@@ -3,7 +3,7 @@ defined('MOODLE_INTERNAL') || die();
 
 // Obtener atributos del body y la configuración del tema.
 $bodyattributes = $OUTPUT->body_attributes();
-$theme = theme_config::load('cajasan');
+$theme = theme_config::load('clickpoint');
 
 // Para el manejo de archivos.
 $fs = get_file_storage();
@@ -20,7 +20,7 @@ $templatecontext = [
     'bodyattributes'   => $bodyattributes,
     'carouselimages'   => [],
     'carouselinterval' => isset($theme->settings->carouselinterval) ? (int)$theme->settings->carouselinterval : 5000,
-    'my_credit'        => get_string('credit', 'theme_cajasan'),
+    'my_credit'        => get_string('credit', 'theme_clickpoint'),
     'hasgeneralnote'   => false,
     'generalnote'      => '',
     // Variables de control para la visualización
@@ -46,7 +46,7 @@ for ($i = 1; $i <= $numslides; $i++) {
         // Verificamos si el archivo existe en storage.
         $files = $fs->get_area_files(
             $context->id,
-            'theme_cajasan',
+            'theme_clickpoint',
             "loging_slideimage{$i}",
             0,
             'sortorder',
@@ -85,11 +85,11 @@ $templatecontext['multiple_slides'] = ($validSlides > 1);
 
 // Si no hay slides válidos, usamos una imagen por defecto
 if (!$templatecontext['has_carousel']) {
-    $defaultImage = $OUTPUT->image_url('slide0', 'theme_cajasan');
+    $defaultImage = $OUTPUT->image_url('slide0', 'theme_clickpoint');
     $templatecontext['carouselimages'][] = [
         'url'       => (string)$defaultImage,
         'link'      => '#',
-        'title'     => get_string('default_slide_title', 'theme_cajasan'),
+        'title'     => get_string('default_slide_title', 'theme_clickpoint'),
         'has_title' => true,
         'has_link'  => false,
         'first'     => true,
@@ -104,4 +104,4 @@ if (!$templatecontext['has_carousel']) {
 // =========================================================================
 // 2) Renderizar la plantilla con este contexto
 // =========================================================================
-echo $OUTPUT->render_from_template('theme_cajasan/core/login-custom', $templatecontext);
+echo $OUTPUT->render_from_template('theme_clickpoint/core/login-custom', $templatecontext);
