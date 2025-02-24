@@ -1,58 +1,165 @@
+/********************************************
+ * scss\custom_variables.scss
+ * Refactor sin !default 
+ * Incluye todas las variables necesarias para clickpoint.scss
+ ********************************************/
+
+/* ==========================================
+   1. GLOBAL SETTINGS
+   ========================================== */
 $body-bg: #FFFFFF;
 $navbar-height: 80px;
 
-// Colores principales
-$my-rojo: #ff5701; // Color secundario principal
-$my-rojo-claro: #ff9a00; // Color secundario atenuado
+/* ==========================================
+      2. TYPOGRAPHY
+      ========================================== */
+$font-family-sans-serif: 'Open Sans', sans-serif;
+$font-family-aux: 'Open Sans', sans-serif;
+$headings-font-family: "Open Sans", $font-family-sans-serif;
+
+/* ==========================================
+      3. NEW PANTONE-BASED COLORS
+      ========================================== */
+/*
+      Según lo proporcionado:
+      Color 1: #1D4356  (RGB: 29,67,86)
+      Color 2: #3D91C0  (RGB: 61,145,192)
+      Color 3: #FF5400  (RGB: 255,84,0)
+      Color 4: #FF9C00  (RGB: 255,156,0)
+   */
+
+/* -- BRAND COLORS (base) -- */
+$brand-color1: #1D4356; // Azul oscuro
+$brand-color2: #3D91C0; // Azul medio
+$brand-color3: #FF5400; // Naranja intenso
+$brand-color4: #FF9C00; // Naranja claro
+
+/* -- BRAND COLOR VARIATIONS -- */
+$brand-color1-dark: darken($brand-color1, 10%);
+$brand-color1-light: lighten($brand-color1, 10%);
+$brand-color1-dimmed: mix($brand-color1, #ffffff, 20%);
+
+$brand-color2-dark: darken($brand-color2, 10%);
+$brand-color2-light: lighten($brand-color2, 10%);
+$brand-color2-dimmed: mix($brand-color2, #ffffff, 20%);
+
+$brand-color3-dark: darken($brand-color3, 10%);
+$brand-color3-light: lighten($brand-color3, 10%);
+$brand-color3-dimmed: mix($brand-color3, #ffffff, 20%);
+
+$brand-color4-dark: darken($brand-color4, 10%);
+$brand-color4-light: lighten($brand-color4, 10%);
+$brand-color4-dimmed: mix($brand-color4, #ffffff, 20%);
+
+/* ==========================================
+      4. PRIMARY / SECONDARY ASSIGNMENT
+      ========================================== */
+/*
+      Ajusta estos roles si lo deseas:
+      - $color-primary => $brand-color1
+      - $color-secondary => $brand-color3
+      - $color-tertiary => $brand-color2
+      - $color-quaternary => $brand-color4
+   */
+$color-primary: $brand-color1;
+$color-primary-dark: $brand-color1-dark;
+$color-primary-light: $brand-color1-light;
+$color-primary-dimmed: $brand-color1-dimmed;
+
+$color-secondary: $brand-color3;
+$color-secondary-dark: $brand-color3-dark;
+$color-secondary-light: $brand-color3-light;
+$color-secondary-dimmed: $brand-color3-dimmed;
+
+$color-tertiary: $brand-color2;
+$color-tertiary-dark: $brand-color2-dark;
+$color-tertiary-light: $brand-color2-light;
+$color-tertiary-dimmed: $brand-color2-dimmed;
+
+$color-quaternary: $brand-color4;
+$color-quaternary-dark: $brand-color4-dark;
+$color-quaternary-light: $brand-color4-light;
+$color-quaternary-dimmed: $brand-color4-dimmed;
+
+/* ==========================================
+      5. NEUTRALS / BASICS
+      ========================================== */
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-gray: #BFBFBF;
+$color-gray-dark: darken($color-gray, 20%);
+$color-gray-light: lighten($color-gray, 20%);
+
+/*
+     Se usa en side-pre 
+     (ej.: .card-body background en clickpoint.scss)
+   */
+$light-bg: #f5f8ff;
+
+/* ==========================================
+      6. ADDITIONAL COLORS FOR CLICKPOINT
+      ========================================== */
+
+/* Grises y fondos */
+$color-ccc: #ccc;
+$color-696969: #696969;
+$color-e9ecef: #e9ecef;
+$color-d5ddea: #d5ddea;
+$color-def2f8: #def2f8;
+$color-badae4: #badae4;
+
+/* Para estados correctos/urgentes/priority */
+$color-dffae7: #dffae7;
+$color-c7e9d1: #c7e9d1;
+$color-event-urgent: #f51f25;
+$color-event-priority: #f89406;
+
+/* Otro color especial */
+$color-1c3d77: #1c3d77;
+
+/* Variable que hacía falta para .que.correct */
+$color-0a1f22: #0a1f22;
+
+/* ==========================================
+      7. LEGACY VARIABLES (proyecto antiguo)
+      ========================================== */
+/* Mantén si tu código legacy las usa */
+$my-red: #bf1724;
+$my-rojo: #ff5701;
+$my-rojo-claro: #ff9a00;
 $my-amarillo: #F9B214;
 
 $my-orange: #f98012;
 $my-oscuro: #003049;
 $my-gris: #e8e8e8;
-$my-gris2: #B8B9BE;
+$my-gris2: #bdbdbc;
 $my-negro: #3D3D3D;
-$my-blue: #407ba6; // Azul intermedio
-$my-blue2: #1d4356; // Azul oscuro - Color primario
-$color-white:#FFFFFF;
-
-$font-family-sans-serif: 'Open Sans', sans-serif;
-$font-family-aux: 'Open Sans', sans-serif;
-
-$headings-font-family: "Open Sans", $font-family-sans-serif !default;
-
-// Asignación de colores primarios y secundarios
-$color-primary: $my-blue2; // #27548c
-$color-primary-dimmed: #f5f8ff;
-$color-primary-dark: $my-blue2; // #27548c
-
-$color-secondary: $my-rojo; // #bf1724
-$color-secondary-dimmed: $my-rojo-claro; // #d91e41
-$color-secondary-dark: #001b29; // Mantener o ajustar según necesidad
-
-$color-terciary: $my-amarillo; // #F9B214
-$color-terciary-dimmed: #fac34c;
-$color-terciary-dark: #efa506;
-
-$brand-primary: $my-blue2; // #27548c
-$navbar-header-color: $color-secondary; // #bf1724
-
+$my-blue: #407ba6;
+$my-blue2: #1d4356;
 $color-blue: #06BEE1;
 
-$headings-color: $my-gris; // #e8e8e8
+$headings-color: $my-gris;
 
-$nav-drawer-color: $color-primary; // #27548c
+$blue: #2C8C99;
+$indigo: #003049;
+$purple: #2a3562;
+$pink: #F5A6E6;
+$red: #E41740;
+$orange: #d9651a;
+$yellow: #EAAB00;
+$green: #7AAA18;
+$teal: #80DEEC;
+$cyan: #06BEE1;
 
-// Otros colores que no forman parte de la nueva paleta se mantienen
-$blue:    #2C8C99 ;
-$indigo:  #003049 ;
-$purple:  #2a3562 ;
-$pink:    #F5A6E6 ;
-$red:     #E41740 ;
-$orange:  #d9651a ;
-$yellow:  #EAAB00 ;
-$green:   #7AAA18 ;
-$teal:    #80DEEC ;
-$cyan:    #06BEE1 ;
-
-/* extra variables */
+/* ==========================================
+      8. MISC / OTRAS VARIABLES
+      ========================================== */
 $my-loginfooterheight: 80px;
+$nav-drawer-color: $color-primary;
+
+/*
+      Si usas un framework (ej. Bootstrap),
+      mapea colores:
+      $brand-primary: $color-primary;
+      ...
+   */
