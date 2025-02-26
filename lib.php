@@ -119,9 +119,22 @@ function theme_clickpoint_set_extra_img($theme) {
  * @param array $args
  * @param bool $forcedownload
  * @param array $options
- * @return mixed
+ * @return bool|null
  */
 function theme_clickpoint_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+    global $CFG;
+    
+    // Si se trata de un logo de compañía de IOMAD, delegamos al controlador de IOMAD
+    if ($filearea === 'companylogo') {
+        if (file_exists($CFG->dirroot . '/local/iomad/lib.php')) {
+            require_once($CFG->dirroot . '/local/iomad/lib.php');
+            if (function_exists('local_iomad_pluginfile')) {
+                return local_iomad_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, $options);
+            }
+        }
+        // Si no encontramos la función de IOMAD, continuamos con la lógica normal
+    }
+    
     $theme = theme_config::load('clickpoint');
 
     if ($context->contextlevel == CONTEXT_SYSTEM) {
