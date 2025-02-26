@@ -29,7 +29,7 @@ $templatecontext = [
 ];
 
 // =========================================================================
-// 1) Carrusel de diapositivas
+// 1) Carrusel de diapositivas (simplificado, sin títulos ni enlaces)
 // =========================================================================
 // Se obtiene el número de slides configurado con el prefijo "loging_".
 $numslides = isset($theme->settings->loging_numberofslides) && is_numeric($theme->settings->loging_numberofslides)
@@ -56,24 +56,11 @@ for ($i = 1; $i <= $numslides; $i++) {
         if (!empty($files)) {
             $validSlides++;
             
-            // Extraemos los demás parámetros del slide usando los identificadores con prefijo "loging_"
-            $slidetitle = format_string(
-                $theme->settings->{"loging_slidetitle{$i}"} ?? '',
-                true,
-                ['escape' => false]
-            );
-            $slideurl = $theme->settings->{"loging_slideurl{$i}"} ?? '#';
-            
-            // Se añade la diapositiva al array con sus settings
+            // Se añade la diapositiva al array con información mínima necesaria
             $templatecontext['carouselimages'][] = [
                 'url'       => $imageurl,
-                'link'      => $slideurl,
-                'title'     => $slidetitle,
-                'has_title' => !empty($slidetitle),
-                'has_link'  => ($slideurl !== '#'),
                 'first'     => ($validSlides === 1),
-                'index'     => ($validSlides - 1),
-                'real_index'=> $i // Índice original del slide
+                'index'     => ($validSlides - 1)
             ];
         }
     }
@@ -88,13 +75,8 @@ if (!$templatecontext['has_carousel']) {
     $defaultImage = $OUTPUT->image_url('slide0', 'theme_clickpoint');
     $templatecontext['carouselimages'][] = [
         'url'       => (string)$defaultImage,
-        'link'      => '#',
-        'title'     => get_string('default_slide_title', 'theme_clickpoint'),
-        'has_title' => true,
-        'has_link'  => false,
         'first'     => true,
-        'index'     => 0,
-        'real_index'=> 1
+        'index'     => 0
     ];
     $templatecontext['has_carousel'] = true;
     $templatecontext['multiple_slides'] = false;
