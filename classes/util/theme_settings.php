@@ -35,8 +35,8 @@ class settings {
         $templatecontext['my_credit'] = get_string('credit', 'theme_clickpoint');
 
         // Retrieve 'abouttext' from the theme settings or use a default value if not set.
-        $templatecontext['abouttitle'] = !empty($this->theme->settings->abouttext) ? $this->theme->settings->abouttext : get_string('abouttitle_default', 'theme_clickpoint');
-        $templatecontext['abouttext'] = !empty($this->theme->settings->abouttext) ? $this->theme->settings->abouttext : get_string('abouttext_default', 'theme_clickpoint');
+        $templatecontext['abouttitle'] = !empty($this->page->theme->settings->abouttext) ? $this->page->theme->settings->abouttext : get_string('abouttitle_default', 'theme_clickpoint');
+        $templatecontext['abouttext'] = !empty($this->page->theme->settings->abouttext) ? $this->page->theme->settings->abouttext : get_string('abouttext_default', 'theme_clickpoint');
 
         return $templatecontext;
     }
@@ -52,17 +52,28 @@ class settings {
     public function personal_area_header() {
         $templatecontext = [];
 
-        // Retrieve 'personalareaheader' from the theme settings or use a default value if not set.
-        $personalareaheader = $this->theme->setting_file_url('personalareaheader', 'personalareaheader');
-        if (!empty($personalareaheader)) {
-            $templatecontext['headerimage'] = [
-                'url' => $personalareaheader,
-                'title' => get_string('personalareaheader', 'theme_clickpoint')
-            ];
+        // Check if personal area header should be shown
+        $showheader = !empty($this->page->theme->settings->showpersonalareaheader) && 
+            $this->page->theme->settings->showpersonalareaheader == '1';
+        
+        if ($showheader) {
+            $personalareaheader = $this->theme->setting_file_url('personalareaheader', 'personalareaheader');
+            if (!empty($personalareaheader)) {
+                $templatecontext['headerimage'] = [
+                    'url' => $personalareaheader,
+                    'title' => get_string('personalareaheader', 'theme_inteb'),
+                    'show' => true
+                ];
+            } else {
+                $templatecontext['headerimage'] = [
+                    'url' => '',
+                    'title' => get_string('defaultheader', 'theme_inteb'),
+                    'show' => false
+                ];
+            }
         } else {
             $templatecontext['headerimage'] = [
-                'url' => '',
-                'title' => get_string('defaultheader', 'theme_clickpoint')
+                'show' => false
             ];
         }
 
@@ -80,17 +91,28 @@ class settings {
     public function my_courses_header() {
         $templatecontext = [];
 
-        // Retrieve 'mycoursesheader' from the theme settings or use a default value if not set.
-        $mycoursesheader = $this->theme->setting_file_url('mycoursesheader', 'mycoursesheader');
-        if (!empty($mycoursesheader)) {
-            $templatecontext['headerimage'] = [
-                'url' => $mycoursesheader,
-                'title' => get_string('mycoursesheader', 'theme_clickpoint')
-            ];
+        // Check if my courses header should be shown
+        $showheader = !empty($this->page->theme->settings->showmycoursesheader) && 
+            $this->page->theme->settings->showmycoursesheader == '1';
+        
+        if ($showheader) {
+            $mycoursesheader = $this->theme->setting_file_url('mycoursesheader', 'mycoursesheader');
+            if (!empty($mycoursesheader)) {
+                $templatecontext['headerimage'] = [
+                    'url' => $mycoursesheader,
+                    'title' => get_string('mycoursesheader', 'theme_inteb'),
+                    'show' => true
+                ];
+            } else {
+                $templatecontext['headerimage'] = [
+                    'url' => '',
+                    'title' => get_string('defaultheader', 'theme_inteb'),
+                    'show' => false
+                ];
+            }
         } else {
             $templatecontext['headerimage'] = [
-                'url' => '',
-                'title' => get_string('defaultheader', 'theme_clickpoint')
+                'show' => false
             ];
         }
 
