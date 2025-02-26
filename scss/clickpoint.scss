@@ -1,1120 +1,2098 @@
 /********************************************
- * SCSS\clickpoint.scss
+ * SCSS/clickpoint.scss
  * Asegúrate de importar primero: @import "custom_variables";
  ********************************************/
 
 /* ==========================================
-   ENCABEZADO Y TEXTO
+   TABLA DE CONTENIDOS
+   ==========================================
+   1. Variables y mixins
+   2. Typografía y textos
+   3. Componentes de navegación
+   4. Botones y controles
+   5. Bloques y tarjetas
+   6. Íconos para bloques
+   7. Elementos de formulario
+   8. Páginas específicas (Login)
+   9. Calendario y eventos
+   10. Animaciones y transiciones
+   11. Media queries y responsive
+   12. Utilidades y ajustes menores
+   13. Dropdowns y controles específicos
+   14. Footer styles
    ========================================== */
 
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-.h5,
-.h5,
-h6,
-.h6 {
-    color: $color-primary;
-    font-family: $headings-font-family;
+/* ===========================================
+   1. MIXINS Y UTILIDADES
+   =========================================== */
+
+// Mixin para transiciones suaves
+@mixin smooth-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
 }
 
-/* Links */
-a {
-    color: $color-primary;
+// Mixin para efectos hover en botones
+@mixin button-hover-effect {
+  @include smooth-transition(transform 0.2s, box-shadow 0.3s);
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba($color-black, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba($color-black, 0.1);
+  }
+}
 
-    &:hover {
-        color: $color-secondary;
+// Mixin para animación de entrada escalonada
+@mixin staggered-animation($animation, $base-delay: 0.1s, $items: 4) {
+  opacity: 0;
+  animation: $animation 0.5s ease forwards;
+  
+  @for $i from 1 through $items {
+    &:nth-of-type(#{$i}) {
+      animation-delay: $base-delay * $i;
     }
+  }
 }
 
-/* Footer headings */
-#top-footer h3 {
-    color: $color-white;
-}
-
-/* ==========================================
-      NAVBAR & PILLS (Con animación fadeInDown)
-      ========================================== */
-
-.navbar-brand {
-    background-color: transparent;
-}
-
-.navbar {
-    border-bottom: 5px solid $color-primary;
-    box-shadow: 0px 2px 3px rgba($color-white, 0.5);
-
-    .primary-navigation,
-    #usernavigation {
-
-        .nav-link,
-        .dropdown-toggle {
-            /* Animación fadeInDown */
-            opacity: 0;
-            animation: fadeInDown 0.6s ease forwards;
-            color: $color-primary;
-            font-weight: bold;
-
-            &.active {
-                color: $color-primary;
-
-                &::before {
-                    border-bottom-color: $color-primary;
-                    top: 58px;
-                    border-bottom: 3px solid $color-primary;
-                }
-            }
-
-            &:hover {
-                color: $color-primary;
-            }
-
-            &.active::before,
-            &.dropdown-toggle.active::before {
-                top: 58px;
-                border-bottom: 3px solid $color-primary;
-            }
-        }
-
-        /* Retardo escalonado */
-        .nav-link:nth-of-type(1) {
-            animation-delay: 0.1s;
-        }
-
-        .nav-link:nth-of-type(2) {
-            animation-delay: 0.2s;
-        }
-
-        .nav-link:nth-of-type(3) {
-            animation-delay: 0.3s;
-        }
-
-        .nav-link:nth-of-type(4) {
-            animation-delay: 0.4s;
-        }
-    }
-
-    .userinitials {
-        background-color: $color-primary-dark;
-        color: $color-white !important;
-    }
-}
-
-.nav-pills {
-
-    .nav-link.active,
-    .show>.nav-link {
-        color: $color-white;
-        background-color: $color-primary;
-    }
-}
-
-/* ==========================================
-      EVENTOS & CALENDARIO
-      ========================================== */
-
-.event {
-
-    h3.name,
-    .calendar_event_course {
-        color: $color-white;
-        text-shadow: 1px 1px 1px $color-black;
-    }
-
-    a.card-link {
-        font-weight: bold;
-        border-bottom: 2px dotted;
-        font-size: 107%;
-    }
-}
-
-.block_calendar_upcoming {
-    .event {
-        border-left: 2px solid $color-ccc;
-        padding-left: 5px;
-
-        &.my-event-urgent {
-            border-color: $color-event-urgent;
-        }
-
-        &.my-event-priority {
-            border-color: $color-event-priority;
-        }
-    }
-}
-
-.badge.badge-danger {
-    background-color: $color-event-urgent;
-}
-
-/* ==========================================
-      MYOVERVIEW & BLOCKS
-      ========================================== */
-
-.block-myoverview {
-    [data-region="filter"] {
-        .nav-grouping-selector {
-            .nav {
-                margin: 10px 17px 16px 17px;
-
-                li.nav-item {
-                    [aria-current="true"]::after {
-                        border-bottom: 3px solid $color-primary;
-                    }
-                }
-            }
-        }
-
-        .all-filter-wrapper {
-            .nav-display-selector-wrapper {
-                .nav-display-selector {
-                    .nav {
-                        .nav-item {
-                            .nav-link {
-                                [aria-current="true"] {
-                                    color: $color-primary;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-/* ==========================================
-      QUESTIONNAIRE / QUE STYLES
-      ========================================== */
-
-.que {
-    .formulation {
-        background-color: $color-white;
-        border: 1px solid $color-badae4;
-    }
-
-    &.informationitem {
-        .formulation {
-            background-color: $color-def2f8;
-            border-color: $color-badae4;
-        }
-
-        .info {
-            margin-bottom: 5px;
-        }
-    }
-}
-
-/* ==========================================
-      ACTIVITY INSTANCE
-      ========================================== */
-
-.activityinstance a {
-    text-transform: none;
-}
-
-/* ==========================================
-      BLOQUES (GENERAL) con animación fadeInUp
-      ========================================== */
-
-.block {
-    margin: 1px;
+// Mixin para efectos ripple en botones
+@mixin ripple-effect {
+  position: relative;
+  overflow: hidden;
+  
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, $color-white 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
     opacity: 0;
-    /* Inicia oculto para la animación */
-    animation: fadeInUp 0.5s ease forwards;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.5s, opacity 0.5s;
+  }
+  
+  &:active:after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+  }
+}
 
-    /* Escalonado en nth-of-type */
-    &:nth-of-type(1) {
-        animation-delay: 0.1s;
+/* ===========================================
+   2. TYPOGRAFÍA Y TEXTOS
+   =========================================== */
+
+// Encabezados
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  color: $color-primary;
+  font-family: $headings-font-family;
+  @include smooth-transition(color);
+  
+  &:hover {
+    text-shadow: 0 0 1px rgba($color-primary, 0.2);
+  }
+}
+
+// Links
+a {
+  color: $color-primary;
+  position: relative;
+  @include smooth-transition(color);
+  
+  &:hover {
+    color: $color-secondary;
+    text-decoration: none;
+  }
+  
+  // Efecto underline animado
+  &.animated-link {
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: $color-secondary;
+      @include smooth-transition(width);
     }
-
-    &:nth-of-type(2) {
-        animation-delay: 0.2s;
+    
+    &:hover:after {
+      width: 100%;
     }
-
-    &:nth-of-type(3) {
-        animation-delay: 0.3s;
-    }
-
-    &:nth-of-type(4) {
-        animation-delay: 0.4s;
-    }
-
-    &:hover {
-        /* Efecto lift */
-        transform: translateY(-3px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-    }
-
-    .card-body {
-        background-color: $color-white;
-        border-radius: 0 0 24px 24px;
-    }
-
-    &:not(.block_calendar_upcoming) {
-        border-bottom: 0;
-    }
-
-    /* Botones en .block */
-    button.dropdown-toggle {
-        box-shadow: none;
-        border: 1px solid $color-secondary;
-
-        &:hover {
-            background-color: $color-secondary-dimmed;
-            color: $color-white;
-            box-shadow: none;
-            border: 1px solid $color-secondary;
-        }
-
-        &.btn-outline-secondary.dropdown-toggle {
-
-            &:focus,
-            &.show {
-                border-color: $color-secondary-dimmed;
-                background-color: $color-secondary-dimmed;
-                outline: none !important;
-                box-shadow: none;
-                color: $color-white;
-            }
-        }
-    }
-
-    .dropdown-item:focus {
-        background-color: $color-primary-dark;
-        color: $color-white;
-    }
+  }
 }
 
-/* ==========================================
-      ICONOS FA6 PARA LOS BLOQUES
-      ========================================== */
-
-/* Icono base por defecto */
-.block h5.card-title:before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 8px;
-    content: "\f468";
-    /* fa-solid fa-box */
+// Footer headings
+#top-footer h3 {
+  color: $color-white;
 }
 
-/* Sobrescritura de iconos específicos */
-.block.block_accessreview h5.card-title:before {
-    content: "\f070";
-}
-
-.block.block_activity_modules h5.card-title:before {
-    content: "\f468";
-}
-
-.block.block_activity_results h5.card-title:before {
-    content: "\f681";
-}
-
-.block.block_admin_bookmarks h5.card-title:before {
-    content: "\f02e";
-}
-
-.block.block_badges h5.card-title:before {
-    content: "\f559";
-}
-
-.block.block_blog_menu h5.card-title:before {
-    content: "\f781";
-}
-
-.block.block_blog_recent h5.card-title:before {
-    content: "\f017";
-}
-
-.block.block_blog_tags h5.card-title:before {
-    content: "\f02c";
-}
-
-.block.block_calendar_month h5.card-title:before {
-    content: "\f133";
-}
-
-.block.block_calendar_upcoming h5.card-title:before {
-    content: "\f784";
-}
-
-.block.block_checklist h5.card-title:before {
-    content: "\f14a";
-}
-
-.block.block_comments h5.card-title:before {
-    content: "\f086";
-}
-
-.block.block_completion_progress h5.card-title:before {
-    content: "\f772";
-}
-
-.block.block_completionstatus h5.card-title:before {
-    content: "\f058";
-}
-
-.block.block_configurable_reports h5.card-title:before {
-    content: "\f200";
-}
-
-.block.block_course_list h5.card-title:before {
-    content: "\f0ae";
-}
-
-.block.block_course_summary h5.card-title:before {
-    content: "\f022";
-}
-
-.block.block_dedication h5.card-title:before {
-    content: "\f004";
-}
-
-.block.block_feedback h5.card-title:before {
-    content: "\f4ad";
-}
-
-.block.block_globalsearch h5.card-title:before {
-    content: "\f689";
-}
-
-.block.block_glossary_random h5.card-title:before {
-    content: "\f49e";
-}
-
-.block.block_grade_me h5.card-title:before {
-    content: "\f304";
-}
-
-.block.block_grade_overview h5.card-title:before {
-    content: "\f080";
-}
-
-.block.block_html h5.card-title:before {
-    content: "\f121";
-}
-
-.block.block_login h5.card-title:before {
-    content: "\f2f6";
-}
-
-.block.block_lp h5.card-title:before {
-    content: "\f5da";
-}
-
-.block.block_mentees h5.card-title:before {
-    content: "\f4c4";
-}
-
-.block.block_messageteacher h5.card-title:before {
-    content: "\f4e8";
-}
-
-.block.block_mnet_hosts h5.card-title:before {
-    content: "\f542";
-}
-
-.block.block_multiblock h5.card-title:before {
-    content: "\f5fd";
-}
-
-.block.block_mycertificates h5.card-title:before {
-    content: "\f0a3";
-}
-
-.block.block_myoverview h5.card-title:before {
-    content: "\f00a";
-}
-
-.block.block_myprofile h5.card-title:before {
-    content: "\f2bd";
-}
-
-.block.block_myprogress h5.card-title:before {
-    content: "\f64f";
-}
-
-.block.block_navigation h5.card-title:before {
-    content: "\f0e8";
-}
-
-.block.block_news_items h5.card-title:before {
-    content: "\f1ea";
-}
-
-.block.block_online_users h5.card-title:before {
-    content: "\f500";
-}
-
-.block.block_private_files h5.card-title:before {
-    content: "\f023";
-}
-
-.block.block_recent_activity h5.card-title:before {
-    content: "\f1da";
-}
-
-.block.block_recentlyaccessedcourses h5.card-title:before {
-    content: "\f518";
-}
-
-.block.block_recentlyaccesseditems h5.card-title:before {
-    content: "\f07c";
-}
-
-.block.block_rss_client h5.card-title:before {
-    content: "\f09e";
-}
-
-.block.block_search_forums h5.card-title:before {
-    content: "\f002";
-}
-
-.block.block_section_links h5.card-title:before {
-    content: "\f0cb";
-}
-
-.block.block_selfcompletion h5.card-title:before {
-    content: "\f5a2";
-}
-
-.block.block_settings h5.card-title:before {
-    content: "\f013";
-}
-
-.block.block_site_main_menu h5.card-title:before {
-    content: "\f0c9";
-}
-
-.block.block_social_activities h5.card-title:before {
-    content: "\f0c0";
-}
-
-.block.block_starredcourses h5.card-title:before {
-    content: "\f005";
-}
-
-.block.block_tag_flickr h5.card-title:before {
-    content: "\f16e";
-}
-
-.block.block_tag_youtube h5.card-title:before {
-    content: "\f167";
-}
-
-.block.block_tags h5.card-title:before {
-    content: "\f02c";
-}
-
-.block.block_timeline h5.card-title:before {
-    content: "\f783";
-}
-
-.block.block_xp h5.card-title:before {
-    content: "\f091";
-}
-
-/* ==========================================
-      SIDE-PRE BLOCKS
-      ========================================== */
-
-#block-region-side-pre {
-    .card-header>h5.card-title {
-        /* Asegura texto blanco en el header */
-        color: $color-white !important;
-    }
-
-    >section:nth-of-type(7n)>.card-header {
-        background-color: $block-region-side-pre-7;
-    }
-
-    >section:nth-of-type(7n + 1)>.card-header {
-        background-color: $block-region-side-pre-1;
-    }
-
-    >section:nth-of-type(7n + 2)>.card-header {
-        background-color: $block-region-side-pre-2;
-    }
-
-    >section:nth-of-type(7n + 3)>.card-header {
-        background-color: $block-region-side-pre-3;
-    }
-
-    >section:nth-of-type(7n + 4)>.card-header {
-        background-color: $block-region-side-pre-4;
-    }
-
-    >section:nth-of-type(7n + 5)>.card-header {
-        background-color: $block-region-side-pre-5;
-    }
-
-    >section:nth-of-type(7n + 6)>.card-header {
-        background-color: $block-region-side-pre-6;
-    }
-
-    >section:nth-of-type(7n),
-    >section:nth-of-type(7n + 1),
-    >section:nth-of-type(7n + 2),
-    >section:nth-of-type(7n + 3),
-    >section:nth-of-type(7n + 4),
-    >section:nth-of-type(7n + 5),
-    >section:nth-of-type(7n + 6) {
-        >.card-body {
-            background-color: $light-bg;
-            border-radius: 0 0 24px 24px;
-        }
-    }
-
-    .block {
-        border-bottom: 0;
-    }
-}
-
-/* ==========================================
-      TIMELINE (BLOCK_TIMELINE)
-      ========================================== */
-
-.block_timeline {
-    .block-timeline {
-
-        [data-region="day-filter"],
-        [data-region="view-selector"] {
-            .dropdown-toggle {
-                border: 1px solid $color-d5ddea;
-                color: $color-1c3d77;
-            }
-        }
-
-        [data-region="timeline-view"] {
-            box-shadow: none;
-        }
-    }
-}
-
-.block button.dropdown-toggle:hover {
-    background-color: darken($light-bg, 10%);
-    color: $color-white;
-}
-
-/* ==========================================
-      LICENSE NOTICE
-      ========================================== */
-
-.license-notice {
-    display: none;
-}
-
-/* ==========================================
-      TYPOGRAPHIC IMPROVEMENTS
-      ========================================== */
-
+// Mejoras tipográficas
 .description .course-description-item,
 #page-content {
-    font-size: 0.9775rem;
-    font-weight: 400;
-    line-height: 1.52;
+  font-size: 0.9775rem;
+  font-weight: 400;
+  line-height: 1.52;
 }
 
-/* ==========================================
-      QUIZ CORRECT ANSWERS
-      ========================================== */
-
-.que.correct {
-
-    .outcome,
-    .comment {
-        background-color: $color-dffae7;
-        border-color: $color-c7e9d1;
-        color: $color-0a1f22;
-    }
-}
-
-/* ==========================================
-      BREADCRUMBS & NAV FONTS
-      ========================================== */
-
+// Breadcrumbs y fuentes de navegación
 nav.moremenu.navigation.observed {
-    font-size: 0.9775rem;
+  font-size: 0.9775rem;
 }
 
-.edw-tabs-navigation {
-    .nav-tabs {
-        .nav-item {
-            .nav-link {
-                font-size: 0.9775rem;
-            }
-        }
-    }
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link {
+  font-size: 0.9775rem;
 }
 
 li.breadcrumb-item {
-    font-size: 0.8775rem;
+  font-size: 0.8775rem;
 }
 
-/* ==========================================
-      LOGIN PAGE & LAYOUT (Carrusel col-8 + Login col-4)
-      ========================================== */
+/* ===========================================
+   3. COMPONENTES DE NAVEGACIÓN
+   =========================================== */
 
-.pagelayout-login {
-    min-height: 100vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-
-    .header-main,
-    .navbar,
-    .drawer-toggles,
-    .debug {
-        display: none !important;
-    }
-}
-
-@media (min-width: 768px) {
-    .fixed-carousel-col {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 66.6667%;
-        height: 100vh;
-        overflow: hidden;
-    }
-
-    .login-col {
-        margin-left: 66.6667%;
-        height: 100vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-        background-color: $color-white;
-        padding: 2rem;
-        display: block;
-    }
-
-    .login-wrapper {
-        width: 100%;
-        max-width: 420px;
-        margin: 0 auto;
-    }
-}
-
-@media (max-width: 767px) {
-    .fixed-carousel-col {
-        position: static;
-        width: 100%;
-        height: auto;
-        overflow: visible;
-    }
-
-    .login-col {
-        margin-left: 0;
-        min-height: auto;
-        overflow: visible;
-        padding: 1rem;
-        display: block;
-    }
-
-    .login-wrapper {
-        max-width: 100%;
-        margin: 0 auto;
-    }
-}
-
-/* Estilos para la .loginform (de loginbox.mustache) */
-.loginform {
-    width: 100%;
-
-    .login-logo {
-        text-align: center;
-        margin-bottom: 1rem;
-
-        img.login-logo-img {
-            max-height: 80px;
-            width: auto;
-        }
-    }
-
-    .login-welcome-wrapper {
-        margin-bottom: 1rem;
-        text-align: center;
-
-        h2 {
-            margin: 0;
-        }
-
-        p {
-            margin: 0;
-        }
-    }
-
-    .login-form {
-        .form-group {
-            margin-bottom: 1rem;
-
-            label.form-label-color {
-                font-weight: 600;
-            }
-
-            input.form-control-lg {
-                font-size: 1rem;
-            }
-        }
-
-        .login-form-forgotpassword {
-            text-align: right;
-            margin-top: -0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-form-submit {
-            margin-top: 1rem;
-
-            button#loginbtn {
-                width: 100%;
-            }
-        }
-    }
-}
-
-/* ==========================================
-      BUTTONS (Estilos y transiciones)
-      ========================================== */
-
-/* Botón flotante */
-.btn-floating {
-    border-color: $color-white;
-}
-
-/* Iconos dentro de .btn-primary */
-.btn-primary {
-
-    .fa,
-    .edw-icon {
-        color: $color-white !important;
-    }
-}
-
-.btn-primary {
-    background-color: $color-secondary;
-    border-color: $color-secondary;
-    color: $color-white;
-
+// Navbar general
+.navbar {
+  border-bottom: 5px solid $color-primary;
+  box-shadow: 0px 2px 3px rgba($color-white, 0.5);
+  
+  .navbar-brand {
+    background-color: transparent;
+    @include smooth-transition(transform);
+    
     &:hover {
-        background-color: $color-primary;
-        border-color: $color-primary;
-        color: $color-white;
+      transform: scale(1.05);
     }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show>&.dropdown-toggle {
+  }
+  
+  // Items de navegación principal y usuario
+  .primary-navigation,
+  #usernavigation {
+    .nav-link,
+    .dropdown-toggle {
+      opacity: 0;
+      animation: fadeInDown 0.6s ease forwards;
+      color: $color-primary;
+      font-weight: bold;
+      position: relative;
+      @include smooth-transition(color);
+      
+      // Animación para el subrayado
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
         background-color: $color-secondary;
-        border-color: $color-secondary;
-        color: $color-white;
+        @include smooth-transition(all 0.3s);
+      }
+      
+      &:hover, &:focus {
+        color: $color-primary;
+        
+        &:after {
+          width: 100%;
+          left: 0;
+        }
+      }
+      
+      &.active {
+        color: $color-primary;
+        
+        &::before {
+          border-bottom-color: $color-primary;
+          top: 58px;
+          border-bottom: 3px solid $color-secondary;
+        }
+      }
+      
+      &.active::before,
+      &.dropdown-toggle.active::before {
+        top: 58px;
+        border-bottom: 3px solid $color-primary;
+      }
     }
-
-    &:not(:disabled):not(.disabled):focus,
-    &:not(:disabled):not(.disabled).focus {
-        background-color: $color-primary;
-        border-color: $color-primary;
-        color: $color-white;
+    
+    // Retardo escalonado
+    @for $i from 1 through 4 {
+      .nav-link:nth-of-type(#{$i}) {
+        animation-delay: 0.1s * $i;
+      }
     }
+  }
+  
+  .userinitials {
+    background-color: $color-primary-dark;
+    color: $color-white !important;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
 
-.btn-secondary {
+// Nav pills
+.nav-pills {
+  .nav-link {
+    @include smooth-transition(all);
+    border-radius: 30px;
+    overflow: hidden;
+    
+    &.active,
+    .show > & {
+      color: $color-white;
+      background-color: $color-secondary;
+      box-shadow: 0 4px 10px rgba($color-secondary, 0.3);
+      transform: translateY(-1px);
+    }
+    
+    &:hover:not(.active) {
+      background-color: rgba($color-secondary, 0.1);
+    }
+  }
+}
+
+// Nav pills custom
+.nav-pills-custom {
+  .nav-link {
+    position: relative;
+    @include smooth-transition(all);
+    
+    &::before {
+      content: '';
+      display: block;
+      border-top: 8px solid transparent;
+      border-left: 10px solid $color-primary;
+      border-bottom: 8px solid transparent;
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      transform: translateY(-50%);
+      opacity: 0;
+      @include smooth-transition(opacity);
+      
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+    
+    &.active {
+      &::before {
+        opacity: 1;
+      }
+    }
+    
+    &:hover:not(.active) {
+      transform: translateX(3px);
+    }
+  }
+}
+
+// Tabs de navegación
+.edw-tabs-navigation {
+  .nav-tabs {
+    .nav-item {
+      .nav-link {
+        @include smooth-transition(all);
+        position: relative;
+        
+        &.active, &:hover, &:focus {
+          color: $color-primary;
+          background-color: #fff0;
+        }
+        
+        &.active::before {
+          content: "";
+          visibility: visible;
+          position: absolute;
+          bottom: -15px;
+          width: 100%;
+          border-bottom: 3px solid $color-secondary;
+          animation: tabActiveBorder 0.3s ease;
+        }
+      }
+    }
+  }
+}
+
+/* ===========================================
+   4. BOTONES Y CONTROLES
+   =========================================== */
+
+// Base para todos los botones
+button {
+  @include smooth-transition(background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease);
+  @include button-hover-effect;
+  @include ripple-effect;
+}
+
+// Estilos generales para botones
+.btn, #page-calendar-view .cal_courses_flt {
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+  }
+}
+
+// Dropdown show
+.dropdown.show > .dropdown-toggle {
+  color: $color-primary;
+  background-color: #fff0;
+}
+
+// Botón primario
+.btn-primary {
+  background-color: $color-secondary;
+  border-color: $color-secondary;
+  color: $color-white;
+  position: relative;
+  overflow: hidden;
+  
+  .fa, .edw-icon {
+    color: $color-white !important;
+  }
+  
+  &:hover {
     background-color: $color-primary;
     border-color: $color-primary;
     color: $color-white;
-
-    &:hover {
-        background-color: $color-secondary;
-        border-color: $color-secondary;
-        color: $color-white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba($color-secondary, 0.4);
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, &:active:focus, .show > &.dropdown-toggle {
+      background-color: $color-secondary;
+      border-color: $color-secondary;
+      color: $color-white;
+      transform: translateY(-1px);
     }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show>&.dropdown-toggle {
-        background-color: $color-primary;
-        border-color: $color-primary;
-        color: $color-white;
+    
+    &:focus, &.focus {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+      box-shadow: 0 0 0 0.2rem rgba($color-secondary, 0.5);
     }
-
-    &:not(:disabled):not(.disabled):focus,
-    &:not(:disabled):not(.disabled).focus {
-        background-color: $color-secondary;
-        border-color: $color-secondary;
-        color: $color-white;
-    }
+  }
+  
+  // Efecto de pulso
+  &.pulse-effect {
+    animation: buttonPulse 2s infinite;
+  }
 }
 
-/* Botones específicos con icon-no-margin */
+// Botón secundario
+.btn-secondary {
+  background-color: $color-primary;
+  border-color: $color-primary;
+  color: $color-white;
+  
+  &:hover {
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+    color: $color-white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba($color-primary, 0.4);
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, &:active:focus, .show > &.dropdown-toggle {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+    }
+    
+    &:focus, &.focus {
+      background-color: $color-secondary;
+      border-color: $color-secondary;
+      color: $color-white;
+      box-shadow: 0 0 0 0.2rem rgba($color-primary, 0.5);
+    }
+  }
+}
+
+// Botón outline secundario
+.btn-outline-secondary {
+  @include smooth-transition(all);
+  
+  &:hover {
+    color: $color-white;
+    background-color: $color-primary;
+    border-color: $color-primary;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba($color-primary, 0.3);
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, .show > &.dropdown-toggle {
+      border-color: $color-primary;
+      box-shadow: 0 2px 4px rgba($color-primary, 0.2);
+    }
+  }
+}
+
+// Botones específicos con icon-no-margin
 button.btn.btn-primary.icon-no-margin.p-0 {
+  background-color: $color-secondary;
+  border-color: $color-white;
+  color: $color-white;
+  
+  &:hover {
     background-color: $color-secondary;
     border-color: $color-white;
-    color: $color-white;
-
-    &:hover {
-        background-color: $color-secondary;
-        border-color: $color-white;
-        color: $color-white !important;
-    }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show>&.dropdown-toggle {
-        background-color: darken($color-secondary, 10%);
-        border-color: $color-white;
+    color: $color-white !important;
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, &:active:focus, .show > &.dropdown-toggle {
+      background-color: darken($color-secondary, 10%);
+      border-color: $color-white;
+      color: $color-white;
+      
+      .fa, .edw-icon {
         color: $color-white;
-
-        .fa,
-        .edw-icon {
-            color: $color-white;
-        }
+      }
     }
+  }
 }
 
-/* ==========================================
-      PAGINATION
-      ========================================== */
-
-.page-link,
-.page-link:hover,
-.page-item.active .page-link {
-    color: $color-primary;
-    text-decoration: none;
+// Botón flotante
+.btn-floating {
+  border-color: $color-white;
 }
 
-.page-link:hover {
+// Botones flotantes con efecto elevación
+.floating-buttons-wrapper {
+  position: fixed;
+  bottom: 80px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  
+  > .btn-floating {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 48px;
+    margin-left: inherit;
+    transition: max-width 0.5s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
+    border-color: $color-white;
+    
+    &:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 20px rgba($color-black, 0.15);
+    }
+  }
+}
+
+// Paginación
+.page-link {
+  @include smooth-transition(all);
+  color: $color-primary;
+  text-decoration: none;
+  
+  &:hover {
     z-index: 2;
     color: darken($color-primary, 10%);
     background-color: $color-e9ecef;
     border-color: $color-d5ddea;
+    transform: translateY(-2px);
+  }
 }
 
 .page-item.active .page-link {
-    color: $color-white;
-    background-color: $color-primary;
-    border-color: $color-primary;
+  color: $color-white;
+  background-color: $color-primary;
+  border-color: $color-primary;
+  box-shadow: 0 2px 5px rgba($color-primary, 0.3);
 }
 
-/* ==========================================
-      FLOATING BUTTONS
-      ========================================== */
+/* ===========================================
+   5. BLOQUES Y TARJETAS
+   =========================================== */
 
-.floating-buttons-wrapper {
-    position: fixed;
-    bottom: 80px;
-    left: 14px;
-    display: flex;
-    flex-direction: column;
-
-    >.btn-floating {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-width: 48px;
-        margin-left: inherit;
-        transition: max-width 0.5s ease-in-out;
-        border-color: $color-white;
+// Estilo general para bloques (con animación fadeInUp)
+.block {
+  margin: 1px;
+  opacity: 0; // Inicia oculto para la animación
+  animation: fadeInUp 0.5s ease forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  // Escalonado en nth-of-type
+  &:nth-of-type(1) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-of-type(2) {
+    animation-delay: 0.2s;
+  }
+  
+  &:nth-of-type(3) {
+    animation-delay: 0.3s;
+  }
+  
+  &:nth-of-type(4) {
+    animation-delay: 0.4s;
+  }
+  
+  &:hover {
+    // Efecto lift
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba($color-black, 0.12);
+  }
+  
+  .card-body {
+    background-color: $color-white;
+    border-radius: 0 0 24px 24px;
+  }
+  
+  &:not(.block_calendar_upcoming) {
+    border-bottom: 0;
+  }
+  
+  // Estilos para el footer dentro de bloques (sin color)
+  .card-text.content .footer {
+    background-color: transparent;
+  }
+  
+  // Botones en .block
+  button.dropdown-toggle {
+    box-shadow: none;
+    border: 1px solid $color-secondary;
+    @include smooth-transition(all);
+    
+    &:hover {
+      background-color: $color-secondary-dimmed;
+      color: $color-white;
+      box-shadow: none;
+      border: 1px solid $color-secondary;
     }
+    
+    &.btn-outline-secondary.dropdown-toggle {
+      &:focus, &.show {
+        border-color: $color-secondary-dimmed;
+        background-color: $color-secondary-dimmed;
+        outline: none !important;
+        box-shadow: none;
+        color: $color-white;
+      }
+    }
+  }
+  
+  .dropdown-item {
+    @include smooth-transition(all);
+    
+    &:focus {
+      background-color: $color-primary-dark;
+      color: $color-white;
+    }
+    
+    &:hover {
+      transform: translateX(5px);
+      background-color: rgba($color-primary-dark, 0.1);
+    }
+  }
+}
+
+// My Overview Block
+.block_myoverview {
+  [data-region="filter"] {
+    .nav-grouping-selector {
+      .nav {
+        margin: 10px 17px 16px 17px;
+        
+        li.nav-item {
+          [aria-current="true"]::after {
+            border-bottom: 3px solid $color-primary;
+          }
+        }
+      }
+    }
+    
+    .all-filter-wrapper {
+      .nav-display-selector-wrapper {
+        .nav-display-selector {
+          .nav {
+            .nav-item {
+              .nav-link {
+                [aria-current="true"] {
+                  color: $color-primary;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Bloques laterales (side-pre)
+#block-region-side-pre {
+  .card-header > h5.card-title {
+    // Asegura texto blanco en el header
+    color: $color-white !important;
+  }
+  
+  > section:nth-of-type(7n) > .card-header {
+    background-color: $block-region-side-pre-7;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+  }
+  
+  > section:nth-of-type(7n + 1) > .card-header {
+    background-color: $block-region-side-pre-1;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 1) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-1;
+    border-right: 1px solid $block-region-side-pre-1;
+    border-bottom: 1px solid $block-region-side-pre-1;
+  }
+  
+  > section:nth-of-type(7n + 2) > .card-header {
+    background-color: $block-region-side-pre-2;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 2) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-2;
+    border-right: 1px solid $block-region-side-pre-2;
+    border-bottom: 1px solid $block-region-side-pre-2;
+  }
+  
+  > section:nth-of-type(7n + 3) > .card-header {
+    background-color: $block-region-side-pre-3;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 3) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-3;
+    border-right: 1px solid $block-region-side-pre-3;
+    border-bottom: 1px solid $block-region-side-pre-3;
+  }
+  
+  > section:nth-of-type(7n + 4) > .card-header {
+    background-color: $block-region-side-pre-4;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 4) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-4;
+    border-right: 1px solid $block-region-side-pre-4;
+    border-bottom: 1px solid $block-region-side-pre-4;
+  }
+  
+  > section:nth-of-type(7n + 5) > .card-header {
+    background-color: $block-region-side-pre-5;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 5) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-5;
+    border-right: 1px solid $block-region-side-pre-5;
+    border-bottom: 1px solid $block-region-side-pre-5;
+  }
+  
+  > section:nth-of-type(7n + 6) > .card-header {
+    background-color: $block-region-side-pre-6;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 6) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-6;
+    border-right: 1px solid $block-region-side-pre-6;
+    border-bottom: 1px solid $block-region-side-pre-6;
+  }
+  
+  .block {
+    border-bottom: 0;
+  }
+}
+
+// Timeline
+.block_timeline {
+  .block-timeline {
+    [data-region="day-filter"],
+    [data-region="view-selector"] {
+      .dropdown-toggle {
+        border: 1px solid $color-d5ddea;
+        color: $color-1c3d77;
+        @include smooth-transition(all);
+        
+        &:hover {
+          border-color: $color-primary;
+          box-shadow: 0 0 0 0.2rem rgba($color-primary, 0.2);
+        }
+      }
+    }
+    
+    [data-region="timeline-view"] {
+      box-shadow: none;
+      transition: box-shadow 0.3s ease;
+      
+      &:hover {
+        box-shadow: 0 3px 10px rgba($color-black, 0.1);
+      }
+    }
+  }
+}
+
+// Questionnaire Styles
+.que {
+  .formulation {
+    background-color: $color-white;
+    border: 1px solid $color-badae4;
+  }
+  
+  &.informationitem {
+    .formulation {
+      background-color: $color-def2f8;
+      border-color: $color-badae4;
+    }
+    
+    .info {
+      margin-bottom: 5px;
+    }
+  }
+  
+  &.correct {
+    .outcome,
+    .comment {
+      background-color: $color-dffae7;
+      border-color: $color-c7e9d1;
+      color: $color-0a1f22;
+    }
+  }
+}
+
+// Activity Instance
+.activityinstance a {
+  text-transform: none;
+}
+
+// Tarjetas del dashboard
+.dashboard-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba($color-black, 0.1);
+  }
+  
+  .course-info-container {
+    .edw-card-design-hd {
+      span.categoryname.small-info-semibold,
+      .popover-region .content-item-container.notification span.categoryname.content-item-footer,
+      #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th span.categoryname.h-semibold-5,
+      #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.h-semibold-5,
+      span.categoryname.edw-msg-panel-badge {
+        color: $color-white;
+        background-color: $color-secondary;
+        font-size: 0.8em;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 3px 6px rgba($color-black, 0.1);
+        }
+      }
+    }
+  }
+}
+
+.categoryname.text-truncate.small-info-semibold {
+  color: $color-white;
+  background-color: $color-secondary;
+  font-size: 0.8em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba($color-secondary, 0.3);
+  }
 }
 
 /* ==========================================
-      COLLAPSIBLE LINKS
-      ========================================== */
+   6. ICONOS PARA BLOQUES
+   ========================================== */
 
-.collapsible-link,
-.collapsible-link::before,
-.collapsible-link[aria-expanded='true']::before {
-    position: relative;
-    display: block;
-    text-align: left;
+/* Estilo base para todos los bloques */
+.block h5.card-title:before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  margin-right: 8px;
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
 
-.collapsible-link::before {
+.block:hover h5.card-title:before {
+  transform: rotate(-10deg) scale(1.2);
+}
+
+/* Estilo por defecto para bloques no listados específicamente */
+.block h5.card-title:before {
+  content: "\f468"; /* fa-solid fa-box - icono general para bloques */
+}
+
+/* Access Review Block */
+.block.block_accessreview h5.card-title:before {
+  content: "\f070"; /* fa-solid fa-eye-slash - revisión de acceso */
+}
+
+/* Activity Modules Block */
+.block.block_activity_modules h5.card-title:before {
+  content: "\f468"; /* fa-solid fa-box - módulos de actividad */
+}
+
+/* Activity Results Block */
+.block.block_activity_results h5.card-title:before {
+  content: "\f681"; /* fa-solid fa-ranking-star - resultados */
+}
+
+/* Admin Bookmarks Block */
+.block.block_admin_bookmarks h5.card-title:before {
+  content: "\f02e"; /* fa-solid fa-bookmark - marcadores */
+}
+
+/* Badges Block */
+.block.block_badges h5.card-title:before {
+  content: "\f559"; /* fa-solid fa-medal - insignias */
+}
+
+/* Blog Menu Block */
+.block.block_blog_menu h5.card-title:before {
+  content: "\f781"; /* fa-solid fa-blog - menú del blog */
+}
+
+/* Blog Recent Block */
+.block.block_blog_recent h5.card-title:before {
+  content: "\f017"; /* fa-solid fa-clock - entradas recientes */
+}
+
+/* Blog Tags Block */
+.block.block_blog_tags h5.card-title:before {
+  content: "\f02c"; /* fa-solid fa-tags - etiquetas del blog */
+}
+
+/* Calendar Month Block */
+.block.block_calendar_month h5.card-title:before {
+  content: "\f133"; /* fa-solid fa-calendar - calendario mensual */
+}
+
+/* Calendar Upcoming Block */
+.block.block_calendar_upcoming h5.card-title:before {
+  content: "\f784"; /* fa-solid fa-calendar-day - eventos próximos */
+}
+
+/* Checklist Block */
+.block.block_checklist h5.card-title:before {
+  content: "\f14a"; /* fa-solid fa-square-check - lista de verificación */
+}
+
+/* Comments Block */
+.block.block_comments h5.card-title:before {
+  content: "\f086"; /* fa-solid fa-comments - comentarios */
+}
+
+/* Completion Progress Block */
+.block.block_completion_progress h5.card-title:before {
+  content: "\f772"; /* fa-solid fa-circle-half-stroke - progreso de finalización */
+}
+
+/* Completion Status Block */
+.block.block_completionstatus h5.card-title:before {
+  content: "\f058"; /* fa-solid fa-circle-check - estado de finalización */
+}
+
+/* Configurable Reports Block */
+.block.block_configurable_reports h5.card-title:before {
+  content: "\f200"; /* fa-solid fa-chart-pie - informes configurables */
+}
+
+/* Course List Block */
+.block.block_course_list h5.card-title:before {
+  content: "\f0ae"; /* fa-solid fa-table-list - lista de cursos */
+}
+
+/* Course Summary Block */
+.block.block_course_summary h5.card-title:before {
+  content: "\f022"; /* fa-solid fa-list-alt - resumen del curso */
+}
+
+/* Dedication Block */
+.block.block_dedication h5.card-title:before {
+  content: "\f004"; /* fa-solid fa-heart - dedicación */
+}
+
+/* Feedback Block */
+.block.block_feedback h5.card-title:before {
+  content: "\f4ad"; /* fa-solid fa-comment-dots - retroalimentación */
+}
+
+/* Global Search Block */
+.block.block_globalsearch h5.card-title:before {
+  content: "\f689"; /* fa-solid fa-search-plus - búsqueda global */
+}
+
+/* Glossary Random Block */
+.block.block_glossary_random h5.card-title:before {
+  content: "\f49e"; /* fa-solid fa-dice - glosario aleatorio */
+}
+
+/* Grade Me Block */
+.block.block_grade_me h5.card-title:before {
+  content: "\f304"; /* fa-solid fa-pen - calificación */
+}
+
+/* Grade Overview Block */
+.block.block_grade_overview h5.card-title:before {
+  content: "\f080"; /* fa-solid fa-chart-bars - vista general de calificaciones */
+}
+
+/* HTML Block */
+.block.block_html h5.card-title:before {
+  content: "\f121"; /* fa-solid fa-code - HTML */
+}
+
+/* Login Block */
+.block.block_login h5.card-title:before {
+  content: "\f2f6"; /* fa-solid fa-right-to-bracket - inicio de sesión */
+}
+
+/* LP Block */
+.block.block_lp h5.card-title:before {
+  content: "\f5da"; /* fa-solid fa-graduation-cap - planes de aprendizaje */
+}
+
+/* Mentees Block */
+.block.block_mentees h5.card-title:before {
+  content: "\f4c4"; /* fa-solid fa-user-graduate - estudiantes mentoreados */
+}
+
+/* Message Teacher Block */
+.block.block_messageteacher h5.card-title:before {
+  content: "\f4e8"; /* fa-solid fa-comment-dots - mensajes al profesor */
+}
+
+/* Mnet Hosts Block */
+.block.block_mnet_hosts h5.card-title:before {
+  content: "\f542"; /* fa-solid fa-network-wired - hosts de red */
+}
+
+/* Multiblock Block */
+.block.block_multiblock h5.card-title:before {
+  content: "\f5fd"; /* fa-solid fa-layer-group - múltiples bloques */
+}
+
+/* My Certificates Block */
+.block.block_mycertificates h5.card-title:before {
+  content: "\f0a3"; /* fa-solid fa-certificate - certificados */
+}
+
+/* My Overview Block */
+.block.block_myoverview h5.card-title:before {
+  content: "\f00a"; /* fa-solid fa-table-cells - vista general */
+}
+
+/* My Profile Block */
+.block.block_myprofile h5.card-title:before {
+  content: "\f2bd"; /* fa-solid fa-user-circle - perfil */
+}
+
+/* My Progress Block */
+.block.block_myprogress h5.card-title:before {
+  content: "\f64f"; /* fa-solid fa-user-clock - mi progreso */
+}
+
+/* Navigation Block */
+.block.block_navigation h5.card-title:before {
+  content: "\f0e8"; /* fa-solid fa-sitemap - navegación */
+}
+
+/* News Items Block */
+.block.block_news_items h5.card-title:before {
+  content: "\f1ea"; /* fa-solid fa-newspaper - noticias */
+}
+
+/* Online Users Block */
+.block.block_online_users h5.card-title:before {
+  content: "\f500"; /* fa-solid fa-user-group - usuarios en línea */
+}
+
+/* Private Files Block */
+.block.block_private_files h5.card-title:before {
+  content: "\f023"; /* fa-solid fa-lock - archivos privados */
+}
+
+/* Recent Activity Block */
+.block.block_recent_activity h5.card-title:before {
+  content: "\f1da"; /* fa-solid fa-clock-rotate-left - actividad reciente */
+}
+
+/* Recently Accessed Courses Block */
+.block.block_recentlyaccessedcourses h5.card-title:before {
+  content: "\f518"; /* fa-solid fa-book-open - cursos recientes */
+}
+
+/* Recently Accessed Items Block */
+.block.block_recentlyaccesseditems h5.card-title:before {
+  content: "\f07c"; /* fa-solid fa-folder-open - elementos recientes */
+}
+
+/* RSS Client Block */
+.block.block_rss_client h5.card-title:before {
+  content: "\f09e"; /* fa-solid fa-rss - RSS */
+}
+
+/* Search Forums Block */
+.block.block_search_forums h5.card-title:before {
+  content: "\f002"; /* fa-solid fa-magnifying-glass - búsqueda en foros */
+}
+
+/* Section Links Block */
+.block.block_section_links h5.card-title:before {
+  content: "\f0cb"; /* fa-solid fa-list-ol - enlaces de sección */
+}
+
+/* Self Completion Block */
+.block.block_selfcompletion h5.card-title:before {
+  content: "\f5a2"; /* fa-solid fa-user-check - auto-finalización */
+}
+
+/* Settings Block */
+.block.block_settings h5.card-title:before {
+  content: "\f013"; /* fa-solid fa-gear - configuración */
+}
+
+/* Site Main Menu Block */
+.block.block_site_main_menu h5.card-title:before {
+  content: "\f0c9"; /* fa-solid fa-bars - menú principal */
+}
+
+/* Social Activities Block */
+.block.block_social_activities h5.card-title:before {
+  content: "\f0c0"; /* fa-solid fa-users - actividades sociales */
+}
+
+/* Starred Courses Block */
+.block.block_starredcourses h5.card-title:before {
+  content: "\f005"; /* fa-solid fa-star - cursos destacados */
+}
+
+/* Tag Flickr Block */
+.block.block_tag_flickr h5.card-title:before {
+  content: "\f16e"; /* fa-brands fa-flickr - Flickr */
+}
+
+/* Tag YouTube Block */
+.block.block_tag_youtube h5.card-title:before {
+  content: "\f167"; /* fa-brands fa-youtube - YouTube */
+}
+
+/* Tags Block */
+.block.block_tags h5.card-title:before {
+  content: "\f02c"; /* fa-solid fa-tags - etiquetas */
+}
+
+/* Timeline Block */
+.block.block_timeline h5.card-title:before {
+  content: "\f783"; /* fa-solid fa-calendar-days - línea de tiempo */
+}
+
+/* XP Block */
+.block.block_xp h5.card-title:before {
+  content: "\f091"; /* fa-solid fa-trophy - puntos de experiencia */
+}
+
+/* ===========================================
+   7. ELEMENTOS DE FORMULARIO
+   =========================================== */
+
+// Cuestionarios
+.que {
+  .formulation {
+    background-color: $color-white;
+    border: 1px solid $color-badae4;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 3px 8px rgba($color-black, 0.1);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.informationitem {
+    .formulation {
+      background-color: $color-def2f8;
+      border-color: $color-badae4;
+    }
+    
+    .info {
+      margin-bottom: 5px;
+    }
+  }
+  
+  &.correct {
+    .outcome,
+    .comment {
+      background-color: $color-dffae7;
+      border-color: $color-c7e9d1;
+      color: $color-0a1f22;
+      animation: correctAnswerPulse 2s ease-in-out;
+    }
+  }
+}
+
+// Autocomplete
+.form-autocomplete-suggestions {
+  li {
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+      border-left: 4px solid $color-primary;
+      padding-left: 12px;
+      transform: translateX(3px);
+    }
+    
+    &:focus {
+      background-color: $color-primary-light;
+      color: $color-primary-dark;
+      border-left: 4px solid $color-secondary-dark;
+      padding-left: 12px;
+    }
+    
+    &[aria-selected="true"] {
+      background-color: $color-primary;
+      color: $color-white;
+      border-left: 4px solid $color-secondary;
+      padding-left: 12px;
+      animation: selectedItemPulse 2s infinite;
+    }
+  }
+}
+
+// Links colapsables
+.collapsible-link {
+  position: relative;
+  display: block;
+  text-align: left;
+  @include smooth-transition(all);
+  
+  &::before {
     content: '\f107';
     top: 50%;
     right: 0.8rem;
     transform: translateY(-50%);
     font-family: 'FontAwesome';
     font-size: 1.1rem;
-}
-
-.collapsible-link[aria-expanded='true']::before {
+    display: block;
+    position: absolute;
+    transition: transform 0.3s ease;
+  }
+  
+  &[aria-expanded='true']::before {
     content: '\f106';
+    transform: translateY(-50%) rotate(0deg);
+  }
+  
+  &:hover::before {
+    transform: translateY(-50%) scale(1.2);
+  }
 }
 
-/* ==========================================
-      NAV PILLS CUSTOM
-      ========================================== */
+/* ===========================================
+   8. PÁGINA DE LOGIN (Adaptación a template)
+   =========================================== */
 
-.nav-pills-custom {
-    .nav-link {
-        position: relative;
-
-        &::before {
-            content: '';
-            display: block;
-            border-top: 8px solid transparent;
-            border-left: 10px solid $color-primary;
-            border-bottom: 8px solid transparent;
-            position: absolute;
-            top: 50%;
-            right: -10px;
-            transform: translateY(-50%);
-            opacity: 0;
-
-            @media (max-width: 991px) {
-                display: none;
+// Estilos para la página de login completa
+.pagelayout-login {
+  min-height: 100vh;
+  
+  // Ocultar elementos innecesarios
+  .header-main,
+  .navbar,
+  .drawer-toggles,
+  .debug {
+    display: none !important;
+  }
+  
+  // Ajustes para el carrusel
+  #loginCarouselColumn {
+    @media (min-width: 768px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 10;
+    }
+    
+    #loginCarousel {
+      height: 100%;
+      
+      .carousel-inner {
+        height: 100%;
+      }
+      
+      .carousel-item {
+        height: 100%;
+        
+        img {
+          width: 100%;
+          height: 100vh;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+      
+      .carousel-indicators li {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba($color-white, 0.5);
+        
+        &.active {
+          background-color: $color-white;
+        }
+      }
+    }
+  }
+  
+  // Ajustes para la columna de login
+  .login-col {
+    min-height: 100vh;
+    
+    @media (min-width: 768px) {
+      margin-left: 66.6667%;
+      padding-bottom: 120px; // Espacio para el footer
+    }
+    
+    .login-wrapper {
+      width: 100%;
+      max-width: 480px;
+      padding: 2rem;
+    }
+  }
+  
+  // Footer fijo abajo de toda la pantalla
+  .my-footer-wrapper {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    
+    // El panel del footer
+    .my-footer.panel {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      
+      .card.my-footer.panel.fixed-bottom {
+        z-index: 1030;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        height: auto;
+        max-height: 60px; // Reducción de altura
+        
+        .card-block {
+                  
+          .copyright {
+            background-color: $my-gris;
+            padding: 8px 10px;
+            margin: 0;
+            
+            .my-credit-footer-wrapper {
+              background-color: transparent;
+              padding: 0;
+              
+              .my-credit {
+                font-size: 0.85rem;
+                color: $color-primary;
+                
+                small {
+                  &:hover {
+                    color: $color-secondary;
+                  }
+                }
+              }
             }
+          }
         }
-
-        &.active::before {
-            opacity: 1;
-        }
+      }
     }
+  }
 }
 
-/* ==========================================
-      AUTOCOMPLETE STYLES
-      ========================================== */
-
-.form-autocomplete-suggestions {
-    li {
-        &:hover {
-            background-color: $color-primary;
-            color: $color-white;
-            border-left: 4px solid $color-primary;
-            padding-left: 12px;
-        }
-
-        &:focus {
-            background-color: $color-primary-light;
-            color: $color-primary-dark;
-            border-left: 4px solid $color-secondary-dark;
-            padding-left: 12px;
-        }
-
-        &[aria-selected="true"] {
-            background-color: $color-primary;
-            color: $color-white;
-            border-left: 4px solid $color-secondary;
-            padding-left: 12px;
-        }
+// Mejoras visuales para el formulario de login
+.loginform {
+  // Evita duplicación de estilos en divs anidados
+  &.d-flex.flex-column {
+    .loginform {
+      display: block !important;
     }
-}
-
-/* ==========================================
-      CALENDAR HIGHLIGHTS
-      ========================================== */
-
-.maincalendar {
-    .calendarmonth {
-        td.today {
-            .day-number-circle {
-                color: $color-white;
-                background-color: $color-primary;
-            }
-        }
+  }
+  
+  // Logo del login
+  .login-logo {
+    margin-bottom: 1.5rem;
+    
+    img {
+      transition: transform 0.3s ease;
+      max-height: 80px;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
     }
-}
-
-/* ==========================================
-      FOOTER
-      ========================================== */
-
-#page-footer {
-    background-color: darken($color-primary, 10%);
-
-    .copyright {
-        background-color: $my-gris;
-        color: $color-primary;
-        text-align: center;
-        min-height: inherit;
-        margin-bottom: 0;
+  }
+  
+  // Mejoras visuales para inputs
+  input.form-control {
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $color-secondary;
+      box-shadow: 0 0 0 0.2rem rgba($color-secondary, 0.25);
+      transform: translateY(-2px);
     }
-}
-
-#top-footer {
-    background-color: $color-primary;
-    color: $color-white;
-    margin: 0 -15px;
-
-    .my-about {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-
-    h3 {
-        margin-bottom: 15px;
-    }
-}
-
-/* ==========================================
-      CATEGORY / DASHBOARD CARDS
-      ========================================== */
-
-.dashboard-card {
-    .course-info-container {
-        .edw-card-design-hd {
-
-            span.categoryname.small-info-semibold,
-            .popover-region .content-item-container.notification span.categoryname.content-item-footer,
-            #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th span.categoryname.h-semibold-5,
-            #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.h-semibold-5,
-            span.categoryname.edw-msg-panel-badge {
-                color: $color-white;
-                background-color: $color-secondary;
-                font-size: 0.8em;
-            }
-        }
-    }
-}
-
-.categoryname.text-truncate.small-info-semibold {
-    color: $color-white;
+  }
+  
+  // Estilos para botones
+  .btn-primary {
     background-color: $color-secondary;
-    font-size: 0.8em;
+    border-color: $color-secondary;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: darken($color-secondary, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba($color-secondary, 0.3);
+    }
+  }
+  
+  .btn-secondary {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: darken($color-primary, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba($color-primary, 0.3);
+    }
+  }
+  
+  // Enlace olvido contraseña
+  .login-form-forgotpassword a {
+    color: $color-primary;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: $color-secondary;
+      text-decoration: none;
+    }
+  }
 }
 
-/* ==========================================
-      ANIMATIONS (Keyframes)
-      ========================================== */
+/* ===========================================
+   9. CALENDARIO Y EVENTOS
+   =========================================== */
 
+// Estilos para eventos
+.event {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba($color-black, 0.1);
+  }
+  
+  h3.name,
+  .calendar_event_course {
+    color: $color-white;
+    text-shadow: 1px 1px 1px $color-black;
+  }
+  
+  a.card-link {
+    font-weight: bold;
+    border-bottom: 2px dotted;
+    font-size: 107%;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-bottom-style: solid;
+      padding-bottom: 2px;
+    }
+  }
+}
+
+// Próximos eventos en el calendario
+.block_calendar_upcoming {
+  .event {
+    border-left: 2px solid $color-ccc;
+    padding-left: 5px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      padding-left: 8px;
+      background-color: rgba($color-ccc, 0.1);
+    }
+    
+    &.my-event-urgent {
+      border-color: $color-event-urgent;
+      
+      &:hover {
+        background-color: rgba($color-event-urgent, 0.05);
+      }
+    }
+    
+    &.my-event-priority {
+      border-color: $color-event-priority;
+      
+      &:hover {
+        background-color: rgba($color-event-priority, 0.05);
+      }
+    }
+  }
+}
+
+// Badge de peligro
+.badge.badge-danger {
+  background-color: $color-event-urgent;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+// Calendario
+.maincalendar {
+  .calendarmonth {
+    td {
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: rgba($color-primary, 0.05);
+      }
+      
+      &.today {
+        .day-number-circle {
+          color: $color-white;
+          background-color: $color-primary;
+          animation: todayPulse 2s infinite;
+        }
+      }
+    }
+  }
+}
+
+// Día de hoy en calendario
+section#region-main .maincalendar td.today span.day-number-circle,
+aside:not(#block-region-side-pre) .maincalendar td.today span.day-number-circle {
+  border-radius: 5px;
+  color: $color-white;
+  background-color: $color-primary;
+  box-shadow: 0 6px 12px $color-primary;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px $color-primary;
+  }
+}
+
+/* ===========================================
+   10. ANIMACIONES Y TRANSICIONES
+   =========================================== */
+
+// Keyframes base
 @keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(15px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Nuevas animaciones
+@keyframes buttonPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($color-secondary, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0);
+  }
+}
+
+@keyframes buttonBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes correctAnswerPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($color-c7e9d1, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($color-c7e9d1, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($color-c7e9d1, 0);
+  }
+}
+
+@keyframes selectedItemPulse {
+  0% {
+    border-left-width: 4px;
+  }
+  50% {
+    border-left-width: 8px;
+  }
+  100% {
+    border-left-width: 4px;
+  }
+}
+
+@keyframes todayPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($color-primary, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba($color-primary, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($color-primary, 0);
+  }
+}
+
+@keyframes logoEntrance {
+  0% {
+    transform: scale(0.8) rotate(-5deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes inputFocus {
+  0% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes tabActiveBorder {
+  0% {
+    width: 0;
+    left: 50%;
+  }
+  100% {
+    width: 100%;
+    left: 0;
+  }
+}
+
+@keyframes urgentPulse {
+  0% {
+    border-left-width: 2px;
+  }
+  50% {
+    border-left-width: 6px;
+  }
+  100% {
+    border-left-width: 2px;
+  }
+}
+
+// Animación específica para el botón de login
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+// Nueva animación para la carga de la página
+@keyframes pageLoadFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// Animación para elementos que se deslizan desde la derecha
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===========================================
+   11. MEDIA QUERIES Y RESPONSIVE
+   =========================================== */
+
+// Media queries para pantallas pequeñas
+@media (max-width: 767px) {
+  .fixed-carousel-col {
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  
+  .login-col {
+    margin-left: 0;
+    min-height: auto;
+    overflow: visible;
+    padding: 1rem;
+    display: block;
+  }
+  
+  .login-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .block:hover {
+    transform: translateY(-2px);
+  }
+  
+  .btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba($color-black, 0.15);
+  }
+  
+  .nav-pills-custom .nav-link::before {
+    display: none;
+  }
+}
+
+// Media queries para pantallas medianas
+@media (min-width: 768px) and (max-width: 991px) {
+  .nav-pills-custom .nav-link::before {
+    right: -5px;
+    border-left-width: 5px;
+  }
+  
+  .floating-buttons-wrapper {
+    bottom: 60px;
+    left: 10px;
+    
+    > .btn-floating {
+      width: 40px;
+      height: 40px;
     }
+  }
+}
+
+/* ===========================================
+   12. UTILIDADES Y AJUSTES MENORES
+   =========================================== */
+
+// Ajustes para activity instance
+.activityinstance a {
+  text-transform: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    text-decoration: none;
+    padding-left: 3px;
+  }
+}
+
+// Ocultar license notice
+.license-notice {
+  display: none;
+}
+
+// Estadísticas (ícono)
+.edw-stats-wrapper .stat-block .inner .edw-icon {
+  font-size: 44px;
+  display: flex;
+  color: $color-secondary;
+  transition: transform 0.3s ease, color 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    color: darken($color-secondary, 10%);
+  }
+}
+
+// Título de sección en courseindex
+#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
+  padding: 10px 24px;
+  color: $color-white;
+  background-color: $color-primary;
+  border-radius: 0;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: darken($color-primary, 5%);
+  }
+}
+
+// Ítems en courseindex
+#theme_remui-drawers-courseindex .pageitem {
+  color: $color-white !important;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  
+  &:hover {
+    background-color: rgba($color-white, 0.1);
+    transform: translateX(3px);
+  }
+}
+
+/* ===========================================
+   13. DROPDOWNS Y CONTROLES ESPECÍFICOS
+   =========================================== */
+
+// Dropdown toggles y behavior
+.dropdown-toggle {
+  position: relative;
+  @include smooth-transition(all);
+  
+  &::after {
+    transition: transform 0.3s ease;
+    position: relative;
+    top: 1px;
+  }
+  
+  &:hover::after {
+    transform: translateY(2px);
+  }
+}
+
+// Controles de navegación específicos
+.block .dropdown-item:focus {
+  background-color: $color-primary-dark;
+  color: $color-white;
+}
+
+// Botones específicos para bloques de navegación
+.block button.dropdown-toggle:hover {
+  background-color: darken($light-bg, 10%);
+  color: $color-white;
+}
+
+// My Overview bloque, elementos específicos
+.block-myoverview {
+  [data-region="filter"] {
+    .nav-grouping-selector {
+      .nav {
+        li.nav-item {
+          .nav-link {
+            @include smooth-transition(all);
+            
+            &:hover {
+              transform: translateY(-2px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animación para eventos
+.block_calendar_upcoming .event {
+  &:nth-child(odd) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(even) {
+    animation-delay: 0.3s;
+  }
+  
+  &.my-event-urgent {
+    animation: urgentPulse 2s infinite;
+  }
+}
+
+/* ===========================================
+   14. FOOTER STYLES
+   =========================================== */
+
+.my-credit-footer-wrapper {
+  background-color: $color-gray-light;
+  color: $color-primary;
+  font-size: 15px;
+  padding: 1rem 0;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: darken($color-gray-light, 3%);
+  }
+}
+
+#page-footer {
+  background-color: darken($color-primary, 10%);
+  
+  .copyright {
+    background-color: $my-gris;
+    color: $color-primary;
+    text-align: center;
+    min-height: inherit;
+    margin-bottom: 0;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: darken($my-gris, 3%);
+    }
+  }
+}
+
+#top-footer {
+  background-color: $color-primary;
+  color: $color-white;
+  margin: 0 -15px;
+  padding: 2rem 0;
+  position: relative;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, $color-primary, $color-secondary, $color-primary);
+  }
+  
+  .my-about {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+  
+  h3 {
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+    // El after ha sido eliminado según instrucciones
+  }
+  
+  a {
+    color: $color-white;
+    transition: all 0.3s ease;
+    position: relative;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $color-secondary;
+      transition: width 0.3s ease;
+    }
+    
+    &:hover {
+      color: $color-secondary;
+      text-decoration: none;
+      
+      &:before {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.footer {
+  background-color: $my-gris;
+  padding: 1rem 0;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: darken($my-gris, 3%);
+  }
+  
+  .my-credit {
+    font-size: 0.875rem;
+    color: $color-primary;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+}
+
+/* ==========================================
+   NUEVAS INCLUSIONES y REEMPLAZOS DE VALORES
+   ========================================== */
+
+/* Ícono de estadísticas */
+.edw-stats-wrapper .stat-block .inner .edw-icon {
+  font-size: 44px;
+  display: flex;
+  color: $color-secondary; 
+}
+
+/* Título de sección en courseindex */
+#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
+  padding: 10px 24px;
+  color: $color-white;
+  background-color: $color-primary;
+  border-radius: 0;
+  justify-content: space-between;
+}
+
+/* Ítems en courseindex */
+#theme_remui-drawers-courseindex .pageitem {
+  color: $color-white !important;
+}
+
+/* Estilos para los círculos de día en el calendario */
+section#region-main .maincalendar td.today span.day-number-circle,
+aside:not(#block-region-side-pre) .maincalendar td.today span.day-number-circle {
+  border-radius: 5px;
+  color: $color-white;
+  background-color: $color-primary;
+  box-shadow: 0 6px 12px $color-primary;
+}
+
+/* Para el calendario (calendarmonth) */
+.maincalendar .calendarmonth td.today .day-number-circle {
+  color: $color-white;
+  background-color: $color-primary;
+}
+
+/* Estilos para navegación de tabs */
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link.active, 
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link:hover, 
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link:focus {
+  color: $color-primary;
+  background-color: #fff0;
+}
+
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link.active::before {
+  content: "";
+  visibility: visible;
+  position: absolute;
+  bottom: -15px;
+  width: 100%;
+  border-bottom: 3px solid $color-secondary;
 }
