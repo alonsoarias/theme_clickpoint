@@ -166,8 +166,9 @@ $THEME->layouts = [
     )
 ];
 
-$THEME->parents = ['remui'];
+$THEME->parents = ['remui','iomad'];
 $THEME->enable_dock = false;
+$THEME->isiomadtheme = true;
 $THEME->prescsscallback = 'theme_remui_get_pre_scss';
 $THEME->precompiledcsscallback = 'theme_remui_get_precompiled_css';
 $THEME->extrascsscallback = 'theme_clickpoint_get_extra_scss';
