@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provides the core rendering functionality for the theme_clickpoint, aligning Moodle's HTML with Bootstrap expectations.
  *
@@ -18,11 +19,13 @@ use theme_config;
 use moodle_url;
 use context_course;
 use moodle_exception;
+use company_user;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../../../remui/classes/output/core_renderer.php');
 require_once(__DIR__ . '/../util/theme_settings.php');
+
 
 /**
  * Renderers to align Moodle's HTML with that expected by Bootstrap
@@ -30,45 +33,124 @@ require_once(__DIR__ . '/../util/theme_settings.php');
  */
 class core_renderer extends \theme_remui\output\core_renderer
 {
-    /**
-     * Renders the login form.
-     *
-     * @param \core_auth\output\login $form The renderable.
-     * @return string
+/**
+     * Cached theme config
+     * @var object
      */
-    public function render_login(\core_auth\output\login $form) {
-        global $SITE;
+    protected $themeConfig = null;
 
-        $context = $form->export_for_template($this);
-
-        // Prepara el mensaje de error, si lo hubiera.
-        $context->errorformatted = $this->error_text($context->error);
+    /**
+     * Get theme config with caching
+     * @return object
+     */
+    public function get_theme_config() {
+        if ($this->themeConfig === null) {
+            $this->themeConfig = theme_config::load('clickpoint');
+        }
+        return $this->themeConfig;
+    }
     
-        // Añade los textos para la autorización policial.
-        $context->police_autorization = get_string('police_autorization', 'theme_clickpoint');
-        $context->police_autorization_help = get_string('police_autorization_help', 'theme_clickpoint');
-    
-        // Logo from 'remui' or from 'clickpoint'? 
-        // Si deseas usar el logo del tema "clickpoint" en vez de "remui", cambia la línea:
-        $context->logourl = $this->get_theme_logo_url('logo');
+/**
+ * Renders the login form with company branding.
+ *
+ * @param \core_auth\output\login $form The renderable.
+ * @return string
+ */
+public function render_login(\core_auth\output\login $form) {
+    global $SITE, $OUTPUT;
 
-        // Nombre del sitio.
+    $context = $form->export_for_template($this);
+
+    // Prepara el mensaje de error, si lo hubiera.
+    $context->errorformatted = $this->error_text($context->error);
+
+    // Inyectamos el contexto de branding (logo y nombre de la compañía)
+    $brandingContext = $this->get_branding_context();
+    if ($brandingContext) {
+        foreach ($brandingContext as $key => $value) {
+            $context->$key = $value;
+        }
+    }
+
+    // Si no se obtuvo el nombre de compañía, se usa el nombre completo del sitio.
+    if (empty($context->companyname)) {
         $context->sitename = format_string($SITE->fullname, true, ['context' => \context_course::instance(SITEID)]);
-
-        // Renderiza la plantilla 'core/loginbox' (o la que uses en tu tema).
-        return $this->render_from_template('core/loginbox', $context);
     }
 
-    /**
-     * Devuelve la URL de una imagen de configuración del tema (ej. loginimage, slide1, etc.)
-     *
-     * @param string $img Nombre del ajuste
-     * @return string
-     */
-    public function get_theme_img_url($img) {
-        $theme = theme_config::load('clickpoint');
-        return $theme->setting_file_url($img, $img);
+    // Limpieza final: eliminamos propiedades con valor null.
+    foreach ($context as $key => $value) {
+        if (is_null($value)) {
+            unset($context->$key);
+        }
     }
+
+    // Renderiza la plantilla 'core/loginbox' con el contexto completo.
+    return $this->render_from_template('core/loginbox', $context);
+}
+
+public function get_branding_context() {
+    global $SITE, $DB;
+    $context = [];
+
+    // Primero intentamos obtener el logo de la compañía si IOMAD está disponible
+    if (class_exists('\iomad') && class_exists('\company')) {
+        try {
+            $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
+            if (!empty($companyid)) {
+                // Obtener la información completa de la compañía
+                $company = $DB->get_record('company', array('id' => $companyid), '*');
+                if (!empty($company)) {
+                    // Usar el método nativo de IOMAD para obtener el logo URL
+                    $companyobj = new \company($company->id);
+                    $logo_url = $companyobj->get_logo_url($company->id);
+                    if (!empty($logo_url)) {
+                        debugging("Logo de compañía encontrado: " . $logo_url, DEBUG_DEVELOPER);
+                        $context['companylogourl'] = $logo_url;
+                        $context['companyname'] = format_string($company->name);
+                        // Si estamos en la página de login y hay un logo de compañía, devolvemos el contexto aquí
+                        if ($this->page->pagelayout == 'login') {
+                            $context['incontainer'] = true;
+                            return $context;
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            debugging('Error al obtener logo de compañía: ' . $e->getMessage(), DEBUG_DEVELOPER);
+        }
+    }
+
+    // Manejo específico para la página de login (cuando no hay logo de compañía)
+    if ($this->page->pagelayout == 'login') {
+        $loginpanellogo = $this->get_theme_logo_url('loginpanellogo');
+        if ($loginpanellogo) {
+            $context['logourl'] = $loginpanellogo;
+            $context['incontainer'] = true;
+            return $context;
+        }
+    }
+
+    // Lógica para el logo estándar del tema
+    $logo = $this->get_theme_logo_url('logo');
+    if (!empty($logo)) {
+        $context['logourl'] = $logo;
+    } else {
+        // Logo por defecto si no hay ninguno configurado
+        $context['logourl'] = $this->image_url('logo', 'theme');
+    }
+
+    // Agregar el logomini si está configurado
+    $logomini = $this->get_theme_logo_url('logomini');
+    if (!empty($logomini)) {
+        $context['logominiurl'] = $logomini;
+    }
+
+    // Información del sitio como respaldo
+    $context['sitename'] = format_string($SITE->shortname);
+
+    return $context;
+}
+
 
     /**
      * Devuelve la URL del logo. Puede cambiarse para usar 'clickpoint' o 'remui' según tu preferencia.
@@ -76,9 +158,123 @@ class core_renderer extends \theme_remui\output\core_renderer
      * @param string $img
      * @return string|null
      */
-    public function get_theme_logo_url($img) {
+    public function get_theme_logo_url($img)
+    {
         $theme = theme_config::load('remui');
         return $theme->setting_file_url($img, $img);
+    }
+
+    /**
+     * The standard tags that should be included in the <head> tag
+     * 
+     * @return string HTML fragment.
+     */
+    public function standard_head_html()
+    {
+        global $SITE, $PAGE, $DB;
+
+        // Obtener el resultado base del padre
+        $output = parent::standard_head_html();
+
+        // Inyectar estilos de IOMAD directamente si la clase está disponible
+        if (class_exists('\iomad')) {
+            $css = '';
+            try {
+                $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
+
+                if ($companyid && ($company = $DB->get_record('company', array('id' => $companyid)))) {
+                    $css .= "/* IOMAD Direct CSS Injection Based on clickpoint.scss Analysis */\n";
+
+                    // Variables para uso interno
+                    $primaryColor = !empty($company->headingcolor) ? $company->headingcolor : null;
+                    $secondaryColor = !empty($company->linkcolor) ? $company->linkcolor : null;
+                    $mainColor = !empty($company->maincolor) ? $company->maincolor : null;
+
+                    // 1. ENCABEZADOS Y TEXTO
+                    if ($primaryColor) {
+                        $css .= "h1, .h1, h2, .h2, h3, .h3, h4, .h4, .h5, .h5, h6, .h6 { color: {$primaryColor} !important; }\n";
+                    }
+
+                    // if ($secondaryColor) {
+                    //     $css .= "a { color: {$secondaryColor} !important; }\n";
+                    //     $css .= "a:hover { color: " . $this->lighten_color($secondaryColor, 15) . " !important; }\n";
+                    // }
+
+                    // 2. NAVBAR Y NAVEGACIÓN
+                    if ($primaryColor) {
+                        $css .= ".navbar { border-bottom: 5px solid {$primaryColor} !important; }\n";
+                        $css .= ".navbar .primary-navigation .nav-link, .navbar .primary-navigation .dropdown-toggle, ";
+                        $css .= ".navbar #usernavigation .nav-link, .navbar #usernavigation .dropdown-toggle { color: {$primaryColor} !important; }\n";
+                        $css .= ".navbar .primary-navigation .nav-link.active, .navbar .primary-navigation .dropdown-toggle.active, ";
+                        $css .= ".navbar #usernavigation .nav-link.active, .navbar #usernavigation .dropdown-toggle.active { color: {$primaryColor} !important; }\n";
+                        $css .= ".navbar .primary-navigation .nav-link.active::before, .navbar .primary-navigation .dropdown-toggle.active::before, ";
+                        $css .= ".navbar #usernavigation .nav-link.active::before, .navbar #usernavigation .dropdown-toggle.active::before { border-bottom: 3px solid {$primaryColor} !important; }\n";
+
+                        $primaryDark = $this->darken_color($primaryColor, 10);
+                        $css .= ".navbar .userinitials { background-color: {$primaryDark} !important; color: #FFFFFF !important; }\n";
+
+                        $css .= ".nav-pills .nav-link.active, .nav-pills .show>.nav-link { color: #FFFFFF !important; background-color: {$primaryColor} !important; }\n";
+                    }
+
+                    // 3. BOTONES
+                    if ($primaryColor && $secondaryColor) {
+                        // btn-primary con color secundario
+                        $css .= ".btn-primary { background-color: {$secondaryColor} !important; border-color: {$secondaryColor} !important; color: #FFFFFF !important; }\n";
+                        $css .= ".btn-primary:hover { background-color: {$primaryColor} !important; border-color: {$primaryColor} !important; color: #FFFFFF !important; }\n";
+                        $css .= ".btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, ";
+                        $css .= ".btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle ";
+                        $css .= "{ background-color: {$secondaryColor} !important; border-color: {$secondaryColor} !important; color: #FFFFFF !important; }\n";
+
+                        // btn-secondary con color primario
+                        $css .= ".btn-secondary { background-color: {$primaryColor} !important; border-color: {$primaryColor} !important; color: #FFFFFF !important; }\n";
+                        $css .= ".btn-secondary:hover { background-color: {$secondaryColor} !important; border-color: {$secondaryColor} !important; color: #FFFFFF !important; }\n";
+                        $css .= ".btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, ";
+                        $css .= ".btn-secondary:not(:disabled):not(.disabled):active:focus, .show>.btn-secondary.dropdown-toggle ";
+                        $css .= "{ background-color: {$primaryColor} !important; border-color: {$primaryColor} !important; color: #FFFFFF !important; }\n";
+
+                        // Botones específicos con icon-no-margin
+                        $css .= "button.btn.btn-primary.icon-no-margin.p-0 { background-color: {$secondaryColor} !important; border-color: #FFFFFF !important; color: #FFFFFF !important; }\n";
+                        $css .= "button.btn.btn-primary.icon-no-margin.p-0:hover { background-color: {$secondaryColor} !important; border-color: #FFFFFF !important; color: #FFFFFF !important; }\n";
+
+                        // Asegurar que los iconos dentro de btn-primary sean blancos
+                        $css .= ".btn-primary .fa, .btn-primary .edw-icon { color: #FFFFFF !important; }\n";
+                    }
+
+                    // 4. FOOTER
+                    if ($primaryColor) {
+                        $primaryDark = $this->darken_color($primaryColor, 10);
+                        $css .= "#page-footer { background-color: {$primaryDark} !important; }\n";
+                        $css .= "#top-footer { background-color: {$primaryColor} !important; color: #FFFFFF !important; }\n";
+                        $css .= "#top-footer h3 { color: #FFFFFF !important; }\n";
+                    }
+
+
+                    // 5. COLORES DE FONDO
+                    if ($mainColor) {
+                        $lightBg = $this->lighten_color($mainColor, 5);
+                        $css .= "body, #nav-drawer { background-color: {$mainColor} !important; }\n";
+                        $css .= "#page-content { background-color: {$mainColor} !important; }\n";
+                        $css .= "#block-region-side-pre > section > .card-body { background-color: {$lightBg} !important; }\n";
+                    }
+                    // Incluir estilos personalizados de la empresa si existen
+                    if (!empty($company->customcss)) {
+                        $css .= "\n/* Custom Company CSS */\n";
+                        $css .= $company->customcss . "\n";
+                    }
+                }
+            } catch (\Exception $e) {
+                // Silencioso en caso de error
+                if (debugging()) {
+                    $css .= "/* Error al obtener colores IOMAD: " . $e->getMessage() . " */\n";
+                }
+            }
+
+            if (!empty($css)) {
+                $output .= '<style>' . $css . '</style>';
+            }
+        }
+
+        return $output;
     }
 
     /**
@@ -87,22 +283,35 @@ class core_renderer extends \theme_remui\output\core_renderer
      * @return string
      */
     public function standard_footer_html() {
-        global $USER;
+        global $CFG, $USER;
 
-        // Footer principal heredado de theme_remui
         $output = parent::standard_footer_html();
+        $theme = $this->get_theme_config();
 
-        // Carga la configuración del tema clickpoint
-        $theme = theme_config::load('clickpoint');
-
-        // 1) Widget de chat
-        if (!empty($theme->settings->enable_chat)) {
+        // Add chat widget if enabled and user is logged in
+        if (!empty($this->page->theme->settings->enable_chat) && isloggedin()) {
             $output .= $this->add_chat_widget();
         }
 
-        // 2) Prevención de Copy/Paste
-        if (!empty($theme->settings->copypaste_prevention)) {
+        // Add accessibility widget only if enabled and user is logged in
+        if (isloggedin() && !empty($this->page->theme->settings->accessibility_widget)) {
+            $output .= '<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>';
+            debugging('Accessibility widget loaded for user ID: ' . $USER->id, DEBUG_DEVELOPER);
+        }
+
+        // Add copy paste prevention if enabled
+        if (!empty($this->page->theme->settings->copypaste_prevention)) {
             $this->add_copy_paste_prevention();
+        }
+
+        // Check if about text should be hidden
+        if (isset($this->page->theme->settings->hideabouttext) && 
+            $this->page->theme->settings->hideabouttext == 1) {
+            $output .= '<style>
+                body section#top-footer { 
+                    display: none !important; 
+                }
+            </style>';
         }
 
         return $output;
@@ -113,7 +322,8 @@ class core_renderer extends \theme_remui\output\core_renderer
      *
      * @return string
      */
-    public function full_header() {
+    public function full_header()
+    {
         global $CFG, $USER, $PAGE;
 
         $theme = theme_config::load('clickpoint');
@@ -138,7 +348,7 @@ class core_renderer extends \theme_remui\output\core_renderer
         // Recordatorio para admin, si el aviso está en modo 'off'
         if (is_siteadmin() && (!empty($theme->settings->generalnoticemode) && $theme->settings->generalnoticemode === 'off')) {
             $output .= '<div class="alert mt-4"><a href="' . $CFG->wwwroot . '/admin/settings.php?section=themesettingclickpoint#theme_clickpoint">' .
-                       '<strong><i class="fa fa-edit"></i></strong> ' . get_string('generalnotice_create', 'theme_clickpoint') . '</a></div>';
+                '<strong><i class="fa fa-edit"></i></strong> ' . get_string('generalnotice_create', 'theme_clickpoint') . '</a></div>';
         }
 
         // Validación de URL (por ejemplo, para sitios de prueba)
@@ -159,51 +369,43 @@ class core_renderer extends \theme_remui\output\core_renderer
      */
     protected function add_chat_widget() {
         global $USER;
-
-        $theme = theme_config::load('clickpoint');
-        // Si el usuario no ha iniciado sesión o no tenemos URL del chat, no hacemos nada
-        if (!isloggedin() || empty($theme->settings->tawkto_embed_url)) {
+        
+        if (empty($this->page->theme->settings->tawkto_embed_url)) {
             return '';
         }
 
-        // Insertamos el script de Tawk.to (u otro) con datos del usuario
-        $script = "
-        <!--Start of Chat Script-->
+        // Sanitize user data
+        $userData = [
+            'name' => clean_param($USER->firstname . " " . $USER->lastname, PARAM_TEXT),
+            'email' => clean_param($USER->email, PARAM_EMAIL),
+            'username' => clean_param($USER->username, PARAM_USERNAME),
+            'idnumber' => clean_param($USER->idnumber, PARAM_TEXT)
+        ];
+
+        return "<!--Start of Chat Script-->
         <script type=\"text/javascript\">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        Tawk_API.visitor = {
-            name  : '" . fullname($USER) . "',
-            email : '" . $USER->email . "',
-            username : '" . $USER->username . "',
-            idnumber : '" . $USER->idnumber . "'
-        };
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        Tawk_API.visitor = " . json_encode($userData) . ";
         Tawk_API.onLoad = function(){
-            Tawk_API.setAttributes({
-                name  : '" . fullname($USER) . "',
-                email : '" . $USER->email . "',
-                username : '" . $USER->username . "',
-                idnumber : '" . $USER->idnumber . "'
-            }, function(error){});
+            Tawk_API.setAttributes(" . json_encode($userData) . ", function(error){});
         };
         (function(){
-            var s1 = document.createElement(\"script\"), s0 = document.getElementsByTagName(\"script\")[0];
-            s1.async = true;
-            s1.src = '" . $theme->settings->tawkto_embed_url . "';
-            s1.charset = 'UTF-8';
+            var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];
+            s1.async=true;
+            s1.src='" . clean_param($this->page->theme->settings->tawkto_embed_url, PARAM_URL) . "';
+            s1.charset='UTF-8';
             s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1, s0);
+            s0.parentNode.insertBefore(s1,s0);
         })();
         </script>
-        <!--End of Chat Script-->
-        ";
-
-        return $script;
+        <!--End of Chat Script-->";
     }
 
     /**
      * Agrega la lógica de prevención de Copy/Paste para roles específicos.
      */
-    protected function add_copy_paste_prevention() {
+    protected function add_copy_paste_prevention()
+    {
         global $USER, $PAGE, $COURSE;
 
         $theme = theme_config::load('clickpoint');
@@ -266,7 +468,8 @@ class core_renderer extends \theme_remui\output\core_renderer
      * @param string $popup_id Un ID único para el div
      * @return string
      */
-    protected function show_unauthorized_access_overlay($popup_id) {
+    protected function show_unauthorized_access_overlay($popup_id)
+    {
         $output = '';
         $output .= '<style>
             #' . $popup_id . ' {
@@ -325,19 +528,68 @@ class core_renderer extends \theme_remui\output\core_renderer
      * Comprueba si la URL actual está en la lista de URLs permitidas.
      * @return bool True si la URL está permitida, False en caso contrario.
      */
-    protected function check_allowed_urls() {
+    protected function check_allowed_urls()
+    {
         global $CFG;
         $allowed_urls = [
-            'https://clickpoint.moodlesoporte.net',
-            'http://clickpoint.moodlesoporte.net',
-            'https://aulavirtual.clickpoint.edu.co',
-            'http://aulavirtual.clickpoint.edu.co',
-            'https://moodle45.localhost.com',
-            'http://moodle45.localhost.com',
-            'https://demomoodle.ingeweb.co',
-            'http://demomoodle.ingeweb.co'
+            'https://clickpoint.orioncloud.com.co',
+            'http://clickpoint.orioncloud.com.co',
+            'https://iomad.orioncloud.com.co',
+            'http://iomad.orioncloud.com.co',
+            'https://iomad.localhost.com',
+            'http://iomad.localhost.com'
         ];
 
         return in_array($CFG->wwwroot, $allowed_urls);
+    }
+
+    /**
+     * Oscurecer un color en formato hexadecimal
+     *
+     * @param string $hex Color en formato hexadecimal
+     * @param int $percent Porcentaje de oscurecimiento
+     * @return string Color oscurecido en formato hexadecimal
+     */
+    private function darken_color($hex, $percent)
+    {
+        return $this->adjust_brightness($hex, -$percent);
+    }
+
+    /**
+     * Aclarar un color en formato hexadecimal
+     *
+     * @param string $hex Color en formato hexadecimal
+     * @param int $percent Porcentaje de aclarado
+     * @return string Color aclarado en formato hexadecimal
+     */
+    private function lighten_color($hex, $percent)
+    {
+        return $this->adjust_brightness($hex, $percent);
+    }
+
+    /**
+     * Ajusta el brillo de un color hexadecimal
+     *
+     * @param string $hex Color en formato hexadecimal
+     * @param int $steps Pasos de brillo (positivo para aclarar, negativo para oscurecer)
+     * @return string Color ajustado en formato hexadecimal
+     */
+    private function adjust_brightness($hex, $steps)
+    {
+        // Elimina el # si existe
+        $hex = ltrim($hex, '#');
+
+        // Convierte a RGB
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+
+        // Ajusta el brillo
+        $r = max(0, min(255, $r + $steps * 2.55));
+        $g = max(0, min(255, $g + $steps * 2.55));
+        $b = max(0, min(255, $b + $steps * 2.55));
+
+        // Convierte de nuevo a hexadecimal
+        return '#' . sprintf('%02x%02x%02x', $r, $g, $b);
     }
 }
