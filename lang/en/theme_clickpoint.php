@@ -1,12 +1,12 @@
 <?php
-$string['pluginname'] = 'clickpoint';
-$string['choosereadme'] = 'IngeWeb is a theme created by Ing. Pablo A Pico (<a href="http://ingeweb.co/">IngeWeb</a>) exclusively for our customers.';
+$string['pluginname'] = 'ClickPoint';
+$string['choosereadme'] = 'ClickPoint is a theme created by Pedro Arias exclusively for our customers.';
 
-$string['configtitle'] = 'clickpoint';
+$string['configtitle'] = 'ClickPoint';
 
 $string['logo'] = 'Logo';
 
-$string['themesettings'] = 'Theme Settings clickpoint';
+$string['themesettings'] = 'Theme Settings ClickPoint';
 $string['themesettingsgeneral'] = 'General Settings';
 $string['contactinfo'] = 'Contact info';
 $string['abouttitle'] = 'About Title';
@@ -40,8 +40,8 @@ $string['copyrightdesc'] = 'About this website.';
 $string['customcss'] = 'Custom CSS';
 $string['customcssdesc'] = 'Whatever CSS rules you add to this area will be reflected in every page, making for easier customisation of this theme.';
 
-$string['themeinfotext'] = 'This theme was created for <strong>clickpoint</strong> by <a target="_blank" href="http://ingeweb.co/">IngeWeb - Soluciones para triunfar en Internet</a>.';
-$string['credit'] = 'Copyright © 2024 - All rights reserved';
+$string['themeinfotext'] = 'This theme was created for <strong>ClickPoint</strong> by <a target="_blank" href="https://orioncloud.com.co/">OrionCloud Solutions</a>.';
+$string['credit'] = 'Copyright © 2025 - All rights reserved';
 
 $string['showingonlycategorieswithenrolledcourses'] = 'Showing categories containing enrolled courses only';
 $string['nocoursestoshow'] = 'No courses to show were found';
@@ -76,11 +76,6 @@ $string['carousel'] = 'Image carousel';
 $string['loginsection'] = 'Login section';
 $string['previous'] = 'Go to the previous slide';
 $string['next'] = 'Go to the next slide';
-
-$string['slidetitle'] = 'Title for slide {$a}';
-$string['slidetitledesc'] = 'Enter the title for slide {$a}';
-$string['slideurl'] = 'Slide {$a} Button URL';
-$string['slideurldesc'] = 'Enter the URL for the button on slide {$a}. This URL will open in a new window.';
 
 // Existing authorization strings
 $string['unauthorized_access'] = 'Unauthorized Access';
@@ -150,17 +145,17 @@ $string['loginsettings'] = 'Login Settings';
 
 // Keep the default about text
 $string['abouttext_default'] = '<p style="text-align: center;"></p>
-    <p style="text-align: left;">
-    </p>
-    <p style="text-align: center;"><span style="font-family: inherit; font-size: 1rem; letter-spacing: 0rem; text-transform: inherit;"><b>IngeWeb - Solutions for Success on the Internet<br></b></span><span style="font-family: inherit; font-size: 1rem; letter-spacing: 0rem; text-transform: inherit;">Experts in Moodle, BigBlueButton, WordPress, and Joomla.<br></span><strong style="font-family: inherit; font-size: 1rem; letter-spacing: 0rem; text-transform: inherit;">www.ingeweb.co</strong></p>
-    <p></p>';
+<p style="text-align: left;">
+</p>
+<p style="text-align: center;"><span style="font-family: inherit; font-size: 1rem; letter-spacing: 0rem; text-transform: inherit;"><b>OrionCloud - Hosting que impulsa tu éxito</b></span><span style="font-family: inherit; font-size: 1rem; letter-spacing: 0rem; text-transform: inherit;"><br></span><strong style="font-family: inherit; font-size: 1rem; letter-spacing: 0rem; text-transform: inherit;">www.orioncloud.com.co</strong></p>
+<p></p>';
 
 $string['clickpointhelp'] = "Platform Help";
-$string['clickpointfeedback'] = "clickpoint Feedback";
-$string['clickpointsupport'] = "clickpoint Support";
+$string['clickpointfeedback'] = "ClickPoint Feedback";
+$string['clickpointsupport'] = "ClickPoint Support";
 
 $string['enrolleduserscountvisibilityhead'] = "Show 'Enrolled students' information";
 $string['enrolleduserscountvisibilitydesc'] = "Disable to hide the 'Enrolled students' information";
 
-$string['police_autorization']='Authorization for data processing in Collection Media';
-$string['police_autorization_help']='By completing this form, I authorize CAJA SANTANDEREANA DE SUBSIDIO FAMILIAR "clickpoint", located at CARRERA 27 # 61 – 78 PUERTA DEL SOL and with contact telephone number 6434444, to collect, store, use, circulate and/or delete my personal data in order to register for virtual courses and the other purposes incorporated in the Information Treatment Policy available at www.ca jasan.com, which I declare to know. Likewise, I know that as the owner I am assisted by the rights to know, update, rectify and delete my data and revoke the authorization.';
+// Add the missing string
+$string['defaultheader'] = 'Default Header';
