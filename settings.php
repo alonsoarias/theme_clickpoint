@@ -36,7 +36,7 @@ $ADMIN->add('appearance', new admin_category('theme_clickpoint', get_string('plu
 // Crear objeto de configuraciones con pestañas
 $asettings = new theme_clickpoint_admin_settingspage_tabs(
     'themesettingclickpoint',
-    get_string('configtitle', 'theme_clickpoint'),
+    get_string('themesettings', 'theme_clickpoint'),
     'moodle/site:config'
 );
 
@@ -173,11 +173,6 @@ if ($ADMIN->fulltree) {
     // Settings para cada slide
     $numslides = get_config('theme_clickpoint', 'loging_numberofslides') ?: 1;
     for ($i = 1; $i <= $numslides; $i++) {
-        // Título del slide
-        $name = 'theme_clickpoint/loging_slidetitle' . $i;
-        $title = get_string('slidetitle', 'theme_clickpoint', $i);
-        $description = get_string('slidetitle_desc', 'theme_clickpoint', $i);
-        $page->add(new admin_setting_configtext($name, $title, $description, ''));
 
         // Imagen del slide
         $name = 'theme_clickpoint/loging_slideimage' . $i;
@@ -189,12 +184,6 @@ if ($ADMIN->fulltree) {
         ]);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
-
-        // URL del slide
-        $name = 'theme_clickpoint/loging_slideurl' . $i;
-        $title = get_string('slideurl', 'theme_clickpoint', $i);
-        $description = get_string('slideurldesc', 'theme_clickpoint', $i);
-        $page->add(new admin_setting_configtext($name, $title, $description, ''));
     }
 
     // Intervalo del carrusel
