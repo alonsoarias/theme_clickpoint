@@ -212,7 +212,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_clickpoint/cp_show_personalareaheader';
     $title = get_string('show_personalareaheader', 'theme_clickpoint');
     $description = get_string('show_personalareaheaderdesc', 'theme_clickpoint');
-    $default = 1;
+    $default = 0;
     $choices = [
         0 => get_string('hide', 'theme_clickpoint'),
         1 => get_string('show', 'theme_clickpoint')
@@ -243,7 +243,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_clickpoint/cp_show_mycoursesheader';
     $title = get_string('show_mycoursesheader', 'theme_clickpoint');
     $description = get_string('show_mycoursesheaderdesc', 'theme_clickpoint');
-    $default = 1;
+    $default = 0;
     $choices = [
         0 => get_string('hide', 'theme_clickpoint'),
         1 => get_string('show', 'theme_clickpoint')
