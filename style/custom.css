@@ -1,18 +1,18 @@
 /* Footer Styles */
 .my-credit-footer-wrapper {
-    background-color: $color-lightgray;
-    color: $color-primary;
+    background-color: $my-gris;
+    color: $cp-dark-blue;
     font-size: 15px;
 }
 
 a.my-credit-link,
 a.my-credit-link:hover {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 
 #page-header.hasbackground.design-1 .header-main-section .category .badge {
     color: white;
-    background-color: $green;
+    background-color: $cp-medium-blue;
 }
 
 .position-absolute.w-100.h-100 {
@@ -34,14 +34,14 @@ div#navbarmenutopic {
 
 #page-footer .copyright {
     background-color: $my-gris; /* Reemplazado con $my-gris */
-    color: $color-primary;
+    color: $cp-dark-blue;
     text-align: center;
     min-height: inherit;
     margin-bottom: 0;
 }
 
 #top-footer {
-    background-color: $color-primary; /* Azul oscuro */
+    background-color: $cp-dark-blue; /* Azul oscuro */
     color: $color-white;
     margin: 0 -15px;
 }
@@ -66,24 +66,24 @@ div#navbarmenutopic {
 }
 
 .btn-link {
-    color: $color-secondary; /* Azul oscuro */
-    border-color: $color-primary;
+    color: $cp-light-orange; /* Naranja claro */
+    border-color: $cp-dark-blue;
 }
 
 .btn-link:hover {
-    color: $color-primary; /* Rojo */
-    border-color: $color-secondary;
+    color: $cp-dark-blue; /* Azul oscuro */
+    border-color: $cp-light-orange;
 }
 
 .btn-outline-primary {
-    color: $color-secondary;
-    border-color: $color-secondary;
+    color: $cp-light-orange;
+    border-color: $cp-light-orange;
 }
 
 .btn-outline-primary:hover {
     color: $color-white;
-    background-color: darken($color-secondary, 10%);
-    border-color: darken($color-secondary, 10%);
+    background-color: darken($cp-light-orange, 10%);
+    border-color: darken($cp-light-orange, 10%);
 }
 
 /* Badge Styles */
@@ -91,16 +91,16 @@ div#navbarmenutopic {
 .badge-info:hover,
 .badge-success,
 .badge-succes:hover {
-    color: $color-primary;
+    color: $cp-dark-blue;
     transition: background-color 0.3s;
 }
 
 .badge-info {
-    background-color: $purple;
+    background-color: $cp-medium-blue;
 }
 
 .badge-info:hover {
-    background-color: $color-primary;
+    background-color: $cp-dark-blue;
     color: $color-white;
 }
 
@@ -113,24 +113,23 @@ div#navbarmenutopic {
 }
 
 /* List and Link Styles */
-/* Eliminado: #course-category-listings .listitem[data-selected="1"] { ... } */
 
 .text-info,
 .users-list-name,
 #page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
-    color: $color-primary !important;
+    color: $cp-dark-blue !important;
 }
 
 /* Calendar Styles */
 .maincalendar .calendarmonth td.today .day-number-circle {
     color: $color-white;
-    background-color: $color-primary;
+    background-color: $cp-dark-blue;
 }
 
 /* Miscellaneous Styles */
 #page-footer .footer-container hr,
 .progress-bar {
-    background-color: $color-primary;
+    background-color: $cp-dark-blue;
     border-top: 1px solid $color-white;
 }
 
@@ -154,21 +153,21 @@ div#navbarmenutopic {
 }
 
 .form-autocomplete-suggestions li:hover {
-    background-color: $color-primary; /* Cambiado a $color-primary según botón */
+    background-color: $cp-dark-blue; /* Cambiado a $cp-dark-blue según botón */
     color: $color-white;
-    border-left: 4px solid $color-primary;
+    border-left: 4px solid $cp-dark-blue;
 }
 
 .form-autocomplete-suggestions li:focus {
-    background-color: $color-lightgray-dimmed; /* Definir o ajustar según necesidad */
-    color: $color-primary;
-    border-left: 4px solid $color-secondary-dark;
+    background-color: $my-gris; /* Definir o ajustar según necesidad */
+    color: $cp-dark-blue;
+    border-left: 4px solid $cp-light-orange;
 }
 
 .form-autocomplete-suggestions li[aria-selected="true"] {
-    background-color: $color-primary;
+    background-color: $cp-dark-blue;
     color: $color-white;
-    border-left: 4px solid $color-secondary;
+    border-left: 4px solid $cp-light-orange;
 }
 
 /* Navigation Styles */
@@ -181,7 +180,7 @@ div#navbarmenutopic {
         content: '';
         display: block;
         border-top: 8px solid transparent;
-        border-left: 10px solid $color-primary; /* Reemplazado con $color-primary */
+        border-left: 10px solid $cp-dark-blue;
         border-bottom: 8px solid transparent;
         position: absolute;
         top: 50%;
@@ -221,21 +220,21 @@ div#navbarmenutopic {
 .page-link,
 .page-link:hover,
 .page-item.active .page-link {
-    color: $color-primary;
+    color: $cp-dark-blue;
     text-decoration: none;
 }
 
 .page-link:hover {
     z-index: 2;
-    color: darken($color-primary, 10%);
+    color: darken($cp-dark-blue, 10%);
     background-color: #e9ecef;
     border-color: #d5ddea;
 }
 
 .page-item.active .page-link {
     color: $color-white;
-    background-color: $color-primary;
-    border-color: $color-primary;
+    background-color: $cp-dark-blue;
+    border-color: $cp-dark-blue;
 }
 
 /* Floating Buttons */
@@ -267,7 +266,7 @@ div#navbarmenutopic {
 #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
     padding: 10px 24px;
     color: #ffffff;
-    background-color: $color-primary; /* Aplicado $color-primary */
+    background-color: $cp-dark-blue;
     border-radius: 0;
     justify-content: space-between;
 }
@@ -276,95 +275,95 @@ div#navbarmenutopic {
 
 /* Primary button styling */
 .btn-primary {
-    background-color: $color-secondary; // Rojo para el fondo
-    border-color: $color-secondary; // Rojo para el borde
-    color: #ffffff; // Blanco para el texto
+    background-color: $cp-orange;
+    border-color: $cp-orange;
+    color: #ffffff;
 
     .fa,
     .edw-icon {
-        color: #ffffff; // Blanco para los iconos
+        color: #ffffff;
     }
 
     &:hover {
-        background-color: $color-primary; // Azul oscuro en hover
-        border-color: $color-primary; // Azul oscuro para el borde en hover
-        color: #ffffff; // Blanco para el texto en hover
+        background-color: $cp-dark-blue;
+        border-color: $cp-dark-blue;
+        color: #ffffff;
     }
 
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: $color-secondary; // Rojo en activo
-        border-color: $color-secondary; // Rojo en activo
-        color: #ffffff; // Blanco en activo
+        background-color: $cp-orange;
+        border-color: $cp-orange;
+        color: #ffffff;
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
-        background-color: $color-primary; // Azul oscuro en foco
-        border-color: $color-primary; // Azul oscuro en foco
-        color: #ffffff; // Blanco en foco
+        background-color: $cp-dark-blue;
+        border-color: $cp-dark-blue;
+        color: #ffffff;
     }
 }
 
 /* Secondary button styling */
 .btn-secondary {
-    background-color: $color-primary; // Azul oscuro para el fondo
-    border-color: $color-primary; // Azul oscuro para el borde
-    color: #ffffff; // Blanco para el texto
+    background-color: $cp-dark-blue;
+    border-color: $cp-dark-blue;
+    color: #ffffff;
 
     .fa,
     .edw-icon {
-        color: #ffffff; // Blanco para los iconos
+        color: #ffffff;
     }
 
     &:hover {
-        background-color: $color-secondary; // Rojo en hover
-        border-color: $color-secondary; // Rojo en hover
-        color: #ffffff; // Blanco para el texto en hover
+        background-color: $cp-light-orange;
+        border-color: $cp-light-orange;
+        color: #ffffff;
     }
 
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: $color-primary; // Azul oscuro en activo
-        border-color: $color-primary; // Azul oscuro en activo
-        color: #ffffff; // Blanco en activo
+        background-color: $cp-dark-blue;
+        border-color: $cp-dark-blue;
+        color: #ffffff;
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
-        background-color: $color-secondary; // Rojo en foco
-        border-color: $color-secondary; // Rojo en foco
-        color: #ffffff; // Blanco en foco
+        background-color: $cp-light-orange;
+        border-color: $cp-light-orange;
+        color: #ffffff;
     }
 }
 
 /* Botones Específicos */
 button.btn.btn-primary.icon-no-margin.p-0 {
-    background-color: $color-secondary; // Rojo para el fondo
-    border-color: white; // Color blanco para el borde
-    color: white; // Color del texto
+    background-color: $cp-orange;
+    border-color: white;
+    color: white;
 
     &:hover {
-        background-color: $color-secondary; // Rojo para el fondo en hover
-        border-color: white; // Mantiene el borde blanco en hover
-        color: white !important; // Color del texto en hover
+        background-color: $cp-orange;
+        border-color: white;
+        color: white !important;
     }
 
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: darken($color-secondary, 10%); // Oscurece el color secundario para el estado activo
-        border-color: white; // Mantiene el borde blanco para el estado activo
-        color: white; // Mantiene el texto blanco para mejor visibilidad
+        background-color: darken($cp-orange, 10%);
+        border-color: white;
+        color: white;
 
         .fa,
         .edw-icon {
-            color: white; // Mantiene el color de los íconos en blanco
+            color: white;
         }
     }
 }
@@ -379,65 +378,24 @@ button.btn.btn-primary.icon-no-margin.p-0 {
 }
 
 .navbar .edw-icon{
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
-/* Personalizaciones Próximos Eventos */
 
+/* Personalizaciones Próximos Eventos */
 .block_calendar_upcoming .event {
     border-left: 2px solid #ccc;
     padding-left: 5px;
 }
 
 .block_calendar_upcoming .event.my-event-urgent {
-    border-color: #f51f25;
+    border-color: $cp-orange;
 }
 
 .block_calendar_upcoming .event.my-event-priority {
-    border-color: #f89406;
+    border-color: $cp-light-orange;
 }
 
 /* END Personalizaciones Próximos Eventos */
-
-/* Responsive rules */
-
-/* Para tablets y desktops pequeños */
-@media (min-width: 768px) {
-}
-
-/* Para pantallas un poco más grandes que tablets */
-@media (min-width: 800px) {
-}
-
-/* Para desktops grandes */
-@media (min-width: 1200px) {
-}
-
-/* Estilos para dispositivos con un ancho máximo de 993px y una altura mínima de 640px */
-@media (max-width: 993px) {
-    @media (min-height: 640px) {
-    }
-}
-
-/* Para dispositivos móviles (tablets y teléfonos en posición horizontal) */
-@media (max-width: 767px) {
-}
-
-/* Para pantallas pequeñas */
-@media (max-width: 639px) {
-}
-
-/* Para dispositivos aún más pequeños */
-@media (max-width: 576px) {
-}
-
-/* Para teléfonos muy pequeños */
-@media (max-width: 500px) {
-}
-
-/* Para los teléfonos más pequeños */
-@media (max-width: 479px) {
-}
-
 
 /* Estilos base para la página de login */
 .login-page {
@@ -484,7 +442,6 @@ button.btn.btn-primary.icon-no-margin.p-0 {
             font-size: 0.95rem;
         }
     }
-
 }
 
 .login-wrapper{
@@ -515,36 +472,8 @@ button.btn.btn-primary.icon-no-margin.p-0 {
     }
 }
 
-/* Media queries para responsividad */
-@media (max-width: 991.98px) {
-    .loginform {
-        margin: 5%;
-        padding: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .loginform {
-        .login-welcome-wrapper h2 {
-            font-size: 1.25rem;
-        }
-    }
-}
-
-@media (max-width: 480px) {
-    .loginform {
-        margin: 1rem;
-        padding: 1rem;
-
-        .login-logo img {
-            max-width: 150px;
-        }
-    }
-}
-
-
 .carousel-item img {
-    object-fit: cover; /* Ya está en tu código */
+    object-fit: cover;
     width: 100%;
     height: 100vh;
     max-height: 1080px; /* Para evitar estiramiento excesivo en pantallas muy altas */
@@ -571,4 +500,251 @@ span.badge.bg-secondary.text-dark {
 }
 .login-logo img.mb-3.img-fluid {
     width: 50%;
+}
+
+/* ============================================================
+   MODO OSCURO - ADAPTACIÓN PARA REMUI
+   ============================================================ */
+
+/* Estilos personalizados para modo oscuro en RemUI */
+body.dark-mode {
+    /* Footer */
+    .my-credit-footer-wrapper {
+        background-color: $my-gris-dm;
+        color: $text-color-dm;
+    }
+    
+    a.my-credit-link,
+    a.my-credit-link:hover {
+        color: $text-color-dm;
+    }
+    
+    #page-header.hasbackground.design-1 .header-main-section .category .badge {
+        background-color: $cp-medium-blue-dm;
+    }
+    
+    .position-absolute.w-100.h-100 {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) -5%, rgba(0, 0, 0, 0.2) 120%) !important;
+    }
+    
+    #page-footer .copyright {
+        background-color: $my-gris-dm;
+        color: $text-color-dm;
+    }
+    
+    #top-footer {
+        background-color: $cp-dark-blue-dm;
+    }
+    
+    /* Botones */
+    .btn-link {
+        color: $cp-light-orange-dm;
+        border-color: $cp-dark-blue-dm;
+        background-color: $card-bg-dm;
+    }
+    
+    .btn-link:hover {
+        color: $text-color-dm;
+        border-color: $cp-light-orange-dm;
+        background-color: lighten($card-bg-dm, 5%);
+    }
+    
+    .btn-outline-primary {
+        color: $cp-light-orange-dm;
+        border-color: $cp-light-orange-dm;
+        background-color: transparent;
+    }
+    
+    .btn-outline-primary:hover {
+        color: $text-color-dm;
+        background-color: $cp-light-orange-dm;
+        border-color: $cp-light-orange-dm;
+    }
+    
+    /* Enlaces y navegación */
+    .text-info,
+    .users-list-name,
+    #page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
+        color: lighten($cp-medium-blue-dm, 15%) !important;
+    }
+    
+    .nav-pills-custom .nav-link::before {
+        border-left-color: $cp-dark-blue-dm;
+    }
+    
+    /* Calendario */
+    .maincalendar .calendarmonth td.today .day-number-circle {
+        background-color: $cp-dark-blue-dm;
+    }
+    
+    /* Otros elementos */
+    #page-footer .footer-container hr,
+    .progress-bar {
+        background-color: $cp-dark-blue-dm;
+        border-top-color: $border-color-dm;
+    }
+    
+    .about-text-content {
+        color: $text-color-dm;
+    }
+    
+    /* Autocompletado */
+    .form-autocomplete-suggestions {
+        background-color: $card-bg-dm;
+        border-color: $border-color-dm;
+    }
+    
+    .form-autocomplete-suggestions li {
+        color: $text-color-dm;
+    }
+    
+    .form-autocomplete-suggestions li:hover {
+        background-color: $cp-dark-blue-dm;
+        border-left-color: $cp-dark-blue-dm;
+    }
+    
+    .form-autocomplete-suggestions li:focus {
+        background-color: $my-gris-dm;
+        color: $text-color-dm;
+        border-left-color: $cp-light-orange-dm;
+    }
+    
+    .form-autocomplete-suggestions li[aria-selected="true"] {
+        background-color: $cp-dark-blue-dm;
+        border-left-color: $cp-light-orange-dm;
+    }
+    
+    /* Paginación */
+    .page-link {
+        background-color: $card-bg-dm;
+        border-color: $border-color-dm;
+        color: $text-color-dm;
+    }
+    
+    .page-link:hover {
+        background-color: lighten($card-bg-dm, 5%);
+        color: $cp-light-orange-dm;
+    }
+    
+    .page-item.active .page-link {
+        background-color: $cp-dark-blue-dm;
+        border-color: $cp-dark-blue-dm;
+    }
+    
+    /* Botones flotantes */
+    .floating-buttons-wrapper > .btn-floating {
+        background-color: $cp-dark-blue-dm;
+        color: $text-color-dm;
+    }
+    
+    /* Modo oscuro en login */
+    .login-page {
+        --color-bg-page: $body-bg-dm;
+        --color-text-primary: $text-color-dm;
+        --color-text-secondary: darken($text-color-dm, 15%);
+        --color-footer-bg: $my-gris-dm;
+    }
+    
+    .loginform {
+        background-color: $card-bg-dm;
+        
+        input, button {
+            background-color: $input-bg-dm;
+            color: $text-color-dm;
+            border-color: $border-color-dm;
+        }
+    }
+    
+    /* Badges */
+    .badge-info {
+        background-color: $cp-medium-blue-dm;
+        color: $text-color-dm;
+    }
+    
+    .badge-info:hover {
+        background-color: lighten($cp-medium-blue-dm, 10%);
+    }
+    
+    .badge-success {
+        background-color: $success-color-dm;
+    }
+    
+    span.badge.badge-info, 
+    span.badge.rounded-pill.bg-secondary.text-dark,
+    span.badge.bg-secondary.text-dark {
+        color: $text-color-dm !important;
+        background-color: $cp-medium-blue-dm !important;
+    }
+    
+    /* Eventos */
+    .block_calendar_upcoming .event {
+        border-left-color: $border-color-dm;
+    }
+    
+    .block_calendar_upcoming .event.my-event-urgent {
+        border-color: $cp-orange-dm;
+    }
+    
+    .block_calendar_upcoming .event.my-event-priority {
+        border-color: $cp-light-orange-dm;
+    }
+    
+    /* Course index */
+    #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
+        background-color: $cp-dark-blue-dm;
+    }
+    
+    /* Bloques laterales con los nuevos colores para modo oscuro */
+    #block-region-side-pre > section:nth-of-type(7n) > .card-header {
+        background-color: $block-region-side-pre-7-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 1) > .card-header {
+        background-color: $block-region-side-pre-1-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 2) > .card-header {
+        background-color: $block-region-side-pre-2-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 3) > .card-header {
+        background-color: $block-region-side-pre-3-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 4) > .card-header {
+        background-color: $block-region-side-pre-4-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 5) > .card-header {
+        background-color: $block-region-side-pre-5-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 6) > .card-header {
+        background-color: $block-region-side-pre-6-dm;
+    }
+    
+    #block-region-side-pre > section > .card-body {
+        background-color: darken($card-bg-dm, 3%);
+    }
+}
+
+/* Media queries */
+@media (max-width: 991.98px) {
+    .loginform {
+        margin: 5%;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body.dark-mode .loginform .login-welcome-wrapper h2 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body.dark-mode .loginform {
+        margin: 1rem;
+        padding: 1rem;
+    }
 }
