@@ -110,7 +110,7 @@ function theme_clickpoint_set_extra_img($theme) {
 }
 
 /**
- * Serves any files associated with the theme settings.
+ * Serve any files associated with the theme settings.
  *
  * @param stdClass $course
  * @param stdClass $cm
@@ -140,8 +140,8 @@ function theme_clickpoint_pluginfile($course, $cm, $context, $filearea, $args, $
     if ($context->contextlevel == CONTEXT_SYSTEM) {
         // Áreas válidas fijas.
         $validfileareas = [
-            'personalareaheader',
-            'mycoursesheader'
+            'cp_personalareaheader',
+            'cp_mycoursesheader'
         ];
         
         // Si el área es una de las válidas, se sirve el archivo.
@@ -149,11 +149,11 @@ function theme_clickpoint_pluginfile($course, $cm, $context, $filearea, $args, $
             return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
         }
         
-        // Si el área corresponde a una imagen del slider (usando el prefijo "loging_"),
+        // Si el área corresponde a una imagen del slider (usando el prefijo "cp_loging_"), 
         // se procesa para extraer el número y servir el archivo.
-        if (strpos($filearea, 'loging_slideimage') === 0) {
-            $slide_number = substr($filearea, strlen('loging_slideimage'));
-            return $theme->setting_file_serve("loging_slideimage{$slide_number}", $args, $forcedownload, $options);
+        if (strpos($filearea, 'cp_loging_slideimage') === 0) {
+            $slide_number = substr($filearea, strlen('cp_loging_slideimage'));
+            return $theme->setting_file_serve("cp_loging_slideimage{$slide_number}", $args, $forcedownload, $options);
         }
     }
 
