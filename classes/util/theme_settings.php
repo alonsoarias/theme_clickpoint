@@ -35,8 +35,8 @@ class settings {
         $templatecontext['my_credit'] = get_string('credit', 'theme_clickpoint');
 
         // Retrieve 'abouttext' from the theme settings or use a default value if not set.
-        $templatecontext['abouttitle'] = !empty($this->page->theme->settings->abouttext) ? $this->page->theme->settings->abouttext : get_string('abouttitle_default', 'theme_clickpoint');
-        $templatecontext['abouttext'] = !empty($this->page->theme->settings->abouttext) ? $this->page->theme->settings->abouttext : get_string('abouttext_default', 'theme_clickpoint');
+        $templatecontext['abouttitle'] = !empty($this->page->theme->settings->cp_abouttitle) ? $this->page->theme->settings->cp_abouttitle : get_string('abouttitle_default', 'theme_clickpoint');
+        $templatecontext['abouttext'] = !empty($this->page->theme->settings->cp_abouttext) ? $this->page->theme->settings->cp_abouttext : get_string('abouttext_default', 'theme_clickpoint');
 
         return $templatecontext;
     }
@@ -53,11 +53,11 @@ class settings {
         $templatecontext = [];
 
         // Check if personal area header should be shown
-        $showheader = !empty($this->page->theme->settings->showpersonalareaheader) && 
-            $this->page->theme->settings->showpersonalareaheader == '1';
+        $showheader = !empty($this->page->theme->settings->cp_show_personalareaheader) && 
+            $this->page->theme->settings->cp_show_personalareaheader == '1';
         
         if ($showheader) {
-            $personalareaheader = $this->theme->setting_file_url('personalareaheader', 'personalareaheader');
+            $personalareaheader = $this->theme->setting_file_url('cp_personalareaheader', 'cp_personalareaheader');
             if (!empty($personalareaheader)) {
                 $templatecontext['headerimage'] = [
                     'url' => $personalareaheader,
@@ -92,11 +92,11 @@ class settings {
         $templatecontext = [];
 
         // Check if my courses header should be shown
-        $showheader = !empty($this->page->theme->settings->showmycoursesheader) && 
-            $this->page->theme->settings->showmycoursesheader == '1';
+        $showheader = !empty($this->page->theme->settings->cp_show_mycoursesheader) && 
+            $this->page->theme->settings->cp_show_mycoursesheader == '1';
         
         if ($showheader) {
-            $mycoursesheader = $this->theme->setting_file_url('mycoursesheader', 'mycoursesheader');
+            $mycoursesheader = $this->theme->setting_file_url('cp_mycoursesheader', 'cp_mycoursesheader');
             if (!empty($mycoursesheader)) {
                 $templatecontext['headerimage'] = [
                     'url' => $mycoursesheader,
