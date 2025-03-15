@@ -1,13 +1,13 @@
 /* Footer Styles */
 .my-credit-footer-wrapper {
     background-color: $my-gris;
-    color: $cp-dark-blue;
+    color: $cp-primary;
     font-size: 15px;
 }
 
 a.my-credit-link,
 a.my-credit-link:hover {
-    color: $cp-dark-blue;
+    color: $cp-primary;
 }
 
 #page-header.hasbackground.design-1 .header-main-section .category .badge {
@@ -34,14 +34,14 @@ div#navbarmenutopic {
 
 #page-footer .copyright {
     background-color: $my-gris; /* Reemplazado con $my-gris */
-    color: $cp-dark-blue;
+    color: $cp-primary;
     text-align: center;
     min-height: inherit;
     margin-bottom: 0;
 }
 
 #top-footer {
-    background-color: $cp-dark-blue; /* Azul oscuro */
+    background-color: $cp-primary; /* Azul oscuro */
     color: $color-white;
     margin: 0 -15px;
 }
@@ -66,24 +66,24 @@ div#navbarmenutopic {
 }
 
 .btn-link {
-    color: $cp-light-orange; /* Naranja claro */
-    border-color: $cp-dark-blue;
+    color: $cp-tertiary; /* Naranja claro */
+    border-color: $cp-primary;
 }
 
 .btn-link:hover {
-    color: $cp-dark-blue; /* Azul oscuro */
-    border-color: $cp-light-orange;
+    color: $cp-primary; /* Azul oscuro */
+    border-color: $cp-tertiary;
 }
 
 .btn-outline-primary {
-    color: $cp-light-orange;
-    border-color: $cp-light-orange;
+    color: $cp-tertiary;
+    border-color: $cp-tertiary;
 }
 
 .btn-outline-primary:hover {
     color: $color-white;
-    background-color: darken($cp-light-orange, 10%);
-    border-color: darken($cp-light-orange, 10%);
+    background-color: darken($cp-tertiary, 10%);
+    border-color: darken($cp-tertiary, 10%);
 }
 
 /* Badge Styles */
@@ -91,7 +91,7 @@ div#navbarmenutopic {
 .badge-info:hover,
 .badge-success,
 .badge-succes:hover {
-    color: $cp-dark-blue;
+    color: $cp-primary;
     transition: background-color 0.3s;
 }
 
@@ -100,16 +100,16 @@ div#navbarmenutopic {
 }
 
 .badge-info:hover {
-    background-color: $cp-dark-blue;
+    background-color: $cp-primary;
     color: $color-white;
 }
 
 .badge-success {
-    background-color: $green;
+    background-color: $cp-success;
 }
 
 .badge-succes:hover {
-    background-color: darken($green, 10%);
+    background-color: darken($cp-success, 10%);
 }
 
 /* List and Link Styles */
@@ -117,19 +117,19 @@ div#navbarmenutopic {
 .text-info,
 .users-list-name,
 #page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
-    color: $cp-dark-blue !important;
+    color: $cp-primary !important;
 }
 
 /* Calendar Styles */
 .maincalendar .calendarmonth td.today .day-number-circle {
     color: $color-white;
-    background-color: $cp-dark-blue;
+    background-color: $cp-primary;
 }
 
 /* Miscellaneous Styles */
 #page-footer .footer-container hr,
 .progress-bar {
-    background-color: $cp-dark-blue;
+    background-color: $cp-primary;
     border-top: 1px solid $color-white;
 }
 
@@ -153,21 +153,21 @@ div#navbarmenutopic {
 }
 
 .form-autocomplete-suggestions li:hover {
-    background-color: $cp-dark-blue; /* Cambiado a $cp-dark-blue según botón */
+    background-color: $cp-primary; /* Cambiado a $cp-primary según botón */
     color: $color-white;
-    border-left: 4px solid $cp-dark-blue;
+    border-left: 4px solid $cp-primary;
 }
 
 .form-autocomplete-suggestions li:focus {
     background-color: $my-gris; /* Definir o ajustar según necesidad */
-    color: $cp-dark-blue;
-    border-left: 4px solid $cp-light-orange;
+    color: $cp-primary;
+    border-left: 4px solid $cp-tertiary;
 }
 
 .form-autocomplete-suggestions li[aria-selected="true"] {
-    background-color: $cp-dark-blue;
+    background-color: $cp-primary;
     color: $color-white;
-    border-left: 4px solid $cp-light-orange;
+    border-left: 4px solid $cp-tertiary;
 }
 
 /* Navigation Styles */
@@ -180,7 +180,7 @@ div#navbarmenutopic {
         content: '';
         display: block;
         border-top: 8px solid transparent;
-        border-left: 10px solid $cp-dark-blue;
+        border-left: 10px solid $cp-primary;
         border-bottom: 8px solid transparent;
         position: absolute;
         top: 50%;
@@ -220,21 +220,21 @@ div#navbarmenutopic {
 .page-link,
 .page-link:hover,
 .page-item.active .page-link {
-    color: $cp-dark-blue;
+    color: $cp-primary;
     text-decoration: none;
 }
 
 .page-link:hover {
     z-index: 2;
-    color: darken($cp-dark-blue, 10%);
+    color: darken($cp-primary, 10%);
     background-color: #e9ecef;
     border-color: #d5ddea;
 }
 
 .page-item.active .page-link {
     color: $color-white;
-    background-color: $cp-dark-blue;
-    border-color: $cp-dark-blue;
+    background-color: $cp-primary;
+    border-color: $cp-primary;
 }
 
 /* Floating Buttons */
@@ -266,7 +266,7 @@ div#navbarmenutopic {
 #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
     padding: 10px 24px;
     color: #ffffff;
-    background-color: $cp-dark-blue;
+    background-color: $cp-primary;
     border-radius: 0;
     justify-content: space-between;
 }
@@ -275,8 +275,8 @@ div#navbarmenutopic {
 
 /* Primary button styling */
 .btn-primary {
-    background-color: $cp-orange;
-    border-color: $cp-orange;
+    background-color: $cp-secondary;
+    border-color: $cp-secondary;
     color: #ffffff;
 
     .fa,
@@ -285,8 +285,8 @@ div#navbarmenutopic {
     }
 
     &:hover {
-        background-color: $cp-dark-blue;
-        border-color: $cp-dark-blue;
+        background-color: $cp-primary;
+        border-color: $cp-primary;
         color: #ffffff;
     }
 
@@ -294,23 +294,23 @@ div#navbarmenutopic {
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: $cp-orange;
-        border-color: $cp-orange;
+        background-color: $cp-secondary;
+        border-color: $cp-secondary;
         color: #ffffff;
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
-        background-color: $cp-dark-blue;
-        border-color: $cp-dark-blue;
+        background-color: $cp-primary;
+        border-color: $cp-primary;
         color: #ffffff;
     }
 }
 
 /* Secondary button styling */
 .btn-secondary {
-    background-color: $cp-dark-blue;
-    border-color: $cp-dark-blue;
+    background-color: $cp-primary;
+    border-color: $cp-primary;
     color: #ffffff;
 
     .fa,
@@ -319,8 +319,8 @@ div#navbarmenutopic {
     }
 
     &:hover {
-        background-color: $cp-light-orange;
-        border-color: $cp-light-orange;
+        background-color: $cp-tertiary;
+        border-color: $cp-tertiary;
         color: #ffffff;
     }
 
@@ -328,27 +328,27 @@ div#navbarmenutopic {
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: $cp-dark-blue;
-        border-color: $cp-dark-blue;
+        background-color: $cp-primary;
+        border-color: $cp-primary;
         color: #ffffff;
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
-        background-color: $cp-light-orange;
-        border-color: $cp-light-orange;
+        background-color: $cp-tertiary;
+        border-color: $cp-tertiary;
         color: #ffffff;
     }
 }
 
 /* Botones Específicos */
 button.btn.btn-primary.icon-no-margin.p-0 {
-    background-color: $cp-orange;
+    background-color: $cp-secondary;
     border-color: white;
     color: white;
 
     &:hover {
-        background-color: $cp-orange;
+        background-color: $cp-secondary;
         border-color: white;
         color: white !important;
     }
@@ -357,7 +357,7 @@ button.btn.btn-primary.icon-no-margin.p-0 {
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: darken($cp-orange, 10%);
+        background-color: darken($cp-secondary, 10%);
         border-color: white;
         color: white;
 
@@ -378,7 +378,7 @@ button.btn.btn-primary.icon-no-margin.p-0 {
 }
 
 .navbar .edw-icon{
-    color: $cp-dark-blue;
+    color: $cp-primary;
 }
 
 /* Personalizaciones Próximos Eventos */
@@ -388,11 +388,11 @@ button.btn.btn-primary.icon-no-margin.p-0 {
 }
 
 .block_calendar_upcoming .event.my-event-urgent {
-    border-color: $cp-orange;
+    border-color: $cp-secondary;
 }
 
 .block_calendar_upcoming .event.my-event-priority {
-    border-color: $cp-light-orange;
+    border-color: $cp-tertiary;
 }
 
 /* END Personalizaciones Próximos Eventos */
@@ -511,16 +511,16 @@ body.dark-mode {
     /* Footer */
     .my-credit-footer-wrapper {
         background-color: $my-gris-dm;
-        color: $text-color-dm;
+        color: $cp-dm-text;
     }
     
     a.my-credit-link,
     a.my-credit-link:hover {
-        color: $text-color-dm;
+        color: $cp-dm-text;
     }
     
     #page-header.hasbackground.design-1 .header-main-section .category .badge {
-        background-color: $cp-medium-blue-dm;
+        background-color: $cp-dm-medium-blue;
     }
     
     .position-absolute.w-100.h-100 {
@@ -529,202 +529,202 @@ body.dark-mode {
     
     #page-footer .copyright {
         background-color: $my-gris-dm;
-        color: $text-color-dm;
+        color: $cp-dm-text;
     }
     
     #top-footer {
-        background-color: $cp-dark-blue-dm;
+        background-color: $cp-dm-primary;
     }
     
     /* Botones */
     .btn-link {
-        color: $cp-light-orange-dm;
-        border-color: $cp-dark-blue-dm;
-        background-color: $card-bg-dm;
+        color: $cp-dm-tertiary;
+        border-color: $cp-dm-primary;
+        background-color: $cp-dm-card-bg;
     }
     
     .btn-link:hover {
-        color: $text-color-dm;
-        border-color: $cp-light-orange-dm;
-        background-color: lighten($card-bg-dm, 5%);
+        color: $cp-dm-text;
+        border-color: $cp-dm-tertiary;
+        background-color: lighten($cp-dm-card-bg, 5%);
     }
     
     .btn-outline-primary {
-        color: $cp-light-orange-dm;
-        border-color: $cp-light-orange-dm;
+        color: $cp-dm-tertiary;
+        border-color: $cp-dm-tertiary;
         background-color: transparent;
     }
     
     .btn-outline-primary:hover {
-        color: $text-color-dm;
-        background-color: $cp-light-orange-dm;
-        border-color: $cp-light-orange-dm;
+        color: $cp-dm-text;
+        background-color: $cp-dm-tertiary;
+        border-color: $cp-dm-tertiary;
     }
     
     /* Enlaces y navegación */
     .text-info,
     .users-list-name,
     #page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
-        color: lighten($cp-medium-blue-dm, 15%) !important;
+        color: lighten($cp-dm-medium-blue, 15%) !important;
     }
     
     .nav-pills-custom .nav-link::before {
-        border-left-color: $cp-dark-blue-dm;
+        border-left-color: $cp-dm-primary;
     }
     
     /* Calendario */
     .maincalendar .calendarmonth td.today .day-number-circle {
-        background-color: $cp-dark-blue-dm;
+        background-color: $cp-dm-primary;
     }
     
     /* Otros elementos */
     #page-footer .footer-container hr,
     .progress-bar {
-        background-color: $cp-dark-blue-dm;
-        border-top-color: $border-color-dm;
+        background-color: $cp-dm-primary;
+        border-top-color: $cp-dm-border;
     }
     
     .about-text-content {
-        color: $text-color-dm;
+        color: $cp-dm-text;
     }
     
     /* Autocompletado */
     .form-autocomplete-suggestions {
-        background-color: $card-bg-dm;
-        border-color: $border-color-dm;
+        background-color: $cp-dm-card-bg;
+        border-color: $cp-dm-border;
     }
     
     .form-autocomplete-suggestions li {
-        color: $text-color-dm;
+        color: $cp-dm-text;
     }
     
     .form-autocomplete-suggestions li:hover {
-        background-color: $cp-dark-blue-dm;
-        border-left-color: $cp-dark-blue-dm;
+        background-color: $cp-dm-primary;
+        border-left-color: $cp-dm-primary;
     }
     
     .form-autocomplete-suggestions li:focus {
         background-color: $my-gris-dm;
-        color: $text-color-dm;
-        border-left-color: $cp-light-orange-dm;
+        color: $cp-dm-text;
+        border-left-color: $cp-dm-tertiary;
     }
     
     .form-autocomplete-suggestions li[aria-selected="true"] {
-        background-color: $cp-dark-blue-dm;
-        border-left-color: $cp-light-orange-dm;
+        background-color: $cp-dm-primary;
+        border-left-color: $cp-dm-tertiary;
     }
     
     /* Paginación */
     .page-link {
-        background-color: $card-bg-dm;
-        border-color: $border-color-dm;
-        color: $text-color-dm;
+        background-color: $cp-dm-card-bg;
+        border-color: $cp-dm-border;
+        color: $cp-dm-text;
     }
     
     .page-link:hover {
-        background-color: lighten($card-bg-dm, 5%);
-        color: $cp-light-orange-dm;
+        background-color: lighten($cp-dm-card-bg, 5%);
+        color: $cp-dm-tertiary;
     }
     
     .page-item.active .page-link {
-        background-color: $cp-dark-blue-dm;
-        border-color: $cp-dark-blue-dm;
+        background-color: $cp-dm-primary;
+        border-color: $cp-dm-primary;
     }
     
     /* Botones flotantes */
     .floating-buttons-wrapper > .btn-floating {
-        background-color: $cp-dark-blue-dm;
-        color: $text-color-dm;
+        background-color: $cp-dm-primary;
+        color: $cp-dm-text;
     }
     
     /* Modo oscuro en login */
     .login-page {
-        --color-bg-page: $body-bg-dm;
-        --color-text-primary: $text-color-dm;
-        --color-text-secondary: darken($text-color-dm, 15%);
+        --color-bg-page: $cp-dm-bg;
+        --color-text-primary: $cp-dm-text;
+        --color-text-secondary: darken($cp-dm-text, 15%);
         --color-footer-bg: $my-gris-dm;
     }
     
     .loginform {
-        background-color: $card-bg-dm;
+        background-color: $cp-dm-card-bg;
         
         input, button {
-            background-color: $input-bg-dm;
-            color: $text-color-dm;
-            border-color: $border-color-dm;
+            background-color: $cp-dm-input-bg;
+            color: $cp-dm-text;
+            border-color: $cp-dm-border;
         }
     }
     
     /* Badges */
     .badge-info {
-        background-color: $cp-medium-blue-dm;
-        color: $text-color-dm;
+        background-color: $cp-dm-medium-blue;
+        color: $cp-dm-text;
     }
     
     .badge-info:hover {
-        background-color: lighten($cp-medium-blue-dm, 10%);
+        background-color: lighten($cp-dm-medium-blue, 10%);
     }
     
     .badge-success {
-        background-color: $success-color-dm;
+        background-color: $cp-dm-success;
     }
     
     span.badge.badge-info, 
     span.badge.rounded-pill.bg-secondary.text-dark,
     span.badge.bg-secondary.text-dark {
-        color: $text-color-dm !important;
-        background-color: $cp-medium-blue-dm !important;
+        color: $cp-dm-text !important;
+        background-color: $cp-dm-medium-blue !important;
     }
     
     /* Eventos */
     .block_calendar_upcoming .event {
-        border-left-color: $border-color-dm;
+        border-left-color: $cp-dm-border;
     }
     
     .block_calendar_upcoming .event.my-event-urgent {
-        border-color: $cp-orange-dm;
+        border-color: $cp-dm-secondary;
     }
     
     .block_calendar_upcoming .event.my-event-priority {
-        border-color: $cp-light-orange-dm;
+        border-color: $cp-dm-tertiary;
     }
     
     /* Course index */
     #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
-        background-color: $cp-dark-blue-dm;
+        background-color: $cp-dm-primary;
     }
     
     /* Bloques laterales con los nuevos colores para modo oscuro */
     #block-region-side-pre > section:nth-of-type(7n) > .card-header {
-        background-color: $block-region-side-pre-7-dm;
+        background-color: $cp-dm-block-7;
     }
     
     #block-region-side-pre > section:nth-of-type(7n + 1) > .card-header {
-        background-color: $block-region-side-pre-1-dm;
+        background-color: $cp-dm-block-1;
     }
     
     #block-region-side-pre > section:nth-of-type(7n + 2) > .card-header {
-        background-color: $block-region-side-pre-2-dm;
+        background-color: $cp-dm-block-2;
     }
     
     #block-region-side-pre > section:nth-of-type(7n + 3) > .card-header {
-        background-color: $block-region-side-pre-3-dm;
+        background-color: $cp-dm-block-3;
     }
     
     #block-region-side-pre > section:nth-of-type(7n + 4) > .card-header {
-        background-color: $block-region-side-pre-4-dm;
+        background-color: $cp-dm-block-4;
     }
     
     #block-region-side-pre > section:nth-of-type(7n + 5) > .card-header {
-        background-color: $block-region-side-pre-5-dm;
+        background-color: $cp-dm-block-5;
     }
     
     #block-region-side-pre > section:nth-of-type(7n + 6) > .card-header {
-        background-color: $block-region-side-pre-6-dm;
+        background-color: $cp-dm-block-6;
     }
     
     #block-region-side-pre > section > .card-body {
-        background-color: darken($card-bg-dm, 3%);
+        background-color: darken($cp-dm-card-bg, 3%);
     }
 }
 
