@@ -437,46 +437,41 @@ class core_renderer extends \theme_remui\output\core_renderer
         return $theme->setting_file_url($img, $img);
     }
 
-    /**
-     * Devuelve el footer estándar y agrega scripts de chat y prevención de copy/paste según configuraciones.
-     *
-     * @return string
-     */
     public function standard_footer_html() {
         global $CFG, $USER;
-
+    
         $output = parent::standard_footer_html();
         $theme = $this->get_theme_config();
-
+    
         // Add chat widget if enabled and user is logged in
-        if (!empty($this->page->theme->settings->enable_chat) && isloggedin()) {
+        if (!empty($this->page->theme->settings->cp_enable_chat) && isloggedin()) {
             $output .= $this->add_chat_widget();
         }
-
+    
         // Add accessibility widget only if enabled and user is logged in
-        if (isloggedin() && !empty($this->page->theme->settings->accessibility_widget)) {
+        if (isloggedin() && !empty($this->page->theme->settings->cp_accessibility_widget)) {
             $output .= '<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>';
             debugging('Accessibility widget loaded for user ID: ' . $USER->id, DEBUG_DEVELOPER);
         }
-
+    
         // Add copy paste prevention if enabled
-        if (!empty($this->page->theme->settings->copypaste_prevention)) {
+        if (!empty($this->page->theme->settings->cp_copypaste_prevention)) {
             $this->add_copy_paste_prevention();
         }
-
+    
         // Check if about text should be hidden
-        if (isset($this->page->theme->settings->hideabouttext) && 
-            $this->page->theme->settings->hideabouttext == 1) {
+        if (isset($this->page->theme->settings->cp_hidefootersections) && 
+            $this->page->theme->settings->cp_hidefootersections == 1) {
             $output .= '<style>
                 body section#top-footer { 
                     display: none !important; 
                 }
             </style>';
         }
-
+    
         return $output;
     }
-
+    
     /**
      * Sobrescribe el método full_header para mostrar avisos generales u otros estilos en el header.
      *
@@ -485,55 +480,55 @@ class core_renderer extends \theme_remui\output\core_renderer
     public function full_header()
     {
         global $CFG, $USER, $PAGE;
-
+    
         $theme = theme_config::load('clickpoint');
         $output = '';
-
+    
         // Ocultar secciones front page si está configurado
-        if (!empty($theme->settings->hidefrontpagesections)) {
+        if (!empty($theme->settings->cp_hidefrontpagesections)) {
             $output .= '<style>.frontpage-sections { display: none; }</style>';
         }
-
+    
         // Aviso general (notice)
-        if (!empty(trim($theme->settings->generalnotice))) {
-            $mode = $theme->settings->generalnoticemode;
+        if (!empty(trim($theme->settings->cp_generalnotice))) {
+            $mode = $theme->settings->cp_generalnoticemode;
             // 'info' => alert-info, 'danger' => alert-danger, 'off' => sin aviso
             if ($mode === 'info') {
-                $output .= '<div class="alert alert-info mt-4"><strong><i class="fa fa-info-circle"></i></strong> ' . $theme->settings->generalnotice . '</div>';
+                $output .= '<div class="alert alert-info mt-4"><strong><i class="fa fa-info-circle"></i></strong> ' . $theme->settings->cp_generalnotice . '</div>';
             } else if ($mode === 'danger') {
-                $output .= '<div class="alert alert-danger mt-4"><strong><i class="fa fa-warning"></i></strong> ' . $theme->settings->generalnotice . '</div>';
+                $output .= '<div class="alert alert-danger mt-4"><strong><i class="fa fa-warning"></i></strong> ' . $theme->settings->cp_generalnotice . '</div>';
             }
         }
-
+    
         // Recordatorio para admin, si el aviso está en modo 'off'
-        if (is_siteadmin() && (!empty($theme->settings->generalnoticemode) && $theme->settings->generalnoticemode === 'off')) {
+        if (is_siteadmin() && (!empty($theme->settings->cp_generalnoticemode) && $theme->settings->cp_generalnoticemode === 'off')) {
             $output .= '<div class="alert mt-4"><a href="' . $CFG->wwwroot . '/admin/settings.php?section=themesettingclickpoint#theme_clickpoint">' .
                 '<strong><i class="fa fa-edit"></i></strong> ' . get_string('generalnotice_create', 'theme_clickpoint') . '</a></div>';
         }
-
+    
         // Validación de URL (por ejemplo, para sitios de prueba)
         if (!$this->check_allowed_urls()) {
             $popup_id = bin2hex(random_bytes(8));
             $output .= $this->show_unauthorized_access_overlay($popup_id);
         }
-
+    
         // Continúa con el header normal.
         $output .= parent::full_header();
         return $output;
     }
-
+    
     /**
-     * Agrega el script de chat si está configurado en el tema (enable_chat y tawkto_embed_url).
+     * Agrega el script de chat si está configurado en el tema (cp_enable_chat y cp_tawkto_embed_url).
      *
      * @return string HTML/JS del widget de chat
      */
     protected function add_chat_widget() {
         global $USER;
         
-        if (empty($this->page->theme->settings->tawkto_embed_url)) {
+        if (empty($this->page->theme->settings->cp_tawkto_embed_url)) {
             return '';
         }
-
+    
         // Sanitize user data
         $userData = [
             'name' => clean_param($USER->firstname . " " . $USER->lastname, PARAM_TEXT),
@@ -541,7 +536,7 @@ class core_renderer extends \theme_remui\output\core_renderer
             'username' => clean_param($USER->username, PARAM_USERNAME),
             'idnumber' => clean_param($USER->idnumber, PARAM_TEXT)
         ];
-
+    
         return "<!--Start of Chat Script-->
         <script type=\"text/javascript\">
         var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -552,7 +547,7 @@ class core_renderer extends \theme_remui\output\core_renderer
         (function(){
             var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];
             s1.async=true;
-            s1.src='" . clean_param($this->page->theme->settings->tawkto_embed_url, PARAM_URL) . "';
+            s1.src='" . clean_param($this->page->theme->settings->cp_tawkto_embed_url, PARAM_URL) . "';
             s1.charset='UTF-8';
             s1.setAttribute('crossorigin','*');
             s0.parentNode.insertBefore(s1,s0);
@@ -560,27 +555,27 @@ class core_renderer extends \theme_remui\output\core_renderer
         </script>
         <!--End of Chat Script-->";
     }
-
+    
     /**
      * Agrega la lógica de prevención de Copy/Paste para roles específicos.
      */
     protected function add_copy_paste_prevention()
     {
         global $USER, $PAGE, $COURSE;
-
+    
         $theme = theme_config::load('clickpoint');
-        $restrictedroles = $theme->settings->copypaste_roles;
-
+        $restrictedroles = $theme->settings->cp_copypaste_roles;
+    
         // Si no hay roles restringidos, no hacemos nada.
         if (empty($restrictedroles)) {
             return;
         }
-
+    
         // Si es administrador/a, ignoramos la restricción
         if (is_siteadmin()) {
             return;
         }
-
+    
         try {
             // Obtenemos el contexto para saber en qué curso o página estamos
             $context = null;
@@ -591,16 +586,16 @@ class core_renderer extends \theme_remui\output\core_renderer
                 // Si no es un curso, usamos el contexto de la página actual
                 $context = $PAGE->context;
             }
-
+    
             if (!$context) {
                 return; // No hay contexto válido
             }
-
+    
             // Convertimos a array si es string (por seguridad)
             if (!is_array($restrictedroles)) {
                 $restrictedroles = explode(',', $restrictedroles);
             }
-
+    
             // Obtenemos los roles del usuario en este contexto
             $userroles = get_user_roles($context, $USER->id);
             $hasrestrictedrole = false;
@@ -610,7 +605,7 @@ class core_renderer extends \theme_remui\output\core_renderer
                     break;
                 }
             }
-
+    
             // Si el usuario tiene algún rol restringido, aplicamos la prevención
             if (isloggedin() && $hasrestrictedrole) {
                 // Llama a un módulo AMD con la lógica para bloquear copy/paste
