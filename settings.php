@@ -55,12 +55,12 @@ if ($ADMIN->fulltree) {
 
     // --- Notificaciones Generales ---
     $page->add(new admin_setting_heading(
-        'theme_clickpoint/generalnoticeheading',
+        'theme_clickpoint/cp_generalnoticeheading',
         get_string('generalnoticeheading', 'theme_clickpoint'),
         ''
     ));
 
-    $name = 'theme_clickpoint/generalnoticemode';
+    $name = 'theme_clickpoint/cp_generalnoticemode';
     $title = get_string('generalnoticemode', 'theme_clickpoint');
     $description = get_string('generalnoticemodedesc', 'theme_clickpoint');
     $default = 'off';
@@ -73,7 +73,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    $name = 'theme_clickpoint/generalnotice';
+    $name = 'theme_clickpoint/cp_generalnotice';
     $title = get_string('generalnotice', 'theme_clickpoint');
     $description = get_string('generalnoticedesc', 'theme_clickpoint');
     $default = '<strong>Estamos trabajando</strong> para mejorar...';
@@ -83,12 +83,12 @@ if ($ADMIN->fulltree) {
 
     // --- Chat Settings ---
     $page->add(new admin_setting_heading(
-        'theme_clickpoint/chatheading',
+        'theme_clickpoint/cp_chatheading',
         get_string('chatheading', 'theme_clickpoint'),
         ''
     ));
 
-    $name = 'theme_clickpoint/enable_chat';
+    $name = 'theme_clickpoint/cp_enable_chat';
     $title = get_string('enable_chat', 'theme_clickpoint');
     $description = get_string('enable_chatdesc', 'theme_clickpoint');
     $default = 0;
@@ -96,7 +96,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    $name = 'theme_clickpoint/tawkto_embed_url';
+    $name = 'theme_clickpoint/cp_tawkto_embed_url';
     $title = get_string('tawkto_embed_url', 'theme_clickpoint');
     $description = get_string('tawkto_embed_urldesc', 'theme_clickpoint');
     $default = '';
@@ -106,12 +106,12 @@ if ($ADMIN->fulltree) {
 
     // --- Accessibility Settings ---
     $page->add(new admin_setting_heading(
-        'theme_clickpoint/accessibilityheading',
+        'theme_clickpoint/cp_accessibilityheading',
         get_string('accessibilityheading', 'theme_clickpoint'),
         ''
     ));
 
-    $name = 'theme_clickpoint/accessibility_widget';
+    $name = 'theme_clickpoint/cp_accessibility_widget';
     $title = get_string('accessibility_widget', 'theme_clickpoint');
     $description = get_string('accessibility_widgetdesc', 'theme_clickpoint');
     $default = 0;
@@ -121,12 +121,12 @@ if ($ADMIN->fulltree) {
 
     // --- Content Protection Settings ---
     $page->add(new admin_setting_heading(
-        'theme_clickpoint/contentprotectionheading',
+        'theme_clickpoint/cp_contentprotectionheading',
         get_string('contentprotectionheading', 'theme_clickpoint'),
         ''
     ));
 
-    $name = 'theme_clickpoint/copypaste_prevention';
+    $name = 'theme_clickpoint/cp_copypaste_prevention';
     $title = get_string('copypaste_prevention', 'theme_clickpoint');
     $description = get_string('copypaste_preventiondesc', 'theme_clickpoint');
     $default = 0;
@@ -141,7 +141,7 @@ if ($ADMIN->fulltree) {
         $roles_array[$role->id] = $role->localname;
     }
 
-    $name = 'theme_clickpoint/copypaste_roles';
+    $name = 'theme_clickpoint/cp_copypaste_roles';
     $title = get_string('copypaste_roles', 'theme_clickpoint');
     $description = get_string('copypaste_rolesdesc', 'theme_clickpoint');
     $default = [5]; // Rol de estudiante por defecto
@@ -158,27 +158,27 @@ if ($ADMIN->fulltree) {
 
     // Carousel Settings
     $page->add(new admin_setting_heading(
-        'theme_clickpoint_carousel',
+        'theme_clickpoint/cp_carousel',
         get_string('carouselsettings', 'theme_clickpoint'),
         ''
     ));
 
     // Número de slides (se utiliza el prefijo "loging_" para evitar duplicidad)
-    $name = 'theme_clickpoint/loging_numberofslides';
+    $name = 'theme_clickpoint/cp_loging_numberofslides';
     $title = get_string('numberofslides', 'theme_clickpoint');
     $description = get_string('numberofslides_desc', 'theme_clickpoint');
     $choices = range(1, 5);
     $page->add(new admin_setting_configselect($name, $title, $description, 1, array_combine($choices, $choices)));
 
     // Settings para cada slide
-    $numslides = get_config('theme_clickpoint', 'loging_numberofslides') ?: 1;
+    $numslides = get_config('theme_clickpoint', 'cp_loging_numberofslides') ?: 1;
     for ($i = 1; $i <= $numslides; $i++) {
 
         // Imagen del slide
-        $name = 'theme_clickpoint/loging_slideimage' . $i;
+        $name = 'theme_clickpoint/cp_loging_slideimage' . $i;
         $title = get_string('slideimage', 'theme_clickpoint', $i);
         $description = get_string('slideimage_desc', 'theme_clickpoint', $i);
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'loging_slideimage' . $i, 0, [
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'cp_loging_slideimage' . $i, 0, [
             'subdirs' => 0,
             'accepted_types' => ['web_image']
         ]);
@@ -187,7 +187,7 @@ if ($ADMIN->fulltree) {
     }
 
     // Intervalo del carrusel
-    $name = 'theme_clickpoint/carouselinterval';
+    $name = 'theme_clickpoint/cp_carouselinterval';
     $title = get_string('carouselinterval', 'theme_clickpoint');
     $description = get_string('carouselintervaldesc', 'theme_clickpoint');
     $setting = new admin_setting_configtext($name, $title, $description, '5000');
@@ -203,13 +203,13 @@ if ($ADMIN->fulltree) {
 
     // Personal Area Header Settings
     $page->add(new admin_setting_heading(
-        'theme_clickpoint/personalareaheading',
+        'theme_clickpoint/cp_personalareaheading',
         get_string('personalareaheading', 'theme_clickpoint'),
         ''
     ));
 
     // Toggle de visibilidad del Personal Area Header
-    $name = 'theme_clickpoint/show_personalareaheader';
+    $name = 'theme_clickpoint/cp_show_personalareaheader';
     $title = get_string('show_personalareaheader', 'theme_clickpoint');
     $description = get_string('show_personalareaheaderdesc', 'theme_clickpoint');
     $default = 1;
@@ -222,10 +222,10 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     // Imagen del Personal Area Header
-    $name = 'theme_clickpoint/personalareaheader';
+    $name = 'theme_clickpoint/cp_personalareaheader';
     $title = get_string('personalareaheader', 'theme_clickpoint');
     $description = get_string('personalareaheaderdesc', 'theme_clickpoint', $a);
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'personalareaheader', 0, [
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'cp_personalareaheader', 0, [
         'subdirs' => 0,
         'accepted_types' => 'web_image'
     ]);
@@ -234,13 +234,13 @@ if ($ADMIN->fulltree) {
 
     // My Courses Header Settings
     $page->add(new admin_setting_heading(
-        'theme_clickpoint/mycoursesheading',
+        'theme_clickpoint/cp_mycoursesheading',
         get_string('mycoursesheading', 'theme_clickpoint'),
         ''
     ));
 
     // Toggle de visibilidad del My Courses Header
-    $name = 'theme_clickpoint/show_mycoursesheader';
+    $name = 'theme_clickpoint/cp_show_mycoursesheader';
     $title = get_string('show_mycoursesheader', 'theme_clickpoint');
     $description = get_string('show_mycoursesheaderdesc', 'theme_clickpoint');
     $default = 1;
@@ -253,10 +253,10 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     // Imagen del My Courses Header
-    $name = 'theme_clickpoint/mycoursesheader';
+    $name = 'theme_clickpoint/cp_mycoursesheader';
     $title = get_string('mycoursesheader', 'theme_clickpoint');
     $description = get_string('mycoursesheaderdesc', 'theme_clickpoint', $a);
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'mycoursesheader', 0, [
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'cp_mycoursesheader', 0, [
         'subdirs' => 0,
         'accepted_types' => 'web_image'
     ]);
@@ -271,7 +271,7 @@ if ($ADMIN->fulltree) {
     $page = new admin_settingpage('theme_clickpoint_footer', get_string('footersettings', 'theme_clickpoint'));
 
     // Visibilidad del Footer
-    $name = 'theme_clickpoint/hidefootersections';
+    $name = 'theme_clickpoint/cp_hidefootersections';
     $title = get_string('hidefootersections', 'theme_clickpoint');
     $description = get_string('hidefootersections_desc', 'theme_clickpoint');
     $default = 0;
@@ -284,12 +284,12 @@ if ($ADMIN->fulltree) {
 
     // About Section
     $page->add(new admin_setting_heading(
-        'theme_clickpoint/footeraboutheading',
+        'theme_clickpoint/cp_footeraboutheading',
         get_string('footeraboutheading', 'theme_clickpoint'),
         ''
     ));
 
-    $name = 'theme_clickpoint/abouttitle';
+    $name = 'theme_clickpoint/cp_abouttitle';
     $title = get_string('abouttitle', 'theme_clickpoint');
     $description = get_string('abouttitledesc', 'theme_clickpoint');
     $default = get_string('abouttitle_default', 'theme_clickpoint');
@@ -297,7 +297,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    $name = 'theme_clickpoint/abouttext';
+    $name = 'theme_clickpoint/cp_abouttext';
     $title = get_string('abouttext', 'theme_clickpoint');
     $description = get_string('abouttextdesc', 'theme_clickpoint');
     $default = get_string('abouttext_default', 'theme_clickpoint');
