@@ -13,22 +13,22 @@ h4,
 .h5,
 h6,
 .h6 {
-    color: $color-primary;
+    color: $cp-dark-blue;
     font-family: $headings-font-family;
     font-weight: $headings-font-weight;
 }
 
 h1 {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 h1.h2.header-heading {
     font-weight: bold !important;
 }
 a {
-    color: $fng-blue-medium;
+    color: $cp-medium-blue;
 }
 a:hover {
-    color: $color-secondary;
+    color: $cp-light-orange;
 }
 #top-footer h3 {
     color: white;
@@ -38,17 +38,17 @@ a:hover {
     .nav-link.active,
     .show > .nav-link {
         color: #ffffff;
-        background-color: $color-primary; // Azul oscuro para el fondo activo
+        background-color: $cp-dark-blue;
     }
 }
 
 .edw-tabs-navigation .nav-tabs .nav-item .nav-link.active,
 .edw-tabs-navigation .nav-tabs .nav-item .nav-link:hover,
 .edw-tabs-navigation .nav-tabs .nav-item .nav-link:focus {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 .edw-tabs-navigation .nav-tabs .nav-item .nav-link.active::before {
-    border-bottom: 3px solid $color-primary;
+    border-bottom: 3px solid $cp-dark-blue;
 }
 
 .event h3.name,
@@ -81,22 +81,22 @@ a:hover {
     .nav-item
     .nav-link
     [aria-current="true"] {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 
 .block-myoverview [data-region="filter"] .nav-grouping-selector .nav li.nav-item [aria-current="true"]::after {
-    border-bottom: 3px solid $color-primary;
+    border-bottom: 3px solid $cp-dark-blue;
 }
 .block_calendar_upcoming .event.my-event-urgent {
-    border-color: $fng-red;
+    border-color: $cp-orange;
 }
 
 .block_calendar_upcoming .event.my-event-priority {
-    border-color: $fng-orange;
+    border-color: $cp-light-orange;
 }
 
 .badge.badge-danger {
-    background-color: $fng-red;
+    background-color: $cp-orange;
 }
 
 /* END Personalizaciones Próximos Eventos */
@@ -104,12 +104,12 @@ a:hover {
 .que .formulation {
     background-color: white;
     border: 1px solid;
-    border-color: #badae4;
+    border-color: lighten($cp-medium-blue, 30%);
 }
 
 .que.informationitem .formulation {
-    background-color: #def2f8;
-    border-color: #badae4;
+    background-color: lighten($cp-medium-blue, 40%);
+    border-color: lighten($cp-medium-blue, 30%);
 }
 
 .que.informationitem .info {
@@ -121,26 +121,26 @@ a:hover {
 }
 
 .fng-block-header {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 
 .block .block-cards .multiline {
-    color: $color-primary;
+    color: $cp-dark-blue;
     font-size: 20px;
 }
 
 .block button.dropdown-toggle {
     box-shadow: none;
-    border-color: $color-secondary;
-    border: 1px solid $color-secondary;
+    border-color: $cp-light-orange;
+    border: 1px solid $cp-light-orange;
 }
 
 .block button.dropdown-toggle:hover {
-    background-color: $color-secondary-dimmed;
+    background-color: $cp-orange;
     color: white;
     box-shadow: none;
-    border-color: $color-secondary;
-    border: 1px solid $color-secondary;
+    border-color: $cp-orange;
+    border: 1px solid $cp-orange;
 }
 
 .block {
@@ -152,8 +152,8 @@ section.node-category {
 }
 
 .block .show > .btn-outline-secondary.dropdown-toggle:focus {
-    border-color: $color-secondary-dimmed;
-    background-color: $color-secondary-dimmed;
+    border-color: $cp-orange;
+    background-color: $cp-orange;
     outline: none !important;
     outline-width: 0 !important;
     box-shadow: none;
@@ -162,10 +162,10 @@ section.node-category {
 }
 
 .block .show > .btn-outline-secondary.dropdown-toggle {
-    background-color: $color-secondary-dimmed;
+    background-color: $cp-orange;
     color: white;
-    border-color: $color-secondary-dimmed;
-    border: 1px solid $color-secondary-dimmed;
+    border-color: $cp-orange;
+    border: 1px solid $cp-orange;
     outline: none !important;
     outline-width: 0 !important;
     box-shadow: none;
@@ -174,7 +174,7 @@ section.node-category {
 }
 
 .block .dropdown-item:focus {
-    background-color: $my-oscuro;
+    background-color: $cp-dark-blue;
     color: white;
 }
 
@@ -183,12 +183,12 @@ section.node-category {
 }
 
 #sidepreopen-control {
-    background-color: $color-secondary;
+    background-color: $cp-light-orange;
 }
 
 #sidepreopen-control:hover {
-    box-shadow: 0 0 6px $color-secondary-dimmed;
-    background-color: $color-secondary-dimmed;
+    box-shadow: 0 0 6px $cp-orange;
+    background-color: $cp-orange;
 }
 
 .block h5.card-title:before {
@@ -482,7 +482,7 @@ section.node-category {
 .block_timeline .block-timeline [data-region="day-filter"] .dropdown-toggle,
 .block_timeline .block-timeline [data-region="view-selector"] .dropdown-toggle {
     border: 1px solid #d5ddea;
-    color: $fng-blue-dark;
+    color: $cp-dark-blue;
 }
 .block_timeline .block-timeline [data-region="timeline-view"] {
     box-shadow: none;
@@ -497,7 +497,7 @@ section.node-category {
 }
 
 .navbar #usernavigation .userinitials {
-    background-color: $fng-blue-medium; // Reemplazado con $fng-blue-medium
+    background-color: $cp-medium-blue;
     color: #ffffff;
 }
 
@@ -509,8 +509,7 @@ section.node-category {
     line-height: 1.52;
 }
 
-/* Mejora en revisión de intentos de cuestionarios
-/TODO::: Traducir a SCSS */
+/* Mejora en revisión de intentos de cuestionarios */
 .que.correct .outcome,
 .que.correct .comment {
     background-color: #dffae7;
@@ -538,25 +537,25 @@ a.nav-link {
 .navbar .primary-navigation .more-nav > .dropdown > .dropdown-toggle,
 .navbar #usernavigation .nav-link,
 .navbar #usernavigation .more-nav > .dropdown > .dropdown-toggle {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 .navbar .primary-navigation .nav-link.active {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 
 .navbar .primary-navigation .nav-link.active::before {
-    border-bottom-color: $color-primary;
+    border-bottom-color: $cp-dark-blue;
 }
 
 .navbar .primary-navigation .nav-link:hover,
 .navbar .primary-navigation .more-nav > .dropdown > .dropdown-toggle:hover,
 .navbar #usernavigation .nav-link:hover,
 .navbar #usernavigation .more-nav > .dropdown > .dropdown-toggle:hover {
-    color: $color-primary;
+    color: $cp-dark-blue;
 }
 
 .navbar {
-    border-bottom: 5px solid $color-primary; /* Borde sólido azul en la parte inferior */
+    border-bottom: 5px solid $cp-dark-blue; /* Borde sólido azul en la parte inferior */
     box-shadow: 0px 2px 3px rgba(255, 255, 255, 0.5); /* Sombra blanca suave para crear el efecto de filo */
 }
 .navbar .primary-navigation .nav-link.active::before,
@@ -564,17 +563,17 @@ a.nav-link {
 .navbar #usernavigation .nav-link.active::before,
 .navbar #usernavigation .dropdown-toggle.active::before {
     top: 56px;
-    border-bottom: 3px solid $color-primary;
+    border-bottom: 3px solid $cp-dark-blue;
 }
 
 /* Footer */
 #page-footer {
-    background-color: $color-secondary; /* Reemplazado con $color-secondary (naranja) */
+    background-color: $cp-light-orange; /* Reemplazado con $cp-light-orange (naranja claro) */
 }
 
 /* Top Footer */
 #top-footer {
-    background-color: $color-primary; /* Azul oscuro */
+    background-color: $cp-dark-blue; /* Azul oscuro */
     color: $color-white;
     margin: 0 -15px;
 }
@@ -587,14 +586,14 @@ a.nav-link {
 #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.h-semibold-5,
 .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.edw-msg-panel-badge {
     color: #fff;
-    background-color: $color-secondary; /* Naranja */
+    background-color: $cp-light-orange; /* Naranja claro */
     font-size: .8em;
 }
 
 /* Asegurar que las clases categoryname, text-truncate, small-info-semibold se vean bien */
 .categoryname.text-truncate.small-info-semibold {
     color: #fff;
-    background-color: $color-secondary; /* Naranja */
+    background-color: $cp-light-orange; /* Naranja claro */
     font-size: 0.8em;
 }
 
@@ -602,7 +601,7 @@ a.nav-link {
 #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
     padding: 10px 24px;
     color: #ffffff;
-    background-color: $color-primary;
+    background-color: $cp-dark-blue;
     border-radius: 0;
     justify-content: space-between;
 }
@@ -617,8 +616,8 @@ a.nav-link {
 
 /* Primary button styling */
 .btn-primary {
-    background-color: $fng-red; // Rojo para el fondo
-    border-color: $fng-red; // Rojo para el borde
+    background-color: $cp-orange; // Naranja para el fondo
+    border-color: $cp-orange; // Naranja para el borde
     color: #ffffff; // Blanco para el texto
 
     .fa,
@@ -627,8 +626,8 @@ a.nav-link {
     }
 
     &:hover {
-        background-color: $color-primary; // Azul oscuro en hover
-        border-color: $color-primary; // Azul oscuro para el borde en hover
+        background-color: $cp-dark-blue; // Azul oscuro en hover
+        border-color: $cp-dark-blue; // Azul oscuro para el borde en hover
         color: #ffffff; // Blanco para el texto en hover
     }
 
@@ -636,23 +635,23 @@ a.nav-link {
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: $fng-red; // Rojo en activo
-        border-color: $fng-red; // Rojo en activo
+        background-color: $cp-orange; // Naranja en activo
+        border-color: $cp-orange; // Naranja en activo
         color: #ffffff; // Blanco en activo
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
-        background-color: $color-primary; // Azul oscuro en foco
-        border-color: $color-primary; // Azul oscuro en foco
+        background-color: $cp-dark-blue; // Azul oscuro en foco
+        border-color: $cp-dark-blue; // Azul oscuro en foco
         color: #ffffff; // Blanco en foco
     }
 }
 
 /* Secondary button styling */
 .btn-secondary {
-    background-color: $color-primary; // Azul oscuro para el fondo
-    border-color: $color-primary; // Azul oscuro para el borde
+    background-color: $cp-dark-blue; // Azul oscuro para el fondo
+    border-color: $cp-dark-blue; // Azul oscuro para el borde
     color: #ffffff; // Blanco para el texto
 
     .fa,
@@ -661,8 +660,8 @@ a.nav-link {
     }
 
     &:hover {
-        background-color: $color-secondary; // Naranja en hover
-        border-color: $color-secondary; // Naranja en hover
+        background-color: $cp-light-orange; // Naranja claro en hover
+        border-color: $cp-light-orange; // Naranja claro en hover
         color: #ffffff; // Blanco para el texto en hover
     }
 
@@ -670,27 +669,27 @@ a.nav-link {
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: $color-primary; // Azul oscuro en activo
-        border-color: $color-primary; // Azul oscuro en activo
+        background-color: $cp-dark-blue; // Azul oscuro en activo
+        border-color: $cp-dark-blue; // Azul oscuro en activo
         color: #ffffff; // Blanco en activo
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
-        background-color: $color-secondary; // Naranja en foco
-        border-color: $color-secondary; // Naranja en foco
+        background-color: $cp-light-orange; // Naranja claro en foco
+        border-color: $cp-light-orange; // Naranja claro en foco
         color: #ffffff; // Blanco en foco
     }
 }
 
 /* Botones Específicos */
 button.btn.btn-primary.icon-no-margin.p-0 {
-    background-color: $fng-red; // Rojo para el fondo
+    background-color: $cp-orange; // Naranja para el fondo
     border-color: white; // Color blanco para el borde
     color: white; // Color del texto
 
     &:hover {
-        background-color: $fng-red; // Rojo para el fondo en hover
+        background-color: $cp-orange; // Naranja para el fondo en hover
         border-color: white; // Mantiene el borde blanco en hover
         color: white !important; // Color del texto en hover
     }
@@ -699,7 +698,7 @@ button.btn.btn-primary.icon-no-margin.p-0 {
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
-        background-color: darken($fng-red, 10%); // Oscurece el color secundario para el estado activo
+        background-color: darken($cp-orange, 10%); // Oscurece el color secundario para el estado activo
         border-color: white; // Mantiene el borde blanco para el estado activo
         color: white; // Mantiene el texto blanco para mejor visibilidad
 
@@ -727,51 +726,226 @@ button.btn.btn-primary.icon-no-margin.p-0 {
 }
 
 .block_calendar_upcoming .event.my-event-urgent {
-    border-color: $fng-red;
+    border-color: $cp-orange;
 }
 
 .block_calendar_upcoming .event.my-event-priority {
-    border-color: $fng-orange;
+    border-color: $cp-light-orange;
 }
 
 /* END Personalizaciones Próximos Eventos */
 
-/* Responsive rules */
+/* ============================================================
+   MODO OSCURO - ADAPTACIÓN PARA REMUI
+   ============================================================ */
 
-/* Para tablets y desktops pequeños */
-@media (min-width: 768px) {
-}
-
-/* Para pantallas un poco más grandes que tablets */
-@media (min-width: 800px) {
-}
-
-/* Para desktops grandes */
-@media (min-width: 1200px) {
-}
-
-/* Estilos para dispositivos con un ancho máximo de 993px y una altura mínima de 640px */
-@media (max-width: 993px) {
-    @media (min-height: 640px) {
+/* Estilos para modo oscuro aprovechando el soporte de RemUI */
+body.dark-mode {
+    /* Encabezados */
+    h1, .h1, h2, .h2, h3, .h3, h4, .h4, .h5, .h5, h6, .h6 {
+        color: $text-color-dm;
+    }
+    
+    /* Enlaces */
+    a {
+        color: lighten($cp-medium-blue-dm, 15%);
+        
+        &:hover {
+            color: $cp-light-orange-dm;
+        }
+    }
+    
+    /* Botones */
+    .btn-primary {
+        background-color: $cp-orange-dm;
+        border-color: $cp-orange-dm;
+        
+        &:hover {
+            background-color: $cp-dark-blue-dm;
+            border-color: $cp-dark-blue-dm;
+        }
+    }
+    
+    .btn-secondary {
+        background-color: $cp-dark-blue-dm;
+        border-color: $cp-dark-blue-dm;
+        
+        &:hover {
+            background-color: $cp-light-orange-dm;
+            border-color: $cp-light-orange-dm;
+        }
+    }
+    
+    /* Navegación y pestañas */
+    .nav-pills .nav-link.active, 
+    .nav-pills .show > .nav-link {
+        background-color: $cp-dark-blue-dm;
+    }
+    
+    .edw-tabs-navigation .nav-tabs .nav-item .nav-link.active,
+    .edw-tabs-navigation .nav-tabs .nav-item .nav-link:hover,
+    .edw-tabs-navigation .nav-tabs .nav-item .nav-link:focus {
+        color: lighten($cp-medium-blue-dm, 20%);
+    }
+    
+    .edw-tabs-navigation .nav-tabs .nav-item .nav-link.active::before {
+        border-bottom-color: $cp-medium-blue-dm;
+    }
+    
+    /* Bloques laterales - Actualizados con los nuevos colores */
+    #block-region-side-pre > section:nth-of-type(7n) > .card-header {
+        background-color: $block-region-side-pre-7-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 1) > .card-header {
+        background-color: $block-region-side-pre-1-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 2) > .card-header {
+        background-color: $block-region-side-pre-2-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 3) > .card-header {
+        background-color: $block-region-side-pre-3-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 4) > .card-header {
+        background-color: $block-region-side-pre-4-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 5) > .card-header {
+        background-color: $block-region-side-pre-5-dm;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 6) > .card-header {
+        background-color: $block-region-side-pre-6-dm;
+    }
+    
+    #block-region-side-pre > section > .card-body {
+        background-color: darken($card-bg-dm, 3%);
+    }
+    
+    /* Control del panel lateral */
+    #sidepreopen-control {
+        background-color: $cp-light-orange-dm;
+        
+        &:hover {
+            background-color: $cp-orange-dm;
+            box-shadow: 0 0 6px $cp-orange-dm;
+        }
+    }
+    
+    /* Barra de navegación */
+    .navbar {
+        background-color: $cp-dark-blue-dm;
+        border-bottom-color: $cp-dark-blue-dm;
+        box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
+    }
+    
+    .navbar .primary-navigation .nav-link,
+    .navbar .primary-navigation .more-nav > .dropdown > .dropdown-toggle,
+    .navbar #usernavigation .nav-link,
+    .navbar #usernavigation .more-nav > .dropdown > .dropdown-toggle {
+        color: $text-color-dm;
+    }
+    
+    .navbar .primary-navigation .nav-link.active,
+    .navbar .primary-navigation .nav-link:hover,
+    .navbar #usernavigation .nav-link:hover {
+        color: $cp-light-orange-dm;
+    }
+    
+    .navbar .primary-navigation .nav-link.active::before {
+        border-bottom-color: $cp-light-orange-dm;
+    }
+    
+    /* Iniciales de usuario */
+    .navbar #usernavigation .userinitials {
+        background-color: $cp-medium-blue-dm;
+    }
+    
+    /* Footer */
+    #page-footer {
+        background-color: darken($cp-light-orange-dm, 10%);
+    }
+    
+    #top-footer {
+        background-color: $cp-dark-blue-dm;
+    }
+    
+    /* Eventos y calendario */
+    .block_calendar_upcoming .event {
+        border-left-color: $border-color-dm;
+    }
+    
+    .block_calendar_upcoming .event.my-event-urgent {
+        border-color: $cp-orange-dm;
+    }
+    
+    .block_calendar_upcoming .event.my-event-priority {
+        border-color: $cp-light-orange-dm;
+    }
+    
+    .badge.badge-danger {
+        background-color: $cp-orange-dm;
+    }
+    
+    /* Cuestionarios */
+    .que .formulation {
+        background-color: $card-bg-dm;
+        border-color: $border-color-dm;
+    }
+    
+    .que.informationitem .formulation {
+        background-color: lighten($card-bg-dm, 5%);
+        border-color: $border-color-dm;
+    }
+    
+    .que.correct .outcome,
+    .que.correct .comment {
+        background-color: rgba(97, 155, 61, 0.2);
+        border-color: rgba(97, 155, 61, 0.3);
+        color: $text-color-dm;
+    }
+    
+    /* Índice del curso */
+    #theme_remui-drawers-courseindex .drawercontent {
+        background-color: $card-bg-dm;
+    }
+    
+    #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
+        background-color: $cp-dark-blue-dm;
+    }
+    
+    /* Tarjetas de curso */
+    .dashboard-card {
+        background-color: $card-bg-dm;
+        
+        .card-footer {
+            background-color: darken($card-bg-dm, 3%);
+        }
+    }
+    
+    .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.small-info-semibold,
+    .categoryname.text-truncate.small-info-semibold {
+        background-color: $cp-light-orange-dm;
     }
 }
 
-/* Para dispositivos móviles (tablets y teléfonos en posición horizontal) */
+/* Responsive rules */
+@media (min-width: 768px) {
+    /* Estilos responsive para tablets y escritorios pequeños */
+}
+
+@media (min-width: 1200px) {
+    /* Estilos responsive para escritorios grandes */
+}
+
 @media (max-width: 767px) {
-}
-
-/* Para pantallas pequeñas */
-@media (max-width: 639px) {
-}
-
-/* Para dispositivos aún más pequeños */
-@media (max-width: 576px) {
-}
-
-/* Para teléfonos muy pequeños */
-@media (max-width: 500px) {
-}
-
-/* Para los teléfonos más pequeños */
-@media (max-width: 479px) {
+    /* Estilos responsive para móviles */
+    body.dark-mode {
+        .navbar {
+            background-color: $cp-dark-blue-dm;
+        }
+    }
 }
