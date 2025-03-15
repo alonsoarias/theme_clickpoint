@@ -19,7 +19,7 @@ $templatecontext = [
     'output'           => $OUTPUT,
     'bodyattributes'   => $bodyattributes,
     'carouselimages'   => [],
-    'carouselinterval' => isset($theme->settings->carouselinterval) ? (int)$theme->settings->carouselinterval : 5000,
+    'carouselinterval' => isset($theme->settings->cp_carouselinterval) ? (int)$theme->settings->cp_carouselinterval : 5000,
     'my_credit'        => get_string('credit', 'theme_clickpoint'),
     'hasgeneralnote'   => false,
     'generalnote'      => '',
@@ -32,22 +32,22 @@ $templatecontext = [
 // 1) Carrusel de diapositivas (simplificado, sin títulos ni enlaces)
 // =========================================================================
 // Se obtiene el número de slides configurado con el prefijo "loging_".
-$numslides = isset($theme->settings->loging_numberofslides) && is_numeric($theme->settings->loging_numberofslides)
-    ? (int)$theme->settings->loging_numberofslides
+$numslides = isset($theme->settings->cp_loging_numberofslides) && is_numeric($theme->settings->cp_loging_numberofslides)
+    ? (int)$theme->settings->cp_loging_numberofslides
     : 1;
 
 $validSlides = 0; // Contador de slides válidos
 
 for ($i = 1; $i <= $numslides; $i++) {
     // Obtenemos la URL de la imagen usando el identificador con prefijo "loging_"
-    $imageurl = $theme->setting_file_url("loging_slideimage{$i}", "loging_slideimage{$i}");
+    $imageurl = $theme->setting_file_url("cp_loging_slideimage{$i}", "cp_loging_slideimage{$i}");
     
     if (!empty($imageurl)) {
         // Verificamos si el archivo existe en storage.
         $files = $fs->get_area_files(
             $context->id,
             'theme_clickpoint',
-            "loging_slideimage{$i}",
+            "cp_loging_slideimage{$i}",
             0,
             'sortorder',
             false
