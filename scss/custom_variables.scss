@@ -1,97 +1,187 @@
-/* Paleta oficial ClickPoint */
-$cp-dark-blue: #1D4356;       // Azul oscuro/petróleo (primario)
-$cp-orange: #FF5E01;          // Naranja intenso/brillante (secundario)
-$cp-light-orange: #FF9A00;    // Naranja/ámbar más claro (terciario)
-$cp-medium-blue: #3D91C0;     // Azul medio (complementario)
-$cp-gray: #706565;            // Gris (neutral)
+// =========================================================
+// CLICKPOINT THEME VARIABLES
+// =========================================================
+// Este archivo contiene todas las variables personalizadas del tema ClickPoint
+// Organizado por secciones para mayor claridad y mantenibilidad
+// =========================================================
 
-/* Paleta para Modo Oscuro ClickPoint */
-$cp-dark-blue-dm: #0F2A38;       // Versión oscura del Azul oscuro/petróleo
-$cp-orange-dm: #E05400;          // Versión oscura del Naranja intenso/brillante
-$cp-light-orange-dm: #D68300;    // Versión oscura del Naranja/ámbar más claro
-$cp-medium-blue-dm: #2A6A8E;     // Versión oscura del Azul medio
-$cp-gray-dm: #444040;            // Versión oscura del Gris neutral
+// ===========================================
+// 1. COLORES DE MARCA PRINCIPALES
+// ===========================================
+// Estos son los colores base que definen la identidad de ClickPoint
 
-/* Colores base para modo oscuro */
-$body-bg-dm: #121212;            // Fondo principal para modo oscuro
-$card-bg-dm: #1E1E1E;            // Fondo de tarjetas y bloques
-$text-color-dm: #E0E0E0;         // Color de texto principal
-$border-color-dm: #383838;       // Color de bordes
-$input-bg-dm: #2D2D2D;           // Fondo de campos de entrada
+// Colores principales 
+$cp-dark-blue: #1D4356;       // Azul oscuro/petróleo (color primario de la marca)
+$cp-orange: #FF5E01;          // Naranja intenso/brillante (color secundario de la marca)
+$cp-light-orange: #FF9A00;    // Naranja/ámbar más claro (color terciario de la marca)
+$cp-medium-blue: #3D91C0;     // Azul medio (color complementario)
+$cp-gray: #706565;            // Gris (color neutral)
 
-/* Versiones para bloques laterales en modo oscuro */
-$block-region-side-pre-1-dm: #B85518 !default;  // Naranja oscuro - menos saturado
-$block-region-side-pre-2-dm: #648C14 !default;  // Verde - menos brillante
-$block-region-side-pre-3-dm: #0097AB !default;  // Cyan - un poco más oscuro
-$block-region-side-pre-4-dm: #1A5FD1 !default;  // Azul - menos brillante
-$block-region-side-pre-5-dm: #282A4A !default;  // Azul oscuro - adaptado para fondos oscuros
-$block-region-side-pre-6-dm: $cp-orange-dm !default;  // Naranja oscuro (equivalente a $cp-orange-dm)
-$block-region-side-pre-7-dm: #555555 !default;  // Gris - más oscuro para fondos oscuros
+// Asignación de roles a los colores principales
+$cp-primary: $cp-dark-blue;         // Color primario para elementos principales
+$cp-primary-light: lighten($cp-primary, 10%);
+$cp-primary-dark: darken($cp-primary, 10%);
 
-/* Valores para mantener consistencia con estilos existentes */
-$body-bg: #FFFFFF;
-$navbar-height: 80px;
+$cp-secondary: $cp-orange;          // Color secundario para acentos y acciones
+$cp-secondary-light: lighten($cp-secondary, 10%);
+$cp-secondary-dark: darken($cp-secondary, 10%);
 
-// Colores derivados para mantener compatibilidad con clases existentes
-$my-rojo: $cp-orange;         // Reemplazando el rojo con naranja intenso
+$cp-tertiary: $cp-light-orange;     // Color terciario para elementos de menor jerarquía
+$cp-tertiary-light: lighten($cp-tertiary, 10%);
+$cp-tertiary-dark: darken($cp-tertiary, 10%);
+
+// ===========================================
+// 2. COLORES PARA COMPONENTES Y ESTADOS
+// ===========================================
+// Colores específicos para diferentes componentes y estados
+
+// Colores para estados
+$cp-success: #7AAA18;         // Color para éxito/completado
+$cp-warning: $cp-light-orange; // Color para advertencias
+$cp-danger: $cp-orange;        // Color para errores/peligro
+$cp-info: $cp-medium-blue;     // Color para información
+
+// Colores para bloques laterales
+$cp-block-1: #D9651A;   // Naranja (bloque lateral 1)
+$cp-block-2: #7AAA18;   // Verde (bloque lateral 2)
+$cp-block-3: #00BCD4;   // Cyan (bloque lateral 3)
+$cp-block-4: #0268FB;   // Azul (bloque lateral 4)
+$cp-block-5: #31335E;   // Azul oscuro (bloque lateral 5)
+$cp-block-6: $cp-orange; // Naranja (bloque lateral 6)
+$cp-block-7: #777;      // Gris (bloque lateral 7)
+
+// ===========================================
+// 3. MODO OSCURO
+// ===========================================
+// Variables para el modo oscuro del tema
+
+// Colores base para modo oscuro
+$cp-dm-bg: #121212;            // Fondo principal
+$cp-dm-card-bg: #1E1E1E;       // Fondo de tarjetas y bloques
+$cp-dm-text: #E0E0E0;          // Texto principal
+$cp-dm-border: #383838;        // Bordes
+$cp-dm-input-bg: #2D2D2D;      // Fondos de campos de entrada
+
+// Colores de marca en modo oscuro
+$cp-dm-dark-blue: #0F2A38;       // Versión oscura del azul principal
+$cp-dm-orange: #E05400;          // Versión oscura del naranja
+$cp-dm-light-orange: #D68300;    // Versión oscura del naranja claro
+$cp-dm-medium-blue: #2A6A8E;     // Versión oscura del azul medio
+$cp-dm-gray: #444040;            // Versión oscura del gris
+
+// Asignación de roles para modo oscuro
+$cp-dm-primary: $cp-dm-dark-blue;
+$cp-dm-secondary: $cp-dm-orange;
+$cp-dm-tertiary: $cp-dm-light-orange;
+
+// Colores para estados en modo oscuro
+$cp-dm-success: #619B3D;         // Verde oscuro para éxito
+$cp-dm-warning: $cp-dm-light-orange; // Naranja para advertencias
+$cp-dm-danger: $cp-dm-orange;    // Naranja intenso para errores
+$cp-dm-info: $cp-dm-medium-blue; // Azul para información
+
+// Colores para bloques laterales en modo oscuro
+$cp-dm-block-1: #B85518;   // Naranja oscuro (menos saturado)
+$cp-dm-block-2: #648C14;   // Verde (menos brillante)
+$cp-dm-block-3: #0097AB;   // Cyan (un poco más oscuro)
+$cp-dm-block-4: #1A5FD1;   // Azul (menos brillante)
+$cp-dm-block-5: #282A4A;   // Azul oscuro (adaptado para fondos oscuros)
+$cp-dm-block-6: $cp-dm-orange; // Naranja oscuro
+$cp-dm-block-7: #555555;   // Gris (más oscuro para fondos oscuros)
+
+// ===========================================
+// 4. TIPOGRAFÍA Y ESPACIADO
+// ===========================================
+// Variables para fuentes, tamaños y espaciado
+
+// Familias de fuentes
+$cp-font-primary: 'Open Sans', sans-serif;
+$cp-font-secondary: 'Open Sans', sans-serif;
+$cp-font-headings: 'Open Sans', sans-serif;
+
+// Alturas y espaciados críticos
+$cp-navbar-height: 80px;
+$cp-footer-height: 80px;
+
+// ===========================================
+// 5. COMPATIBILIDAD CON VARIABLES LEGACY
+// ===========================================
+// Variables para mantener compatibilidad con código existente
+// Estas variables mapean los nuevos nombres a los antiguos para mantener
+// la compatibilidad con el código existente
+
+// Mapeo de colores principales
+$color-primary: $cp-primary;
+$color-primary-dimmed: $cp-primary-light;
+$color-primary-dark: $cp-primary-dark;
+
+$color-secondary: $cp-secondary;
+$color-secondary-dimmed: $cp-secondary-light;
+$color-secondary-dark: $cp-secondary-dark;
+
+$color-terciary: $cp-tertiary;
+$color-terciary-dimmed: $cp-tertiary-light;
+$color-terciary-dark: $cp-tertiary-dark;
+
+// Otras asignaciones para compatibilidad
+$brand-primary: $cp-primary;
+$navbar-header-color: $cp-secondary;
+$color-blue: $cp-medium-blue;
+$headings-color: $cp-gray;
+$nav-drawer-color: $cp-primary;
+
+// Variables para compatibilidad con Bootstrap
+$blue: $cp-medium-blue;
+$indigo: darken($cp-dark-blue, 10%);
+$purple: mix($cp-dark-blue, #550066, 70%);
+$pink: #F5A6E6;
+$red: $cp-orange;
+$orange: $cp-orange;
+$yellow: $cp-light-orange;
+$green: $cp-success;
+$teal: lighten($cp-medium-blue, 20%);
+$cyan: $cp-medium-blue;
+
+// Definiciones de fuentes para compatibilidad
+$font-family-sans-serif: $cp-font-primary;
+$font-family-aux: $cp-font-secondary;
+$headings-font-family: $cp-font-headings;
+
+// Bloques laterales (compatibilidad)
+$block-region-side-pre-1: $cp-block-1;
+$block-region-side-pre-2: $cp-block-2;
+$block-region-side-pre-3: $cp-block-3;
+$block-region-side-pre-4: $cp-block-4;
+$block-region-side-pre-5: $cp-block-5;
+$block-region-side-pre-6: $cp-block-6;
+$block-region-side-pre-7: $cp-block-7;
+
+// Bloques laterales modo oscuro (compatibilidad)
+$block-region-side-pre-1-dm: $cp-dm-block-1;
+$block-region-side-pre-2-dm: $cp-dm-block-2;
+$block-region-side-pre-3-dm: $cp-dm-block-3;
+$block-region-side-pre-4-dm: $cp-dm-block-4;
+$block-region-side-pre-5-dm: $cp-dm-block-5;
+$block-region-side-pre-6-dm: $cp-dm-block-6;
+$block-region-side-pre-7-dm: $cp-dm-block-7;
+
+// Variables antiguas para compatibilidad
+$my-rojo: $cp-orange;
 $my-rojo-claro: lighten($cp-orange, 10%);
-$my-amarillo: $cp-light-orange; // Reemplazando amarillo con naranja claro
+$my-amarillo: $cp-light-orange;
 $my-orange: $cp-orange;
 $my-oscuro: darken($cp-dark-blue, 10%);
-$my-gris: #e8e8e8;            // Mantenemos un gris claro para fondos
-$my-gris2: #B8B9BE;           // Gris secundario para elementos de interfaz
+$my-gris: #e8e8e8;
+$my-gris2: #B8B9BE;
 $my-negro: #3D3D3D;
-$my-blue: $cp-medium-blue;    // Azul medio
-$my-blue2: $cp-dark-blue;     // Azul oscuro - Color primario
+$my-blue: $cp-medium-blue;
+$my-blue2: $cp-dark-blue;
 $color-white: #FFFFFF;
 
-/* Variables derivadas para modo oscuro */
-$my-gris-dm: #2D2D2D;            // Versión oscura de gris claro
-$my-gris2-dm: #444444;           // Versión oscura de gris secundario
+// Compatibilidad modo oscuro
+$my-gris-dm: $cp-dm-input-bg;
+$my-gris2-dm: #444444;
 
-/* Colores para estados en modo oscuro */
-$success-color-dm: #619B3D;      // Verde oscuro para éxito
-$warning-color-dm: $cp-light-orange-dm; // Naranja para advertencias
-$danger-color-dm: $cp-orange-dm;        // Naranja intenso para errores
-$info-color-dm: $cp-medium-blue-dm;     // Azul para información
-
-$font-family-sans-serif: 'Open Sans', sans-serif;
-$font-family-aux: 'Open Sans', sans-serif;
-$headings-font-family: "Open Sans", $font-family-sans-serif !default;
-
-// Asignación de colores primarios y secundarios
-$color-primary: $cp-dark-blue;
-$color-primary-dimmed: lighten($color-primary, 10%);
-$color-primary-dark: darken($color-primary, 10%);
-
-$color-secondary: $cp-orange;
-$color-secondary-dimmed: lighten($color-secondary, 10%);
-$color-secondary-dark: darken($color-secondary, 10%);
-
-$color-terciary: $cp-light-orange;
-$color-terciary-dimmed: lighten($color-terciary, 10%);
-$color-terciary-dark: darken($color-terciary, 10%);
-
-$brand-primary: $cp-dark-blue;
-$navbar-header-color: $color-secondary;
-
-$color-blue: $cp-medium-blue;
-
-$headings-color: $cp-gray;
-
-$nav-drawer-color: $color-primary;
-
-// Colores para componentes Bootstrap
-$blue:    $cp-medium-blue;
-$indigo:  darken($cp-dark-blue, 10%);
-$purple:  mix($cp-dark-blue, #550066, 70%);
-$pink:    #F5A6E6;            // Mantenido para compatibilidad
-$red:     $cp-orange;         // Reemplazado con naranja para alertas
-$orange:  $cp-orange;
-$yellow:  $cp-light-orange;
-$green:   #7AAA18;            // Mantenido para estados de éxito
-$teal:    lighten($cp-medium-blue, 20%);
-$cyan:    $cp-medium-blue;
-
-/* Variables adicionales */
-$my-loginfooterheight: 80px;
+// Variables específicas
+$my-loginfooterheight: $cp-footer-height;
+$body-bg: #FFFFFF;
