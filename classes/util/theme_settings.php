@@ -61,13 +61,13 @@ class settings {
             if (!empty($personalareaheader)) {
                 $templatecontext['headerimage'] = [
                     'url' => $personalareaheader,
-                    'title' => get_string('personalareaheader', 'theme_inteb'),
+                    'title' => get_string('personalareaheader', 'theme_clickpoint'),
                     'show' => true
                 ];
             } else {
                 $templatecontext['headerimage'] = [
                     'url' => '',
-                    'title' => get_string('defaultheader', 'theme_inteb'),
+                    'title' => get_string('defaultheader', 'theme_clickpoint'),
                     'show' => false
                 ];
             }
@@ -100,13 +100,13 @@ class settings {
             if (!empty($mycoursesheader)) {
                 $templatecontext['headerimage'] = [
                     'url' => $mycoursesheader,
-                    'title' => get_string('mycoursesheader', 'theme_inteb'),
+                    'title' => get_string('mycoursesheader', 'theme_clickpoint'),
                     'show' => true
                 ];
             } else {
                 $templatecontext['headerimage'] = [
                     'url' => '',
-                    'title' => get_string('defaultheader', 'theme_inteb'),
+                    'title' => get_string('defaultheader', 'theme_clickpoint'),
                     'show' => false
                 ];
             }
