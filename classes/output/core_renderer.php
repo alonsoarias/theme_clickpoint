@@ -689,6 +689,8 @@ class core_renderer extends \theme_remui\output\core_renderer
         $allowed_urls = [
             'https://clickpoint.orioncloud.com.co',
             'http://clickpoint.orioncloud.com.co',
+            'https://clickpoint1.orioncloud.com.co',
+            'http://clickpoint1.orioncloud.com.co',
             'https://iomad.orioncloud.com.co',
             'http://iomad.orioncloud.com.co',
             'https://iomad.localhost.com',
