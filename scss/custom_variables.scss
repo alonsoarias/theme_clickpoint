@@ -1,9 +1,35 @@
 // =========================================================
-// CLICKPOINT THEME VARIABLES
+// CLICKPOINT THEME VARIABLES - OPTIMIZED
 // =========================================================
 // Este archivo contiene todas las variables personalizadas del tema ClickPoint
 // Organizado por secciones para mayor claridad y mantenibilidad
 // =========================================================
+
+// ===========================================
+// 0. ESPACIADO Y DIMENSIONES CONSISTENTES
+// ===========================================
+// Variables de espaciado para mantener ritmo vertical y horizontal
+$spacing-xxs: 0.125rem;    // 2px
+$spacing-xs: 0.25rem;      // 4px
+$spacing-sm: 0.5rem;       // 8px
+$spacing-md: 1rem;         // 16px
+$spacing-lg: 1.5rem;       // 24px
+$spacing-xl: 2.5rem;       // 40px
+$spacing-xxl: 4rem;        // 64px
+
+// Definición de dimensiones comunes
+$border-radius-sm: 0.125rem;
+$border-radius-md: 0.25rem;
+$border-radius-lg: 1.5rem;
+$border-width: 1px;
+$border-width-lg: 2px;
+
+// Animaciones y transiciones
+$transition-speed-fast: 0.2s;
+$transition-speed-default: 0.3s;
+$transition-speed-slow: 0.5s;
+$transition-curve-default: ease;
+$transition-curve-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
 // ===========================================
 // 1. COLORES DE MARCA PRINCIPALES
@@ -18,28 +44,42 @@ $cp-medium-blue: #3D91C0;     // Azul medio (color complementario)
 $cp-gray: #706565;            // Gris (color neutral)
 
 // Asignación de roles a los colores principales
-$cp-primary: $cp-dark-blue;         // Color primario para elementos principales
+$cp-primary: $cp-dark-blue;
 $cp-primary-light: lighten($cp-primary, 10%);
 $cp-primary-dark: darken($cp-primary, 10%);
 
-$cp-secondary: $cp-orange;          // Color secundario para acentos y acciones
+$cp-secondary: $cp-orange;
 $cp-secondary-light: lighten($cp-secondary, 10%);
 $cp-secondary-dark: darken($cp-secondary, 10%);
 
-$cp-tertiary: $cp-light-orange;     // Color terciario para elementos de menor jerarquía
+$cp-tertiary: $cp-light-orange;
 $cp-tertiary-light: lighten($cp-tertiary, 10%);
 $cp-tertiary-dark: darken($cp-tertiary, 10%);
+
+// Variantes con opacidad para superposiciones y estados
+$cp-primary-a90: rgba($cp-primary, 0.9);
+$cp-primary-a75: rgba($cp-primary, 0.75);
+$cp-primary-a50: rgba($cp-primary, 0.5);
+$cp-primary-a25: rgba($cp-primary, 0.25);
+$cp-primary-a10: rgba($cp-primary, 0.1);
+
+$cp-secondary-a90: rgba($cp-secondary, 0.9);
+$cp-secondary-a75: rgba($cp-secondary, 0.75);
+$cp-secondary-a50: rgba($cp-secondary, 0.5);
+$cp-secondary-a25: rgba($cp-secondary, 0.25);
+$cp-secondary-a10: rgba($cp-secondary, 0.1);
 
 // ===========================================
 // 2. COLORES PARA COMPONENTES Y ESTADOS
 // ===========================================
 // Colores específicos para diferentes componentes y estados
 
-// Colores para estados
+// Colores para estados con alto contraste
 $cp-success: #7AAA18;         // Color para éxito/completado
 $cp-warning: $cp-light-orange; // Color para advertencias
 $cp-danger: $cp-orange;        // Color para errores/peligro
 $cp-info: $cp-medium-blue;     // Color para información
+$cp-muted: #6c757d;            // Color para texto secundario
 
 // Colores para bloques laterales
 $cp-block-1: #D9651A;   // Naranja (bloque lateral 1)
@@ -50,15 +90,23 @@ $cp-block-5: #31335E;   // Azul oscuro (bloque lateral 5)
 $cp-block-6: $cp-orange; // Naranja (bloque lateral 6)
 $cp-block-7: #777;      // Gris (bloque lateral 7)
 
+// Colores para superficies y fondos
+$cp-surface-light: #FFFFFF;    // Fondo de tarjetas y elementos elevados
+$cp-surface-medium: #F9F9F9;   // Fondo de página
+$cp-surface-dark: #F2F2F2;     // Fondo de áreas destacadas
+$cp-border-light: #E8E8E8;     // Bordes ligeros
+$cp-border-medium: #D5DDEA;    // Bordes estándar
+
 // ===========================================
 // 3. MODO OSCURO
 // ===========================================
-// Variables para el modo oscuro del tema
+// Variables para el modo oscuro del tema con contraste mejorado
 
 // Colores base para modo oscuro
 $cp-dm-bg: #121212;            // Fondo principal
 $cp-dm-card-bg: #1E1E1E;       // Fondo de tarjetas y bloques
 $cp-dm-text: #E0E0E0;          // Texto principal
+$cp-dm-text-secondary: rgba($cp-dm-text, 0.85); // Texto secundario
 $cp-dm-border: #383838;        // Bordes
 $cp-dm-input-bg: #2D2D2D;      // Fondos de campos de entrada
 
@@ -74,11 +122,18 @@ $cp-dm-primary: $cp-dm-dark-blue;
 $cp-dm-secondary: $cp-dm-orange;
 $cp-dm-tertiary: $cp-dm-light-orange;
 
+// Variantes con opacidad para modo oscuro
+$cp-dm-primary-a75: rgba($cp-dm-primary, 0.75);
+$cp-dm-primary-a50: rgba($cp-dm-primary, 0.5);
+$cp-dm-primary-a25: rgba($cp-dm-primary, 0.25);
+$cp-dm-primary-a10: rgba($cp-dm-primary, 0.1);
+
 // Colores para estados en modo oscuro
 $cp-dm-success: #619B3D;         // Verde oscuro para éxito
 $cp-dm-warning: $cp-dm-light-orange; // Naranja para advertencias
 $cp-dm-danger: $cp-dm-orange;    // Naranja intenso para errores
 $cp-dm-info: $cp-dm-medium-blue; // Azul para información
+$cp-dm-muted: #8F8F8F;           // Gris claro para texto secundario
 
 // Colores para bloques laterales en modo oscuro
 $cp-dm-block-1: #B85518;   // Naranja oscuro (menos saturado)
@@ -95,13 +150,30 @@ $cp-dm-block-7: #555555;   // Gris (más oscuro para fondos oscuros)
 // Variables para fuentes, tamaños y espaciado
 
 // Familias de fuentes
-$cp-font-primary: 'Open Sans', sans-serif;
-$cp-font-secondary: 'Open Sans', sans-serif;
-$cp-font-headings: 'Open Sans', sans-serif;
+$cp-font-primary: 'Inter', sans-serif;
+$cp-font-secondary: 'Inter', sans-serif;
+$cp-font-headings: 'Inter', sans-serif;
+
+// Tamaños de fuente escalables
+$font-size-xs: 0.75rem;     // 12px
+$font-size-sm: 0.875rem;    // 14px
+$font-size-base: 1rem;      // 16px
+$font-size-md: 1.125rem;    // 18px
+$font-size-lg: 1.25rem;     // 20px
+$font-size-xl: 1.5rem;      // 24px
+$font-size-xxl: 2rem;       // 32px
+
+// Pesos de fuente
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
 
 // Alturas y espaciados críticos
 $cp-navbar-height: 80px;
 $cp-footer-height: 80px;
+$cp-sidebar-width: 280px;
 
 // ===========================================
 // 5. COMPATIBILIDAD CON VARIABLES LEGACY
@@ -185,3 +257,22 @@ $my-gris2-dm: #444444;
 // Variables específicas
 $my-loginfooterheight: $cp-footer-height;
 $body-bg: #FFFFFF;
+
+// Variables CSS para facilitar cambio entre modos claro y oscuro
+:root {
+    --cp-text-color: #{$cp-gray};
+    --cp-bg-color: #{$cp-surface-medium};
+    --cp-card-bg: #{$cp-surface-light};
+    --cp-border-color: #{$cp-border-medium};
+    --cp-primary: #{$cp-primary};
+    --cp-secondary: #{$cp-secondary};
+    --cp-tertiary: #{$cp-tertiary};
+    --cp-success: #{$cp-success};
+    --cp-info: #{$cp-info};
+    --cp-warning: #{$cp-warning};
+    --cp-danger: #{$cp-danger};
+}
+
+// Variables para transiciones
+$transition-base: all $transition-speed-default $transition-curve-default;
+$transition-hover: all $transition-speed-default $transition-curve-bounce;

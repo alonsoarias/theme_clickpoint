@@ -1,4 +1,9 @@
 /*******************
+Combinación de clickpoint.scss y custom.css
+No incluye optimizaciones - Mantiene los estilos originales
+*******************/
+
+/*******************
 Headings
 *******************/
 h1,
@@ -14,7 +19,7 @@ h4,
 h6,
 .h6 {
     color: $cp-primary;
-    font-family: $cp-font-headings;
+    font-family: $headings-font-family;
     font-weight: $headings-font-weight;
 }
 
@@ -37,7 +42,7 @@ a:hover {
 .nav-pills {
     .nav-link.active,
     .show > .nav-link {
-        color: #ffffff;
+        color: $color-white;
         background-color: $cp-primary;
     }
 }
@@ -53,7 +58,7 @@ a:hover {
 
 .event h3.name,
 .calendar_event_course {
-    color: white;
+    color: $color-white;
     text-shadow: 1px 1px 1px #000;
 }
 
@@ -102,7 +107,7 @@ a:hover {
 /* END Personalizaciones Próximos Eventos */
 
 .que .formulation {
-    background-color: white;
+    background-color: $color-white;
     border: 1px solid;
     border-color: lighten($cp-medium-blue, 30%);
 }
@@ -137,7 +142,7 @@ a:hover {
 
 .block button.dropdown-toggle:hover {
     background-color: $cp-secondary;
-    color: white;
+    color: $color-white;
     box-shadow: none;
     border-color: $cp-secondary;
     border: 1px solid $cp-secondary;
@@ -163,7 +168,7 @@ section.node-category {
 
 .block .show > .btn-outline-secondary.dropdown-toggle {
     background-color: $cp-secondary;
-    color: white;
+    color: $color-white;
     border-color: $cp-secondary;
     border: 1px solid $cp-secondary;
     outline: none !important;
@@ -175,11 +180,11 @@ section.node-category {
 
 .block .dropdown-item:focus {
     background-color: $cp-primary;
-    color: white;
+    color: $color-white;
 }
 
 #block-region-side-pre > section > .card-header > h5.card-title {
-    color: white;
+    color: $color-white;
 }
 
 #sidepreopen-control {
@@ -475,7 +480,7 @@ section.node-category {
     color: #696969;
 }
 .block .card-body {
-    background-color: white;
+    background-color: $color-white;
     border-radius: 0px 0px 24px 24px;
 }
 
@@ -489,7 +494,7 @@ section.node-category {
 }
 .block button.dropdown-toggle:hover {
     background-color: #bdbdbc;
-    color: white;
+    color: $color-white;
 }
 
 .license-notice {
@@ -498,7 +503,7 @@ section.node-category {
 
 .navbar #usernavigation .userinitials {
     background-color: $cp-medium-blue;
-    color: #ffffff;
+    color: $color-white;
 }
 
 /* Mejorando tamaño de tipografías para lectura */
@@ -585,14 +590,14 @@ a.nav-link {
 .dashboard-card .course-info-container .edw-card-design-hd #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th span.categoryname.h-semibold-5,
 #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.h-semibold-5,
 .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.edw-msg-panel-badge {
-    color: #fff;
+    color: $color-white;
     background-color: $cp-tertiary; /* Naranja claro */
     font-size: .8em;
 }
 
 /* Asegurar que las clases categoryname, text-truncate, small-info-semibold se vean bien */
 .categoryname.text-truncate.small-info-semibold {
-    color: #fff;
+    color: $color-white;
     background-color: $cp-tertiary; /* Naranja claro */
     font-size: 0.8em;
 }
@@ -600,7 +605,7 @@ a.nav-link {
 /* Nueva regla para courseindex-section-title con clases adicionales */
 #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
     padding: 10px 24px;
-    color: #ffffff;
+    color: $color-white;
     background-color: $cp-primary;
     border-radius: 0;
     justify-content: space-between;
@@ -609,7 +614,7 @@ a.nav-link {
     font-size: 24px;
     height: 24px;
     width: 24px;
-    color: #ffffff;
+    color: $color-white;
 }
 
 /* Botones */
@@ -618,17 +623,17 @@ a.nav-link {
 .btn-primary {
     background-color: $cp-secondary; // Naranja para el fondo
     border-color: $cp-secondary; // Naranja para el borde
-    color: #ffffff; // Blanco para el texto
+    color: $color-white; // Blanco para el texto
 
     .fa,
     .edw-icon {
-        color: #ffffff; // Blanco para los iconos
+        color: $color-white; // Blanco para los iconos
     }
 
     &:hover {
         background-color: $cp-primary; // Azul oscuro en hover
         border-color: $cp-primary; // Azul oscuro para el borde en hover
-        color: #ffffff; // Blanco para el texto en hover
+        color: $color-white; // Blanco para el texto en hover
     }
 
     &:not(:disabled):not(.disabled):active,
@@ -637,14 +642,14 @@ a.nav-link {
     .show > &.dropdown-toggle {
         background-color: $cp-secondary; // Naranja en activo
         border-color: $cp-secondary; // Naranja en activo
-        color: #ffffff; // Blanco en activo
+        color: $color-white; // Blanco en activo
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
         background-color: $cp-primary; // Azul oscuro en foco
         border-color: $cp-primary; // Azul oscuro en foco
-        color: #ffffff; // Blanco en foco
+        color: $color-white; // Blanco en foco
     }
 }
 
@@ -652,17 +657,17 @@ a.nav-link {
 .btn-secondary {
     background-color: $cp-primary; // Azul oscuro para el fondo
     border-color: $cp-primary; // Azul oscuro para el borde
-    color: #ffffff; // Blanco para el texto
+    color: $color-white; // Blanco para el texto
 
     .fa,
     .edw-icon {
-        color: #ffffff; // Blanco para los iconos
+        color: $color-white; // Blanco para los iconos
     }
 
     &:hover {
         background-color: $cp-tertiary; // Naranja claro en hover
         border-color: $cp-tertiary; // Naranja claro en hover
-        color: #ffffff; // Blanco para el texto en hover
+        color: $color-white; // Blanco para el texto en hover
     }
 
     &:not(:disabled):not(.disabled):active,
@@ -671,27 +676,27 @@ a.nav-link {
     .show > &.dropdown-toggle {
         background-color: $cp-primary; // Azul oscuro en activo
         border-color: $cp-primary; // Azul oscuro en activo
-        color: #ffffff; // Blanco en activo
+        color: $color-white; // Blanco en activo
     }
 
     &:not(:disabled):not(.disabled):focus,
     &:not(:disabled):not(.disabled).focus {
         background-color: $cp-tertiary; // Naranja claro en foco
         border-color: $cp-tertiary; // Naranja claro en foco
-        color: #ffffff; // Blanco en foco
+        color: $color-white; // Blanco en foco
     }
 }
 
 /* Botones Específicos */
 button.btn.btn-primary.icon-no-margin.p-0 {
     background-color: $cp-secondary; // Naranja para el fondo
-    border-color: white; // Color blanco para el borde
-    color: white; // Color del texto
+    border-color: $color-white; // Color blanco para el borde
+    color: $color-white; // Color del texto
 
     &:hover {
         background-color: $cp-secondary; // Naranja para el fondo en hover
-        border-color: white; // Mantiene el borde blanco en hover
-        color: white !important; // Color del texto en hover
+        border-color: $color-white; // Mantiene el borde blanco en hover
+        color: $color-white !important; // Color del texto en hover
     }
 
     &:not(:disabled):not(.disabled):active,
@@ -699,23 +704,23 @@ button.btn.btn-primary.icon-no-margin.p-0 {
     &:not(:disabled):not(.disabled):active:focus,
     .show > &.dropdown-toggle {
         background-color: darken($cp-secondary, 10%); // Oscurece el color secundario para el estado activo
-        border-color: white; // Mantiene el borde blanco para el estado activo
-        color: white; // Mantiene el texto blanco para mejor visibilidad
+        border-color: $color-white; // Mantiene el borde blanco para el estado activo
+        color: $color-white; // Mantiene el texto blanco para mejor visibilidad
 
         .fa,
         .edw-icon {
-            color: white; // Mantiene el color de los íconos en blanco
+            color: $color-white; // Mantiene el color de los íconos en blanco
         }
     }
 }
 
 .btn-floating {
-    border-color: white;
+    border-color: $color-white;
 }
 
 .btn-primary .fa,
 .btn-primary .edw-icon {
-    color: white !important;
+    color: $color-white !important;
 }
 
 /* Personalizaciones Próximos Eventos */
@@ -932,20 +937,796 @@ body.dark-mode {
     }
 }
 
-/* Responsive rules */
-@media (min-width: 768px) {
-    /* Estilos responsive para tablets y escritorios pequeños */
+/* Footer Styles */
+.my-credit-footer-wrapper {
+    background-color: $my-gris;
+    color: $cp-primary;
+    font-size: 15px;
 }
 
-@media (min-width: 1200px) {
-    /* Estilos responsive para escritorios grandes */
+a.my-credit-link,
+a.my-credit-link:hover {
+    color: $cp-primary;
 }
 
-@media (max-width: 767px) {
-    /* Estilos responsive para móviles */
-    body.dark-mode {
-        .navbar {
-            background-color: $cp-dm-primary;
+#page-header.hasbackground.design-1 .header-main-section .category .badge {
+    color: white;
+    background-color: $cp-medium-blue;
+}
+
+.position-absolute.w-100.h-100 {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.0) -5%, transparent 120%) !important;
+}
+
+#page-header.hasbackground.design-1 {
+    min-height: 270px !important;
+}
+
+#format_menutopic_menu .navbar-brand {
+    display: none !important;
+}
+
+div#navbarmenutopic {
+    padding: 0 16px !important;
+    height: 80px !important;
+}
+
+#page-footer .copyright {
+    background-color: $my-gris; /* Reemplazado con $my-gris */
+    color: $cp-primary;
+    text-align: center;
+    min-height: inherit;
+    margin-bottom: 0;
+}
+
+#top-footer {
+    background-color: $cp-primary; /* Azul oscuro */
+    color: $color-white;
+    margin: 0 -15px;
+}
+
+#top-footer .my-about,
+#top-footer h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#top-footer h3 {
+    margin-bottom: 15px;
+    /* Espacio debajo del título */
+}
+
+/* Button Styles */
+.btn-link,
+.btn-link:hover,
+.btn-outline-primary,
+.btn-outline-primary:hover {
+    background-color: $color-white;
+}
+
+.btn-link {
+    color: $cp-tertiary; /* Naranja claro */
+    border-color: $cp-primary;
+}
+
+.btn-link:hover {
+    color: $cp-primary; /* Azul oscuro */
+    border-color: $cp-tertiary;
+}
+
+.btn-outline-primary {
+    color: $cp-tertiary;
+    border-color: $cp-tertiary;
+}
+
+.btn-outline-primary:hover {
+    color: $color-white;
+    background-color: darken($cp-tertiary, 10%);
+    border-color: darken($cp-tertiary, 10%);
+}
+
+/* Badge Styles */
+.badge-info,
+.badge-info:hover,
+.badge-success,
+.badge-succes:hover {
+    color: $cp-primary;
+    transition: background-color 0.3s;
+}
+
+.badge-info {
+    background-color: $cp-medium-blue;
+}
+
+.badge-info:hover {
+    background-color: $cp-primary;
+    color: $color-white;
+}
+
+.badge-success {
+    background-color: $cp-success;
+}
+
+.badge-succes:hover {
+    background-color: darken($cp-success, 10%);
+}
+
+/* List and Link Styles */
+
+.text-info,
+.users-list-name,
+#page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
+    color: $cp-primary !important;
+}
+
+/* Calendar Styles */
+.maincalendar .calendarmonth td.today .day-number-circle {
+    color: $color-white;
+    background-color: $cp-primary;
+}
+
+section#region-main .maincalendar td.today span.day-number-circle, 
+aside:not(#block-region-side-pre) .maincalendar td.today span.day-number-circle {
+    background-color: $cp-medium-blue;
+}
+
+/* Miscellaneous Styles */
+#page-footer .footer-container hr,
+.progress-bar {
+    background-color: $cp-primary;
+    border-top: 1px solid $color-white;
+}
+
+.about-text-content {
+    text-align: justify;
+    padding: 0 15px;
+}
+
+@media (max-width: 768px) {
+    .about-text-content {
+        padding: 0 10px;
+        /* Menor padding en dispositivos más pequeños */
+    }
+}
+
+/* Autocomplete Styles */
+.form-autocomplete-suggestions li:hover,
+.form-autocomplete-suggestions li:focus,
+.form-autocomplete-suggestions li[aria-selected="true"] {
+    padding-left: 12px;
+}
+
+.form-autocomplete-suggestions li:hover {
+    background-color: $cp-primary; /* Cambiado a $cp-primary según botón */
+    color: $color-white;
+    border-left: 4px solid $cp-primary;
+}
+
+.form-autocomplete-suggestions li:focus {
+    background-color: $my-gris; /* Definir o ajustar según necesidad */
+    color: $cp-primary;
+    border-left: 4px solid $cp-tertiary;
+}
+
+.form-autocomplete-suggestions li[aria-selected="true"] {
+    background-color: $cp-primary;
+    color: $color-white;
+    border-left: 4px solid $cp-tertiary;
+}
+
+/* Navigation Styles */
+.nav-pills-custom .nav-link {
+    position: relative;
+}
+
+@media (min-width: 992px) {
+    .nav-pills-custom .nav-link::before {
+        content: '';
+        display: block;
+        border-top: 8px solid transparent;
+        border-left: 10px solid $cp-primary;
+        border-bottom: 8px solid transparent;
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+}
+
+.nav-pills-custom .nav-link.active::before {
+    opacity: 1;
+}
+
+/* Collapsible Link Styles */
+.collapsible-link,
+.collapsible-link::before,
+.collapsible-link[aria-expanded='true']::before {
+    position: relative;
+    display: block;
+    text-align: left;
+}
+
+.collapsible-link::before {
+    content: '\f107';
+    top: 50%;
+    right: 0.8rem;
+    transform: translateY(-50%);
+    font-family: 'FontAwesome';
+    font-size: 1.1rem;
+}
+
+.collapsible-link[aria-expanded='true']::before {
+    content: '\f106';
+}
+
+/* Pagination Styles */
+.page-link,
+.page-link:hover,
+.page-item.active .page-link {
+    color: $cp-primary;
+    text-decoration: none;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: darken($cp-primary, 10%);
+    background-color: #e9ecef;
+    border-color: #d5ddea;
+}
+
+.page-item.active .page-link {
+    color: $color-white;
+    background-color: $cp-primary;
+    border-color: $cp-primary;
+}
+
+/* Floating Buttons */
+.floating-buttons-wrapper {
+    position: fixed;
+    bottom: 80px;
+    right: auto;
+    left: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+/*20240926*/
+.floating-buttons-wrapper > .btn-floating {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 48px;
+    margin-left: inherit;
+    transition: max-width 0.5s ease-in-out;
+    border-color: white;
+}
+
+/* Nueva regla para courseindex-section-title con clases adicionales */
+#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
+    padding: 10px 24px;
+    color: $color-white;
+    background-color: $cp-primary;
+    border-radius: 0;
+    justify-content: space-between;
+}
+
+/* Botones */
+
+/* Primary button styling */
+.btn-primary {
+    background-color: $cp-secondary;
+    border-color: $cp-secondary;
+    color: #ffffff;
+
+    .fa,
+    .edw-icon {
+        color: #ffffff;
+    }
+
+    &:hover {
+        background-color: $cp-primary;
+        border-color: $cp-primary;
+        color: #ffffff;
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    &:not(:disabled):not(.disabled):active:focus,
+    .show > &.dropdown-toggle {
+        background-color: $cp-secondary;
+        border-color: $cp-secondary;
+        color: #ffffff;
+    }
+
+    &:not(:disabled):not(.disabled):focus,
+    &:not(:disabled):not(.disabled).focus {
+        background-color: $cp-primary;
+        border-color: $cp-primary;
+        color: #ffffff;
+    }
+}
+
+/* Secondary button styling */
+.btn-secondary {
+    background-color: $cp-primary;
+    border-color: $cp-primary;
+    color: #ffffff;
+
+    .fa,
+    .edw-icon {
+        color: #ffffff;
+    }
+
+    &:hover {
+        background-color: $cp-tertiary;
+        border-color: $cp-tertiary;
+        color: #ffffff;
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    &:not(:disabled):not(.disabled):active:focus,
+    .show > &.dropdown-toggle {
+        background-color: $cp-primary;
+        border-color: $cp-primary;
+        color: #ffffff;
+    }
+
+    &:not(:disabled):not(.disabled):focus,
+    &:not(:disabled):not(.disabled).focus {
+        background-color: $cp-tertiary;
+        border-color: $cp-tertiary;
+        color: #ffffff;
+    }
+}
+
+/* Botones Específicos */
+button.btn.btn-primary.icon-no-margin.p-0 {
+    background-color: $cp-secondary;
+    border-color: white;
+    color: white;
+
+    &:hover {
+        background-color: $cp-secondary;
+        border-color: white;
+        color: white !important;
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    &:not(:disabled):not(.disabled):active:focus,
+    .show > &.dropdown-toggle {
+        background-color: darken($cp-secondary, 10%);
+        border-color: white;
+        color: white;
+
+        .fa,
+        .edw-icon {
+            color: white;
         }
     }
+}
+
+.btn-floating {
+    border-color: white;
+}
+
+.btn-primary .fa,
+.btn-primary .edw-icon {
+    color: white !important;
+}
+
+.navbar .edw-icon{
+    color: $cp-primary;
+}
+
+/* Personalizaciones Próximos Eventos */
+.block_calendar_upcoming .event {
+    border-left: 2px solid #ccc;
+    padding-left: 5px;
+}
+
+.block_calendar_upcoming .event.my-event-urgent {
+    border-color: $cp-secondary;
+}
+
+.block_calendar_upcoming .event.my-event-priority {
+    border-color: $cp-tertiary;
+}
+
+/* END Personalizaciones Próximos Eventos */
+
+/* Estilos base para la página de login */
+.login-page {
+    min-height: 100vh;
+    background-color: var(--color-bg-page);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    /* Contenedor principal */
+    .login-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        /* Grid layout */
+        .row {
+            margin: 0;
+            min-height: 100vh;
+        }
+    }
+}
+
+/* Estilos del formulario de login */
+.loginform {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--max-width-form);
+    animation: fadeIn 0.8s ease-out;
+
+    /* Mensaje de bienvenida */
+    .login-welcome-wrapper {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--color-text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+        }
+    }
+}
+
+.login-wrapper{
+    margin: 10%;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer */
+.footer {
+    background-color: var(--color-footer-bg);
+    padding: 1rem 0;
+    text-align: center;
+
+    .my-credit {
+        font-size: 0.875rem;
+        color: var(--color-text-secondary);
+    }
+}
+
+.carousel-item img {
+    object-fit: cover;
+    width: 100%;
+    height: 100vh;
+    max-height: 1080px; /* Para evitar estiramiento excesivo en pantallas muy altas */
+}
+
+.navbar [data-key="recentcourses"] {
+    display: none;
+}
+
+span.badge.badge-info {
+    color: $color-white;
+}
+span.badge.rounded-pill.bg-secondary.text-dark {
+    color: $color-white !important;
+}
+span.badge.bg-secondary.text-dark {
+    color: $color-white !important;
+}
+.about-text-content h4.data {
+    color: $color-white;
+}
+.about-text-content a.link-1 {
+    color: $color-white;
+}
+.login-logo img.mb-3.img-fluid {
+    width: 50%;
+}
+
+/* ============================================================
+   MODO OSCURO - ADAPTACIÓN PARA REMUI
+   ============================================================ */
+
+/* Estilos personalizados para modo oscuro en RemUI */
+body.dark-mode {
+    /* Footer */
+    .my-credit-footer-wrapper {
+        background-color: $my-gris-dm;
+        color: $cp-dm-text;
+    }
+    
+    a.my-credit-link,
+    a.my-credit-link:hover {
+        color: $cp-dm-text;
+    }
+    
+    #page-header.hasbackground.design-1 .header-main-section .category .badge {
+        background-color: $cp-dm-medium-blue;
+    }
+    
+    .position-absolute.w-100.h-100 {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) -5%, rgba(0, 0, 0, 0.2) 120%) !important;
+    }
+    
+    #page-footer .copyright {
+        background-color: $my-gris-dm;
+        color: $cp-dm-text;
+    }
+    
+    #top-footer {
+        background-color: $cp-dm-primary;
+    }
+    
+    /* Botones */
+    .btn-link {
+        color: $cp-dm-tertiary;
+        border-color: $cp-dm-primary;
+        background-color: $cp-dm-card-bg;
+    }
+    
+    .btn-link:hover {
+        color: $cp-dm-text;
+        border-color: $cp-dm-tertiary;
+        background-color: lighten($cp-dm-card-bg, 5%);
+    }
+    
+    .btn-outline-primary {
+        color: $cp-dm-tertiary;
+        border-color: $cp-dm-tertiary;
+        background-color: transparent;
+    }
+    
+    .btn-outline-primary:hover {
+        color: $cp-dm-text;
+        background-color: $cp-dm-tertiary;
+        border-color: $cp-dm-tertiary;
+    }
+    
+    /* Enlaces y navegación */
+    .text-info,
+    .users-list-name,
+    #page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
+        color: lighten($cp-dm-medium-blue, 15%) !important;
+    }
+    
+    .nav-pills-custom .nav-link::before {
+        border-left-color: $cp-dm-primary;
+    }
+    
+    /* Calendario */
+    .maincalendar .calendarmonth td.today .day-number-circle {
+        background-color: $cp-dm-primary;
+    }
+    
+    /* Otros elementos */
+    #page-footer .footer-container hr,
+    .progress-bar {
+        background-color: $cp-dm-primary;
+        border-top-color: $cp-dm-border;
+    }
+    
+    .about-text-content {
+        color: $cp-dm-text;
+    }
+    
+    /* Autocompletado */
+    .form-autocomplete-suggestions {
+        background-color: $cp-dm-card-bg;
+        border-color: $cp-dm-border;
+    }
+    
+    .form-autocomplete-suggestions li {
+        color: $cp-dm-text;
+    }
+    
+    .form-autocomplete-suggestions li:hover {
+        background-color: $cp-dm-primary;
+        border-left-color: $cp-dm-primary;
+    }
+    
+    .form-autocomplete-suggestions li:focus {
+        background-color: $my-gris-dm;
+        color: $cp-dm-text;
+        border-left-color: $cp-dm-tertiary;
+    }
+    
+    .form-autocomplete-suggestions li[aria-selected="true"] {
+        background-color: $cp-dm-primary;
+        border-left-color: $cp-dm-tertiary;
+    }
+    
+    /* Paginación */
+    .page-link {
+        background-color: $cp-dm-card-bg;
+        border-color: $cp-dm-border;
+        color: $cp-dm-text;
+    }
+    
+    .page-link:hover {
+        background-color: lighten($cp-dm-card-bg, 5%);
+        color: $cp-dm-tertiary;
+    }
+    
+    .page-item.active .page-link {
+        background-color: $cp-dm-primary;
+        border-color: $cp-dm-primary;
+    }
+    
+    /* Botones flotantes */
+    .floating-buttons-wrapper > .btn-floating {
+        background-color: $cp-dm-primary;
+        color: $cp-dm-text;
+    }
+    
+    /* Modo oscuro en login */
+    .login-page {
+        --color-bg-page: $cp-dm-bg;
+        --color-text-primary: $cp-dm-text;
+        --color-text-secondary: darken($cp-dm-text, 15%);
+        --color-footer-bg: $my-gris-dm;
+    }
+    
+    .loginform {
+        background-color: $cp-dm-card-bg;
+        
+        input, button {
+            background-color: $cp-dm-input-bg;
+            color: $cp-dm-text;
+            border-color: $cp-dm-border;
+        }
+    }
+    
+    /* Badges */
+    .badge-info {
+        background-color: $cp-dm-medium-blue;
+        color: $cp-dm-text;
+    }
+    
+    .badge-info:hover {
+        background-color: lighten($cp-dm-medium-blue, 10%);
+    }
+    
+    .badge-success {
+        background-color: $cp-dm-success;
+    }
+    
+    span.badge.badge-info, 
+    span.badge.rounded-pill.bg-secondary.text-dark,
+    span.badge.bg-secondary.text-dark {
+        color: $cp-dm-text !important;
+        background-color: $cp-dm-medium-blue !important;
+    }
+    
+    /* Eventos */
+    .block_calendar_upcoming .event {
+        border-left-color: $cp-dm-border;
+    }
+    
+    .block_calendar_upcoming .event.my-event-urgent {
+        border-color: $cp-dm-secondary;
+    }
+    
+    .block_calendar_upcoming .event.my-event-priority {
+        border-color: $cp-dm-tertiary;
+    }
+    
+    /* Course index */
+    #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
+        background-color: $cp-dm-primary;
+    }
+    
+    /* Bloques laterales con los nuevos colores para modo oscuro */
+    #block-region-side-pre > section:nth-of-type(7n) > .card-header {
+        background-color: $cp-dm-block-7;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 1) > .card-header {
+        background-color: $cp-dm-block-1;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 2) > .card-header {
+        background-color: $cp-dm-block-2;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 3) > .card-header {
+        background-color: $cp-dm-block-3;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 4) > .card-header {
+        background-color: $cp-dm-block-4;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 5) > .card-header {
+        background-color: $cp-dm-block-5;
+    }
+    
+    #block-region-side-pre > section:nth-of-type(7n + 6) > .card-header {
+        background-color: $cp-dm-block-6;
+    }
+    
+    #block-region-side-pre > section > .card-body {
+        background-color: darken($cp-dm-card-bg, 3%);
+    }
+}
+
+/* Media queries */
+@media (max-width: 991.98px) {
+    .loginform {
+        margin: 5%;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body.dark-mode .loginform .login-welcome-wrapper h2 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body.dark-mode .loginform {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+
+/* Estilos para estadísticas */
+.edw-stats-wrapper .stat-block .inner .edw-icon {
+    font-size: 44px;
+    display: flex;
+    color: $cp-secondary;
+}
+
+h6, .h6, .h-regular-6, .h-semibold-6, .epb_custom_modal .advancedblocktab .left-sidebar .left-sidebar-mid-region .block-category-select-mob .btn, 
+.epb_custom_modal .advancedblocktab .left-sidebar .left-sidebar-mid-region .block-category-select-mob #page-calendar-view .cal_courses_flt, 
+#page-calendar-view .epb_custom_modal .advancedblocktab .left-sidebar .left-sidebar-mid-region .block-category-select-mob .cal_courses_flt, 
+.block_timeline .block-timeline .edw-timeline-event-list-item .coursename-action, 
+#page-admin-roles-permissions [role="main"] .rolecap .allowedroles span, 
+#page-admin-roles-permissions [role="main"] .rolecap .forbiddenroles span, 
+#page-admin-roles-override [role="main"] .rolecap .allowedroles span, 
+#page-admin-roles-override [role="main"] .rolecap .forbiddenroles span, 
+#page-admin-roles-check [role="main"] .rolecap .allowedroles span, 
+#page-admin-roles-check [role="main"] .rolecap .forbiddenroles span, 
+#page-admin-roles-check [role="main"] #chooseuser h3, 
+#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #reportuser optgroup, 
+#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #userselector_options #userselector_options_sizer #userselector_options_caption, 
+#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #userselector_options #userselector_options_sizer #userselector_options_caption a, 
+#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #userselector_options #userselector_options_sizer #userselector_options_caption a:hover, 
+#page-admin-roles-permissions table.rolecap thead, 
+#page-admin-roles-override table.rolecap thead, 
+#page-admin-roles-check table.rolecap thead, 
+.h-bold-6, .h-exbold-6 {
+    text-transform: inherit;
+    color: $cp-medium-blue;
+    font-size: .875rem;
+}
+
+a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: $cp-medium-blue;
+    transition: color 0.3s ease-in-out;
 }
