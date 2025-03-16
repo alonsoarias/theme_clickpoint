@@ -1,1198 +1,677 @@
-/*******************
-Combinación de clickpoint.scss y custom.css
-No incluye optimizaciones - Mantiene los estilos originales
-*******************/
+/********************************************
+ * SCSS/clickpoint.scss
+ * Asegúrate de importar primero: @import "custom_variables";
+ ********************************************/
 
-/*******************
-Headings
-*******************/
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-.h5,
-.h5,
-h6,
-.h6 {
-    color: $cp-primary;
-    font-family: $headings-font-family;
-    font-weight: $headings-font-weight;
-}
+/* ==========================================
+   TABLA DE CONTENIDOS
+   ==========================================
+   1. Variables y mixins
+   2. Typografía y textos
+   3. Componentes de navegación
+   4. Botones y controles
+   5. Bloques y tarjetas
+   6. Íconos para bloques
+   7. Elementos de formulario
+   8. Páginas específicas (Login)
+   9. Calendario y eventos
+   10. Animaciones y transiciones
+   11. Media queries y responsive
+   12. Utilidades y ajustes menores
+   13. Dropdowns y controles específicos
+   14. Footer styles
+   ========================================== */
 
-h1 {
-    color: $cp-primary;
-}
-h1.h2.header-heading {
-    font-weight: bold !important;
-}
-a {
-    color: $cp-medium-blue;
-}
-a:hover {
-    color: $cp-tertiary;
-}
-#top-footer h3 {
-    color: white;
+/* ===========================================
+   1. MIXINS Y UTILIDADES
+   =========================================== */
+
+// Mixin para transiciones suaves
+@mixin smooth-transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
 }
 
-.nav-pills {
-    .nav-link.active,
-    .show > .nav-link {
-        color: $color-white;
-        background-color: $cp-primary;
+// Mixin para efectos hover en botones mejorado
+@mixin button-hover-effect {
+  @include smooth-transition(transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                            box-shadow 0.3s ease, 
+                            background-color 0.3s ease);
+  
+  &:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 5px 15px rgba($color-black, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 2px 5px rgba($color-black, 0.1);
+  }
+}
+
+// Mixin para animación de entrada escalonada
+@mixin staggered-animation($animation, $base-delay: 0.1s, $items: 4) {
+  opacity: 0;
+  animation: $animation 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  
+  @for $i from 1 through $items {
+    &:nth-of-type(#{$i}) {
+      animation-delay: $base-delay * $i;
     }
-}
-
-.edw-tabs-navigation .nav-tabs .nav-item .nav-link.active,
-.edw-tabs-navigation .nav-tabs .nav-item .nav-link:hover,
-.edw-tabs-navigation .nav-tabs .nav-item .nav-link:focus {
-    color: $cp-primary;
-}
-.edw-tabs-navigation .nav-tabs .nav-item .nav-link.active::before {
-    border-bottom: 3px solid $cp-primary;
-}
-
-.event h3.name,
-.calendar_event_course {
-    color: $color-white;
-    text-shadow: 1px 1px 1px #000;
-}
-
-.event a.card-link {
-    font-weight: bold;
-    border-bottom: 2px dotted;
-    font-size: 107%;
-}
-
-/* Personalizaciones Próximos Eventos */
-.block_calendar_upcoming .event {
-    border-left: 2px solid #ccc;
-    padding-left: 5px;
-}
-
-.block-myoverview [data-region="filter"] .nav-grouping-selector .nav {
-    margin: 10px 17px 16px 17px;
-}
-.block-myoverview
-    [data-region="filter"]
-    .all-filter-wrapper
-    .nav-display-selector-wrapper
-    .nav-display-selector
-    .nav
-    .nav-item
-    .nav-link
-    [aria-current="true"] {
-    color: $cp-primary;
-}
-
-.block-myoverview [data-region="filter"] .nav-grouping-selector .nav li.nav-item [aria-current="true"]::after {
-    border-bottom: 3px solid $cp-primary;
-}
-.block_calendar_upcoming .event.my-event-urgent {
-    border-color: $cp-secondary;
-}
-
-.block_calendar_upcoming .event.my-event-priority {
-    border-color: $cp-tertiary;
-}
-
-.badge.badge-danger {
-    background-color: $cp-secondary;
-}
-
-/* END Personalizaciones Próximos Eventos */
-
-.que .formulation {
-    background-color: $color-white;
-    border: 1px solid;
-    border-color: lighten($cp-medium-blue, 30%);
-}
-
-.que.informationitem .formulation {
-    background-color: lighten($cp-medium-blue, 40%);
-    border-color: lighten($cp-medium-blue, 30%);
-}
-
-.que.informationitem .info {
-    margin-bottom: 5px;
-}
-
-.activityinstance a {
-    text-transform: none;
-}
-
-.fng-block-header {
-    color: $cp-primary;
-}
-
-.block .block-cards .multiline {
-    color: $cp-primary;
-    font-size: 20px;
-}
-
-.block button.dropdown-toggle {
-    box-shadow: none;
-    border-color: $cp-tertiary;
-    border: 1px solid $cp-tertiary;
-}
-
-.block button.dropdown-toggle:hover {
-    background-color: $cp-secondary;
-    color: $color-white;
-    box-shadow: none;
-    border-color: $cp-secondary;
-    border: 1px solid $cp-secondary;
-}
-
-.block {
-    margin: 1px;
-}
-
-section.node-category {
-    margin: 2px;
-}
-
-.block .show > .btn-outline-secondary.dropdown-toggle:focus {
-    border-color: $cp-secondary;
-    background-color: $cp-secondary;
-    outline: none !important;
-    outline-width: 0 !important;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-}
-
-.block .show > .btn-outline-secondary.dropdown-toggle {
-    background-color: $cp-secondary;
-    color: $color-white;
-    border-color: $cp-secondary;
-    border: 1px solid $cp-secondary;
-    outline: none !important;
-    outline-width: 0 !important;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-}
-
-.block .dropdown-item:focus {
-    background-color: $cp-primary;
-    color: $color-white;
-}
-
-#block-region-side-pre > section > .card-header > h5.card-title {
-    color: $color-white;
-}
-
-#sidepreopen-control {
-    background-color: $cp-tertiary;
-}
-
-#sidepreopen-control:hover {
-    box-shadow: 0 0 6px $cp-secondary;
-    background-color: $cp-secondary;
-}
-
-.block h5.card-title:before {
-    font-family: "Font Awesome 6 Free"; // Actualizado para Font Awesome 6
-    font-weight: 900; // Asegura el estilo sólido
-    margin-right: 8px; // Espacio entre el ícono y el texto
-}
-
-/* Iconos para diferentes bloques */
-.block.block_accessreview h5.card-title:before {
-    content: "\f013"; /* Icono de configuración */
-}
-
-.block.block_activity_modules h5.card-title:before {
-    content: "\f24d"; /* Icono de libro */
-}
-
-.block.block_activity_results h5.card-title:before {
-    content: "\f080"; /* Icono de gráfico de barras */
-}
-
-.block.block_admin_bookmarks h5.card-title:before {
-    content: "\f02e"; /* Icono de marcador */
-}
-
-.block.block_badges h5.card-title:before {
-    content: "\f02b"; /* Icono de insignia */
-}
-
-.block.block_blog_menu h5.card-title:before {
-    content: "\f0e6"; /* Icono de blog */
-}
-
-.block.block_blog_recent h5.card-title:before {
-    content: "\f1ea"; /* Icono de historial */
-}
-
-.block.block_blog_tags h5.card-title:before {
-    content: "\f02c"; /* Icono de etiquetas */
-}
-
-.block.block_calendar_month h5.card-title:before {
-    content: "\f073"; /* Icono de calendario */
-}
-
-.block.block_calendar_upcoming h5.card-title:before {
-    content: "\f017"; /* Icono de calendario para eventos próximos */
-}
-
-.block.block_checklist h5.card-title:before {
-    content: "\f00c"; /* Icono de verificación */
-}
-
-.block.block_comments h5.card-title:before {
-    content: "\f086"; /* Icono de comentarios */
-}
-
-.block.block_completion_progress h5.card-title:before {
-    content: "\f05d"; /* Icono de progreso */
-}
-
-.block.block_completionstatus h5.card-title:before {
-    content: "\f058"; /* Icono de check-circle */
-}
-
-.block.block_configurable_reports h5.card-title:before {
-    content: "\f080"; /* Icono de pie chart */
-}
-
-.block.block_dedication h5.card-title:before {
-    content: "\f004"; /* Icono de corazón */
-}
-
-.block.block_feedback h5.card-title:before {
-    content: "\f0e5"; /* Icono de comentarios */
-}
-
-.block.block_globalsearch h5.card-title:before {
-    content: "\f002"; /* Icono de búsqueda */
-}
-
-.block.block_glossary_random h5.card-title:before {
-    content: "\f02d"; /* Icono de libro abierto */
-}
-
-.block.block_grade_me h5.card-title:before {
-    content: "\f046"; /* Icono de gráfico */
-}
-
-.block.block_grade_overview h5.card-title:before {
-    content: "\f06a"; /* Icono de ojo */
-}
-
-.block.block_html h5.card-title:before {
-    content: "\f097"; /* Icono de código */
-}
-
-.block.block_mentees h5.card-title:before {
-    content: "\f501"; /* Icono de user-friends */
-}
-
-.block.block_messageteacher h5.card-title:before {
-    content: "\f27b"; /* Icono de sobre */
-}
-
-.block.block_mnet_hosts h5.card-title:before {
-    content: "\f0c2"; /* Icono de globo */
-}
-
-.block.block_multiblock h5.card-title:before {
-    content: "\f022"; /* Icono de clon */
-}
-
-.block.block_mycertificates h5.card-title:before {
-    content: "\f0a3"; /* Icono de certificado */
-}
-
-.block.block_myoverview h5.card-title:before {
-    content: "\f200"; /* Icono de dashboard */
-}
-
-.block.block_myprofile h5.card-title:before {
-    content: "\f007"; /* Icono de usuario */
-}
-
-.block.block_navigation h5.card-title:before {
-    content: "\f0e8"; /* Icono de navegación */
-}
-
-.block.block_news_items h5.card-title:before {
-    content: "\f1ea"; /* Icono de periódico */
-}
-
-.block.block_online_users h5.card-title:before {
-    content: "\f0c0"; /* Icono de usuarios */
-}
-
-.block.block_private_files h5.card-title:before {
-    content: "\f07c"; /* Icono de carpeta abierta */
-}
-
-.block.block_quiz_results h5.card-title:before {
-    content: "\f080"; /* Icono de gráfico de barras */
-}
-
-.block.block_recent_activity h5.card-title:before {
-    content: "\f073"; /* Icono de historial */
-}
-
-.block.block_recentlyaccesseditems h5.card-title:before {
-    content: "\f0ca"; /* Icono de lista */
-}
-
-.block.block_remuiblck h5.card-title:before {
-    content: "\f2c9"; /* Icono de layer-group */
-}
-
-.block.block_rss_client h5.card-title:before {
-    content: "\f09e"; /* Icono de RSS */
-}
-
-.block.block_search_forums h5.card-title:before {
-    content: "\f002"; /* Icono de búsqueda */
-}
-
-.block.block_section_links h5.card-title:before {
-    content: "\f0cb"; /* Icono de lista numerada */
-}
-
-.block.block_selfcompletion h5.card-title:before {
-    content: "\f058"; /* Icono de check-circle */
-}
-
-.block.block_settings h5.card-title:before {
-    content: "\f013"; /* Icono de engranaje */
-}
-
-.block.block_site_main_menu h5.card-title:before {
-    content: "\f0c9"; /* Icono de barras */
-}
-
-.block.block_social_activities h5.card-title:before {
-    content: "\f234"; /* Icono de usuarios */
-}
-
-.block.block_tag_flickr h5.card-title:before {
-    content: "\f16e"; /* Icono de Flickr */
-}
-
-.block.block_tag_youtube h5.card-title:before {
-    content: "\f167"; /* Icono de YouTube */
-}
-
-.block.block_tags h5.card-title:before {
-    content: "\f02c"; /* Icono de etiquetas */
-}
-
-.block.block_xp h5.card-title:before {
-    content: "\f091"; /* Icono de trofeo */
-}
-
-.block.block_myprogress h5.card-title:before {
-    content: "\f201"; /* Icono de línea de gráfico */
-}
-
-#block-region-side-pre > section:nth-of-type(7n) > .card-header {
-    background-color: $cp-block-7;
-    border-radius: 0px;
-}
-#block-region-side-pre > section:nth-of-type(7n) > .card-body {
-    background-color: #f5f8ff;
-    border-radius: 0px 0px 24px 24px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 1) > .card-header {
-    background-color: $cp-block-1;
-    border-radius: 0px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 1) > .card-body {
-    background-color: #f5f8ff;
-    border-radius: 0px 0px 24px 24px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 2) > .card-header {
-    background-color: $cp-block-2;
-    border-radius: 0px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 2) > .card-body {
-    background-color: #f5f8ff;
-    border-radius: 0px 0px 24px 24px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 3) > .card-header {
-    background-color: $cp-block-3;
-    border-radius: 0px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 3) > .card-body {
-    background-color: #f5f8ff;
-    border-radius: 0px 0px 24px 24px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 4) > .card-header {
-    background-color: $cp-block-4;
-    border-radius: 0px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 4) > .card-body {
-    background-color: #f5f8ff;
-    border-radius: 0px 0px 24px 24px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 5) > .card-header {
-    background-color: $cp-block-5;
-    border-radius: 0px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 5) > .card-body {
-    background-color: #f5f8ff;
-    border-radius: 0px 0px 24px 24px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 6) > .card-header {
-    background-color: $cp-block-6;
-    border-radius: 0px;
-}
-
-#block-region-side-pre > section:nth-of-type(7n + 6) > .card-body {
-    background-color: #f5f8ff;
-    border-radius: 0px 0px 24px 24px;
-}
-
-#block-region-side-pre .block {
-    border-bottom: 0px;
-}
-
-.card-header.idigital-block-header {
-    background-color: #e8e8e8;
-    border-radius: 24px 24px 0px 0px;
-}
-.block .card-title {
-    color: #696969;
-}
-.block .card-body {
-    background-color: $color-white;
-    border-radius: 0px 0px 24px 24px;
-}
-
-.block_timeline .block-timeline [data-region="day-filter"] .dropdown-toggle,
-.block_timeline .block-timeline [data-region="view-selector"] .dropdown-toggle {
-    border: 1px solid #d5ddea;
-    color: $cp-primary;
-}
-.block_timeline .block-timeline [data-region="timeline-view"] {
-    box-shadow: none;
-}
-.block button.dropdown-toggle:hover {
-    background-color: #bdbdbc;
-    color: $color-white;
-}
-
-.license-notice {
-    display: none;
-}
-
-.navbar #usernavigation .userinitials {
-    background-color: $cp-medium-blue;
-    color: $color-white;
-}
-
-/* Mejorando tamaño de tipografías para lectura */
+  }
+}
+
+// Mixin para efectos ripple en botones mejorado
+@mixin ripple-effect {
+  position: relative;
+  overflow: hidden;
+  
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, $color-white 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+  }
+  
+  &:active:after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+  }
+}
+
+// Mixin para focus interactivo
+@mixin interactive-focus {
+  &:focus {
+    outline: none;
+    animation: focusPulse 1s ease-in-out;
+    box-shadow: 0 0 0 3px rgba($color-secondary, 0.25);
+  }
+}
+
+/* ===========================================
+   2. TYPOGRAFÍA Y TEXTOS
+   =========================================== */
+
+// Encabezados con interactividad mejorada
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  color: $color-primary;
+  font-family: $headings-font-family;
+  @include smooth-transition(color 0.3s, transform 0.3s, text-shadow 0.3s);
+  
+  &:hover {
+    text-shadow: 0 0 1px rgba($color-primary, 0.2);
+    transform: translateX(2px);
+  }
+}
+
+// Links con animación mejorada
+a {
+  color: $color-primary;
+  position: relative;
+  @include smooth-transition(color 0.3s, transform 0.2s);
+  
+  &:hover {
+    color: $color-secondary;
+    text-decoration: none;
+    transform: translateX(1px); 
+  }
+  
+  // Efecto underline animado mejorado
+  &.animated-link {
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: $color-secondary;
+      @include smooth-transition(width 0.3s, left 0.3s, height 0.2s);
+    }
+    
+    &:hover:after {
+      width: 100%;
+      height: 3px;
+    }
+    
+    &:active:after {
+      background-color: darken($color-secondary, 10%);
+    }
+  }
+}
+
+// Footer headings con animación
+#top-footer h3 {
+  color: $color-white;
+}
+
+// Mejoras tipográficas con animación
 .description .course-description-item,
 #page-content {
-    font-size: 0.9775rem;
-    font-weight: 400;
-    line-height: 1.52;
+  font-size: 0.9775rem;
+  font-weight: 400;
+  line-height: 1.52;
+  @include smooth-transition(background-color 0.3s);
+  
+  &:hover {
+    background-color: rgba($color-primary, 0.02);
+  }
 }
 
-/* Mejora en revisión de intentos de cuestionarios */
-.que.correct .outcome,
-.que.correct .comment {
-    background-color: #dffae7;
-    border-color: #c7e9d1;
-    color: #0a1f22;
-}
-
+// Breadcrumbs y fuentes de navegación con interactividad
 nav.moremenu.navigation.observed {
-    font-size: 0.9775rem;
+  font-size: 0.9775rem;
+  
+  .nav-link {
+    @include smooth-transition(all 0.3s);
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 }
 
 .edw-tabs-navigation .nav-tabs .nav-item .nav-link {
-    font-size: 0.9775rem;
+  font-size: 0.9775rem;
 }
+
 li.breadcrumb-item {
-    font-size: 0.8775rem;
-}
-a.nav-link {
-    font-weight: bold;
-}
-.navbar-brand {
-    background-color: transparent;
-}
-.navbar .primary-navigation .nav-link,
-.navbar .primary-navigation .more-nav > .dropdown > .dropdown-toggle,
-.navbar #usernavigation .nav-link,
-.navbar #usernavigation .more-nav > .dropdown > .dropdown-toggle {
-    color: $cp-primary;
-}
-.navbar .primary-navigation .nav-link.active {
-    color: $cp-primary;
-}
-
-.navbar .primary-navigation .nav-link.active::before {
-    border-bottom-color: $cp-primary;
-}
-
-.navbar .primary-navigation .nav-link:hover,
-.navbar .primary-navigation .more-nav > .dropdown > .dropdown-toggle:hover,
-.navbar #usernavigation .nav-link:hover,
-.navbar #usernavigation .more-nav > .dropdown > .dropdown-toggle:hover {
-    color: $cp-primary;
+  font-size: 0.8775rem;
+  @include smooth-transition(all 0.3s);
+  
+  &:hover {
+    transform: translateX(2px);
+  }
+  
+  a {
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: $color-secondary;
+      @include smooth-transition(width 0.2s);
+    }
+    
+    &:hover:after {
+      width: 100%;
+    }
+  }
 }
 
+/* ===========================================
+   3. COMPONENTES DE NAVEGACIÓN
+   =========================================== */
+
+// Navbar general con border-bottom con gradiente correcto
 .navbar {
-    border-bottom: 5px solid $cp-primary; /* Borde sólido azul en la parte inferior */
-    box-shadow: 0px 2px 3px rgba(255, 255, 255, 0.5); /* Sombra blanca suave para crear el efecto de filo */
-}
-.navbar .primary-navigation .nav-link.active::before,
-.navbar .primary-navigation .dropdown-toggle.active::before,
-.navbar #usernavigation .nav-link.active::before,
-.navbar #usernavigation .dropdown-toggle.active::before {
-    top: 56px;
-    border-bottom: 3px solid $cp-primary;
-}
-
-/* Footer */
-#page-footer {
-    background-color: $cp-tertiary; /* Reemplazado con cp-tertiary (naranja claro) */
-}
-
-/* Top Footer */
-#top-footer {
-    background-color: $cp-primary; /* Azul oscuro */
-    color: $color-white;
-    margin: 0 -15px;
-}
-
-/* Vista Categorias */
-.dashboard-card .course-info-container .edw-card-design-hd span.categoryname.small-info-semibold,
-.dashboard-card .course-info-container .edw-card-design-hd .popover-region .content-item-container.notification span.categoryname.content-item-footer,
-.popover-region .content-item-container.notification .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.content-item-footer,
-.dashboard-card .course-info-container .edw-card-design-hd #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th span.categoryname.h-semibold-5,
-#block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.h-semibold-5,
-.dashboard-card .course-info-container .edw-card-design-hd span.categoryname.edw-msg-panel-badge {
-    color: $color-white;
-    background-color: $cp-tertiary; /* Naranja claro */
-    font-size: .8em;
-}
-
-/* Asegurar que las clases categoryname, text-truncate, small-info-semibold se vean bien */
-.categoryname.text-truncate.small-info-semibold {
-    color: $color-white;
-    background-color: $cp-tertiary; /* Naranja claro */
-    font-size: 0.8em;
-}
-
-/* Nueva regla para courseindex-section-title con clases adicionales */
-#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
-    padding: 10px 24px;
-    color: $color-white;
-    background-color: $cp-primary;
-    border-radius: 0;
-    justify-content: space-between;
-}
-#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title .edw-icon, #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title .fa-lock {
-    font-size: 24px;
-    height: 24px;
-    width: 24px;
-    color: $color-white;
-}
-
-/* Botones */
-
-/* Primary button styling */
-.btn-primary {
-    background-color: $cp-secondary; // Naranja para el fondo
-    border-color: $cp-secondary; // Naranja para el borde
-    color: $color-white; // Blanco para el texto
-
-    .fa,
-    .edw-icon {
-        color: $color-white; // Blanco para los iconos
-    }
-
+  border-bottom: 5px solid;
+  border-image: linear-gradient(to right, $color-secondary, $color-primary, $color-secondary) 20%;
+  box-shadow: 0 2px 3px rgba($color-white, 0.5);
+  
+  .navbar-brand {
+    background-color: transparent;
+    @include smooth-transition(transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s);
+    
     &:hover {
-        background-color: $cp-primary; // Azul oscuro en hover
-        border-color: $cp-primary; // Azul oscuro para el borde en hover
-        color: $color-white; // Blanco para el texto en hover
+      transform: scale(1.05) translateY(-2px);
+      filter: drop-shadow(0 2px 4px rgba($color-primary, 0.3));
     }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show > &.dropdown-toggle {
-        background-color: $cp-secondary; // Naranja en activo
-        border-color: $cp-secondary; // Naranja en activo
-        color: $color-white; // Blanco en activo
+    
+    &:active {
+      transform: scale(0.98);
     }
-
-    &:not(:disabled):not(.disabled):focus,
-    &:not(:disabled):not(.disabled).focus {
-        background-color: $cp-primary; // Azul oscuro en foco
-        border-color: $cp-primary; // Azul oscuro en foco
-        color: $color-white; // Blanco en foco
-    }
-}
-
-/* Secondary button styling */
-.btn-secondary {
-    background-color: $cp-primary; // Azul oscuro para el fondo
-    border-color: $cp-primary; // Azul oscuro para el borde
-    color: $color-white; // Blanco para el texto
-
-    .fa,
-    .edw-icon {
-        color: $color-white; // Blanco para los iconos
-    }
-
-    &:hover {
-        background-color: $cp-tertiary; // Naranja claro en hover
-        border-color: $cp-tertiary; // Naranja claro en hover
-        color: $color-white; // Blanco para el texto en hover
-    }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show > &.dropdown-toggle {
-        background-color: $cp-primary; // Azul oscuro en activo
-        border-color: $cp-primary; // Azul oscuro en activo
-        color: $color-white; // Blanco en activo
-    }
-
-    &:not(:disabled):not(.disabled):focus,
-    &:not(:disabled):not(.disabled).focus {
-        background-color: $cp-tertiary; // Naranja claro en foco
-        border-color: $cp-tertiary; // Naranja claro en foco
-        color: $color-white; // Blanco en foco
-    }
-}
-
-/* Botones Específicos */
-button.btn.btn-primary.icon-no-margin.p-0 {
-    background-color: $cp-secondary; // Naranja para el fondo
-    border-color: $color-white; // Color blanco para el borde
-    color: $color-white; // Color del texto
-
-    &:hover {
-        background-color: $cp-secondary; // Naranja para el fondo en hover
-        border-color: $color-white; // Mantiene el borde blanco en hover
-        color: $color-white !important; // Color del texto en hover
-    }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show > &.dropdown-toggle {
-        background-color: darken($cp-secondary, 10%); // Oscurece el color secundario para el estado activo
-        border-color: $color-white; // Mantiene el borde blanco para el estado activo
-        color: $color-white; // Mantiene el texto blanco para mejor visibilidad
-
-        .fa,
-        .edw-icon {
-            color: $color-white; // Mantiene el color de los íconos en blanco
+  }
+  
+  // Items de navegación principal y usuario con nuevas animaciones
+  .primary-navigation,
+  #usernavigation {
+    .nav-link,
+    .dropdown-toggle {
+      opacity: 0;
+      animation: fadeInDown 0.7s cubic-bezier(0.25, 0.1, 0.25, 1.4) forwards;
+      color: $color-primary;
+      font-weight: bold;
+      position: relative;
+      overflow: hidden;
+      @include smooth-transition(color 0.3s, transform 0.3s, text-shadow 0.3s);
+      
+      // Nueva animación de hover sin el after que eliminamos
+      &:hover, &:focus {
+        color: $color-secondary;
+        transform: translateY(-3px);
+        text-shadow: 0 2px 4px rgba($color-secondary, 0.3);
+      }
+      
+      &:active {
+        transform: translateY(-1px);
+        transition: transform 0.1s;
+      }
+      
+      &.active {
+        color: $color-secondary;
+        
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background-color: $color-secondary;
+          animation: slideInRight 0.4s ease forwards;
         }
+      }
+      
+      &.active::before,
+      &.dropdown-toggle.active::before {
+        top: 58px;
+        border-bottom: 3px solid $color-secondary;
+      }
     }
-}
-
-.btn-floating {
-    border-color: $color-white;
-}
-
-.btn-primary .fa,
-.btn-primary .edw-icon {
+    
+    // Retardo escalonado mejorado
+    @for $i from 1 through 6 {
+      .nav-link:nth-of-type(#{$i}),
+      .dropdown-toggle:nth-of-type(#{$i}) {
+        animation-delay: 0.08s * $i;
+      }
+    }
+  }
+  
+  .userinitials {
+    background-color: $color-primary-dark;
     color: $color-white !important;
-}
-
-/* Personalizaciones Próximos Eventos */
-
-.block_calendar_upcoming .event {
-    border-left: 2px solid #ccc;
-    padding-left: 5px;
-}
-
-.block_calendar_upcoming .event.my-event-urgent {
-    border-color: $cp-secondary;
-}
-
-.block_calendar_upcoming .event.my-event-priority {
-    border-color: $cp-tertiary;
-}
-
-/* END Personalizaciones Próximos Eventos */
-
-/* ============================================================
-   MODO OSCURO - ADAPTACIÓN PARA REMUI
-   ============================================================ */
-
-/* Estilos para modo oscuro aprovechando el soporte de RemUI */
-body.dark-mode {
-    /* Encabezados */
-    h1, .h1, h2, .h2, h3, .h3, h4, .h4, .h5, .h5, h6, .h6 {
-        color: $cp-dm-text;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 4px 8px rgba($color-primary-dark, 0.4);
+      background-color: lighten($color-primary-dark, 5%);
     }
     
-    /* Enlaces */
-    a {
-        color: lighten($cp-dm-medium-blue, 15%);
-        
-        &:hover {
-            color: $cp-dm-tertiary;
-        }
+    &:active {
+      transform: scale(0.95);
+      transition: transform 0.1s;
     }
-    
-    /* Botones */
-    .btn-primary {
-        background-color: $cp-dm-secondary;
-        border-color: $cp-dm-secondary;
-        
-        &:hover {
-            background-color: $cp-dm-primary;
-            border-color: $cp-dm-primary;
-        }
+  }
+  
+  // Añadir efecto de flash para notificaciones
+  .count-container {
+    right: 0px !important;
+    .count-badge {
+      animation: notificationPulse 2s infinite;
+      transform-origin: center center;
+      transition: transform 0.3s, background-color 0.3s;
+      
+      &:hover {
+        transform: scale(1.2);
+        animation-play-state: paused;
+      }
     }
-    
-    .btn-secondary {
-        background-color: $cp-dm-primary;
-        border-color: $cp-dm-primary;
-        
-        &:hover {
-            background-color: $cp-dm-tertiary;
-            border-color: $cp-dm-tertiary;
-        }
-    }
-    
-    /* Navegación y pestañas */
-    .nav-pills .nav-link.active, 
-    .nav-pills .show > .nav-link {
-        background-color: $cp-dm-primary;
-    }
-    
-    .edw-tabs-navigation .nav-tabs .nav-item .nav-link.active,
-    .edw-tabs-navigation .nav-tabs .nav-item .nav-link:hover,
-    .edw-tabs-navigation .nav-tabs .nav-item .nav-link:focus {
-        color: lighten($cp-dm-medium-blue, 20%);
-    }
-    
-    .edw-tabs-navigation .nav-tabs .nav-item .nav-link.active::before {
-        border-bottom-color: $cp-dm-medium-blue;
-    }
-    
-    /* Bloques laterales - Actualizados con los nuevos colores */
-    #block-region-side-pre > section:nth-of-type(7n) > .card-header {
-        background-color: $cp-dm-block-7;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 1) > .card-header {
-        background-color: $cp-dm-block-1;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 2) > .card-header {
-        background-color: $cp-dm-block-2;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 3) > .card-header {
-        background-color: $cp-dm-block-3;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 4) > .card-header {
-        background-color: $cp-dm-block-4;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 5) > .card-header {
-        background-color: $cp-dm-block-5;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 6) > .card-header {
-        background-color: $cp-dm-block-6;
-    }
-    
-    #block-region-side-pre > section > .card-body {
-        background-color: darken($cp-dm-card-bg, 3%);
-    }
-    
-    /* Control del panel lateral */
-    #sidepreopen-control {
-        background-color: $cp-dm-tertiary;
-        
-        &:hover {
-            background-color: $cp-dm-secondary;
-            box-shadow: 0 0 6px $cp-dm-secondary;
-        }
-    }
-    
-    /* Barra de navegación */
-    .navbar {
-        background-color: $cp-dm-primary;
-        border-bottom-color: $cp-dm-primary;
-        box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
-    }
-    
-    .navbar .primary-navigation .nav-link,
-    .navbar .primary-navigation .more-nav > .dropdown > .dropdown-toggle,
-    .navbar #usernavigation .nav-link,
-    .navbar #usernavigation .more-nav > .dropdown > .dropdown-toggle {
-        color: $cp-dm-text;
-    }
-    
-    .navbar .primary-navigation .nav-link.active,
-    .navbar .primary-navigation .nav-link:hover,
-    .navbar #usernavigation .nav-link:hover {
-        color: $cp-dm-tertiary;
-    }
-    
-    .navbar .primary-navigation .nav-link.active::before {
-        border-bottom-color: $cp-dm-tertiary;
-    }
-    
-    /* Iniciales de usuario */
-    .navbar #usernavigation .userinitials {
-        background-color: $cp-dm-medium-blue;
-    }
-    
-    /* Footer */
-    #page-footer {
-        background-color: darken($cp-dm-tertiary, 10%);
-    }
-    
-    #top-footer {
-        background-color: $cp-dm-primary;
-    }
-    
-    /* Eventos y calendario */
-    .block_calendar_upcoming .event {
-        border-left-color: $cp-dm-border;
-    }
-    
-    .block_calendar_upcoming .event.my-event-urgent {
-        border-color: $cp-dm-secondary;
-    }
-    
-    .block_calendar_upcoming .event.my-event-priority {
-        border-color: $cp-dm-tertiary;
-    }
-    
-    .badge.badge-danger {
-        background-color: $cp-dm-secondary;
-    }
-    
-    /* Cuestionarios */
-    .que .formulation {
-        background-color: $cp-dm-card-bg;
-        border-color: $cp-dm-border;
-    }
-    
-    .que.informationitem .formulation {
-        background-color: lighten($cp-dm-card-bg, 5%);
-        border-color: $cp-dm-border;
-    }
-    
-    .que.correct .outcome,
-    .que.correct .comment {
-        background-color: rgba(97, 155, 61, 0.2);
-        border-color: rgba(97, 155, 61, 0.3);
-        color: $cp-dm-text;
-    }
-    
-    /* Índice del curso */
-    #theme_remui-drawers-courseindex .drawercontent {
-        background-color: $cp-dm-card-bg;
-    }
-    
-    #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
-        background-color: $cp-dm-primary;
-    }
-    
-    /* Tarjetas de curso */
-    .dashboard-card {
-        background-color: $cp-dm-card-bg;
-        
-        .card-footer {
-            background-color: darken($cp-dm-card-bg, 3%);
-        }
-    }
-    
-    .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.small-info-semibold,
-    .categoryname.text-truncate.small-info-semibold {
-        background-color: $cp-dm-tertiary;
-    }
+  }
 }
 
-/* Footer Styles */
-.my-credit-footer-wrapper {
-    background-color: $my-gris;
-    color: $cp-primary;
-    font-size: 15px;
-}
-
-a.my-credit-link,
-a.my-credit-link:hover {
-    color: $cp-primary;
-}
-
-#page-header.hasbackground.design-1 .header-main-section .category .badge {
-    color: white;
-    background-color: $cp-medium-blue;
-}
-
-.position-absolute.w-100.h-100 {
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.0) -5%, transparent 120%) !important;
-}
-
-#page-header.hasbackground.design-1 {
-    min-height: 270px !important;
-}
-
-#format_menutopic_menu .navbar-brand {
-    display: none !important;
-}
-
-div#navbarmenutopic {
-    padding: 0 16px !important;
-    height: 80px !important;
-}
-
-#page-footer .copyright {
-    background-color: $my-gris; /* Reemplazado con $my-gris */
-    color: $cp-primary;
-    text-align: center;
-    min-height: inherit;
-    margin-bottom: 0;
-}
-
-#top-footer {
-    background-color: $cp-primary; /* Azul oscuro */
-    color: $color-white;
-    margin: 0 -15px;
-}
-
-#top-footer .my-about,
-#top-footer h3 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#top-footer h3 {
-    margin-bottom: 15px;
-    /* Espacio debajo del título */
-}
-
-/* Button Styles */
-.btn-link,
-.btn-link:hover,
-.btn-outline-primary,
-.btn-outline-primary:hover {
-    background-color: $color-white;
-}
-
-.btn-link {
-    color: $cp-tertiary; /* Naranja claro */
-    border-color: $cp-primary;
-}
-
-.btn-link:hover {
-    color: $cp-primary; /* Azul oscuro */
-    border-color: $cp-tertiary;
-}
-
-.btn-outline-primary {
-    color: $cp-tertiary;
-    border-color: $cp-tertiary;
-}
-
-.btn-outline-primary:hover {
-    color: $color-white;
-    background-color: darken($cp-tertiary, 10%);
-    border-color: darken($cp-tertiary, 10%);
-}
-
-/* Badge Styles */
-.badge-info,
-.badge-info:hover,
-.badge-success,
-.badge-succes:hover {
-    color: $cp-primary;
-    transition: background-color 0.3s;
-}
-
-.badge-info {
-    background-color: $cp-medium-blue;
-}
-
-.badge-info:hover {
-    background-color: $cp-primary;
-    color: $color-white;
-}
-
-.badge-success {
-    background-color: $cp-success;
-}
-
-.badge-succes:hover {
-    background-color: darken($cp-success, 10%);
-}
-
-/* List and Link Styles */
-
-.text-info,
-.users-list-name,
-#page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
-    color: $cp-primary !important;
-}
-
-/* Calendar Styles */
-.maincalendar .calendarmonth td.today .day-number-circle {
-    color: $color-white;
-    background-color: $cp-primary;
-}
-
-section#region-main .maincalendar td.today span.day-number-circle, 
-aside:not(#block-region-side-pre) .maincalendar td.today span.day-number-circle {
-    background-color: $cp-medium-blue;
-}
-
-/* Miscellaneous Styles */
-#page-footer .footer-container hr,
-.progress-bar {
-    background-color: $cp-primary;
-    border-top: 1px solid $color-white;
-}
-
-.about-text-content {
-    text-align: justify;
-    padding: 0 15px;
-}
-
-@media (max-width: 768px) {
-    .about-text-content {
-        padding: 0 10px;
-        /* Menor padding en dispositivos más pequeños */
+// Nav pills con interactividad mejorada
+.nav-pills {
+  .nav-link {
+    @include smooth-transition(all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+    border-radius: 30px;
+    overflow: hidden;
+    
+    &.active,
+    .show > & {
+      color: $color-white;
+      background-color: $color-secondary;
+      box-shadow: 0 4px 10px rgba($color-secondary, 0.3);
+      transform: translateY(-1px);
     }
+    
+    &:hover:not(.active) {
+      background-color: rgba($color-secondary, 0.1);
+      transform: translateY(-2px) scale(1.02);
+    }
+    
+    &:active:not(.active) {
+      transform: translateY(0) scale(0.98);
+      transition: all 0.1s;
+    }
+  }
 }
 
-/* Autocomplete Styles */
-.form-autocomplete-suggestions li:hover,
-.form-autocomplete-suggestions li:focus,
-.form-autocomplete-suggestions li[aria-selected="true"] {
-    padding-left: 12px;
-}
-
-.form-autocomplete-suggestions li:hover {
-    background-color: $cp-primary; /* Cambiado a $cp-primary según botón */
-    color: $color-white;
-    border-left: 4px solid $cp-primary;
-}
-
-.form-autocomplete-suggestions li:focus {
-    background-color: $my-gris; /* Definir o ajustar según necesidad */
-    color: $cp-primary;
-    border-left: 4px solid $cp-tertiary;
-}
-
-.form-autocomplete-suggestions li[aria-selected="true"] {
-    background-color: $cp-primary;
-    color: $color-white;
-    border-left: 4px solid $cp-tertiary;
-}
-
-/* Navigation Styles */
-.nav-pills-custom .nav-link {
+// Nav pills custom con interactividad mejorada
+.nav-pills-custom {
+  .nav-link {
     position: relative;
-}
-
-@media (min-width: 992px) {
-    .nav-pills-custom .nav-link::before {
-        content: '';
-        display: block;
-        border-top: 8px solid transparent;
-        border-left: 10px solid $cp-primary;
-        border-bottom: 8px solid transparent;
-        position: absolute;
-        top: 50%;
-        right: -10px;
-        transform: translateY(-50%);
-        opacity: 0;
+    @include smooth-transition(all 0.3s);
+    
+    &::before {
+      content: '';
+      display: block;
+      border-top: 8px solid transparent;
+      border-left: 10px solid $color-primary;
+      border-bottom: 8px solid transparent;
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      transform: translateY(-50%) scale(0.8);
+      opacity: 0;
+      @include smooth-transition(opacity 0.3s, transform 0.3s);
+      
+      @media (max-width: 991px) {
+        display: none;
+      }
     }
+    
+    &.active {
+      &::before {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+    }
+    
+    &:hover:not(.active) {
+      transform: translateX(3px);
+      
+      &::before {
+        opacity: 0.5;
+        transform: translateY(-50%) scale(0.9);
+      }
+    }
+    
+    &:active:not(.active) {
+      transform: translateX(1px);
+      transition: transform 0.1s;
+    }
+  }
 }
 
-.nav-pills-custom .nav-link.active::before {
-    opacity: 1;
+// Tabs de navegación con interactividad mejorada
+.edw-tabs-navigation {
+  .nav-tabs {
+    .nav-item {
+      .nav-link {
+        @include smooth-transition(all 0.3s);
+        position: relative;
+        overflow: hidden;
+        
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: -15px;
+          left: 50%;
+          width: 0;
+          height: 3px;
+          background-color: rgba($color-secondary, 0.5);
+          transition: width 0.3s ease, left 0.3s ease, background-color 0.3s;
+        }
+        
+        &:hover:after {
+          left: 0;
+          width: 100%;
+        }
+        
+        &.active, &:hover, &:focus {
+          color: $color-primary;
+          background-color: #fff0;
+        }
+        
+        &.active::before {
+          content: "";
+          visibility: visible;
+          position: absolute;
+          bottom: -15px;
+          width: 100%;
+          border-bottom: 3px solid $color-secondary;
+          animation: tabActiveBorder 0.3s ease;
+        }
+        
+        &:active {
+          transform: translateY(1px);
+        }
+      }
+    }
+  }
 }
 
-/* Collapsible Link Styles */
-.collapsible-link,
-.collapsible-link::before,
-.collapsible-link[aria-expanded='true']::before {
-    position: relative;
-    display: block;
-    text-align: left;
+/* ===========================================
+   4. BOTONES Y CONTROLES
+   =========================================== */
+
+// Base para todos los botones con interactividad mejorada
+button {
+  @include smooth-transition(background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease);
+  @include button-hover-effect;
+  @include ripple-effect;
+  @include interactive-focus;
 }
 
-.collapsible-link::before {
-    content: '\f107';
-    top: 50%;
-    right: 0.8rem;
-    transform: translateY(-50%);
-    font-family: 'FontAwesome';
-    font-size: 1.1rem;
-}
-
-.collapsible-link[aria-expanded='true']::before {
-    content: '\f106';
-}
-
-/* Pagination Styles */
-.page-link,
-.page-link:hover,
-.page-item.active .page-link {
-    color: $cp-primary;
+// Estilos generales para botones con interactividad mejorada
+.btn, #page-calendar-view .cal_courses_flt {
+  &:hover {
     text-decoration: none;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 8px rgba($color-black, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 1px 3px rgba($color-black, 0.1);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
 }
 
-.page-link:hover {
-    z-index: 2;
-    color: darken($cp-primary, 10%);
-    background-color: #e9ecef;
-    border-color: #d5ddea;
+// Dropdown show con interactividad
+.dropdown.show > .dropdown-toggle {
+  color: $color-primary;
+  background-color: #fff0;
+  animation: pulseScale 0.3s ease;
 }
 
-.page-item.active .page-link {
+// Botón primario con interactividad mejorada
+.btn-primary {
+  background-color: $color-secondary;
+  border-color: $color-secondary;
+  color: $color-white;
+  position: relative;
+  overflow: hidden;
+  
+  .fa, .edw-icon {
+    color: $color-white !important;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover {
+    background-color: $color-primary;
+    border-color: $color-primary;
     color: $color-white;
-    background-color: $cp-primary;
-    border-color: $cp-primary;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 5px 15px rgba($color-secondary, 0.4);
+    
+    .fa, .edw-icon {
+      transform: scale(1.1) translateY(-1px);
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 2px 5px rgba($color-secondary, 0.3);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, &:active:focus, .show > &.dropdown-toggle {
+      background-color: $color-secondary;
+      border-color: $color-secondary;
+      color: $color-white;
+      transform: translateY(-1px);
+    }
+    
+    &:focus, &.focus {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+      box-shadow: 0 0 0 0.2rem rgba($color-secondary, 0.5);
+      animation: focusPulse 1.5s infinite;
+    }
+  }
+  
+  // Efecto de pulso con animación mejorada
+  &.pulse-effect {
+    animation: buttonPulse 2s infinite;
+    
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
 }
 
-/* Floating Buttons */
+// Botón secundario con interactividad mejorada
+.btn-secondary {
+  background-color: $color-primary;
+  border-color: $color-primary;
+  color: $color-white;
+  
+  .fa, .edw-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover {
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+    color: $color-white;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 5px 15px rgba($color-primary, 0.4);
+    
+    .fa, .edw-icon {
+      transform: scale(1.1) translateY(-1px);
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 2px 5px rgba($color-primary, 0.3);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, &:active:focus, .show > &.dropdown-toggle {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+    }
+    
+    &:focus, &.focus {
+      background-color: $color-secondary;
+      border-color: $color-secondary;
+      color: $color-white;
+      box-shadow: 0 0 0 0.2rem rgba($color-primary, 0.5);
+      animation: focusPulse 1.5s infinite;
+    }
+  }
+}
+
+// Botón outline secundario con interactividad mejorada
+.btn-outline-secondary {
+  @include smooth-transition(all 0.3s);
+  overflow: hidden;
+  
+  &:hover {
+    color: $color-white;
+    background-color: $color-primary;
+    border-color: $color-primary;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 8px rgba($color-primary, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.1s;
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, .show > &.dropdown-toggle {
+      border-color: $color-primary;
+      box-shadow: 0 2px 4px rgba($color-primary, 0.2);
+    }
+  }
+}
+
+// Botones específicos con icon-no-margin con interactividad mejorada
+button.btn.btn-primary.icon-no-margin.p-0 {
+  background-color: $color-secondary;
+  border-color: $color-white;
+  color: $color-white;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  &:hover {
+    background-color: $color-secondary;
+    border-color: $color-white;
+    color: $color-white !important;
+    transform: scale(1.08);
+    box-shadow: 0 3px 6px rgba($color-secondary, 0.3);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+  
+  &:not(:disabled):not(.disabled) {
+    &:active, &.active, &:active:focus, .show > &.dropdown-toggle {
+      background-color: darken($color-secondary, 10%);
+      border-color: $color-white;
+      color: $color-white;
+      
+      .fa, .edw-icon {
+        color: $color-white;
+      }
+    }
+  }
+}
+
+// Botón flotante con interactividad mejorada
+.btn-floating {
+  border-color: $color-white;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 5px 10px rgba($color-black, 0.15);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+}
+
+// Botones flotantes con efecto elevación mejorado
 .floating-buttons-wrapper {
-    position: fixed;
-    bottom: 80px;
-    right: auto;
-    left: 14px;
-    display: flex;
-    flex-direction: column;
-}
-
-/*20240926*/
-.floating-buttons-wrapper > .btn-floating {
+  position: fixed;
+  bottom: 80px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  
+  > .btn-floating {
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -1202,531 +681,2211 @@ aside:not(#block-region-side-pre) .maincalendar td.today span.day-number-circle 
     align-items: center;
     max-width: 48px;
     margin-left: inherit;
-    transition: max-width 0.5s ease-in-out;
-    border-color: white;
-}
-
-/* Nueva regla para courseindex-section-title con clases adicionales */
-#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
-    padding: 10px 24px;
-    color: $color-white;
-    background-color: $cp-primary;
-    border-radius: 0;
-    justify-content: space-between;
-}
-
-/* Botones */
-
-/* Primary button styling */
-.btn-primary {
-    background-color: $cp-secondary;
-    border-color: $cp-secondary;
-    color: #ffffff;
-
-    .fa,
-    .edw-icon {
-        color: #ffffff;
-    }
-
+    transition: max-width 0.5s ease-in-out, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    border-color: $color-white;
+    
     &:hover {
-        background-color: $cp-primary;
-        border-color: $cp-primary;
-        color: #ffffff;
+      transform: translateY(-5px) scale(1.08);
+      box-shadow: 0 10px 20px rgba($color-black, 0.15);
     }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show > &.dropdown-toggle {
-        background-color: $cp-secondary;
-        border-color: $cp-secondary;
-        color: #ffffff;
+    
+    &:active {
+      transform: translateY(-2px) scale(0.95);
+      transition: transform 0.1s, box-shadow 0.1s;
     }
-
-    &:not(:disabled):not(.disabled):focus,
-    &:not(:disabled):not(.disabled).focus {
-        background-color: $cp-primary;
-        border-color: $cp-primary;
-        color: #ffffff;
-    }
+  }
 }
 
-/* Secondary button styling */
-.btn-secondary {
-    background-color: $cp-primary;
-    border-color: $cp-primary;
-    color: #ffffff;
+// Paginación con interactividad mejorada
+.page-link {
+  @include smooth-transition(all 0.3s);
+  color: $color-primary;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover {
+    z-index: 2;
+    color: darken($color-primary, 10%);
+    background-color: $color-e9ecef;
+    border-color: $color-d5ddea;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 2px 4px rgba($color-primary, 0.2);
+  }
+  
+  &:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.1s;
+  }
+}
 
-    .fa,
-    .edw-icon {
-        color: #ffffff;
-    }
+.page-item.active .page-link {
+  color: $color-white;
+  background-color: $color-primary;
+  border-color: $color-primary;
+  box-shadow: 0 2px 5px rgba($color-primary, 0.3);
+  transform: scale(1.05);
+  animation: activePagePulse 2s infinite;
+}
 
+/* ===========================================
+   5. BLOQUES Y TARJETAS
+   =========================================== */
+
+// Estilo general para bloques con interactividad mejorada
+.block {
+  margin: 1px;
+  opacity: 0; // Inicia oculto para la animación
+  animation: fadeInUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background-color 0.3s;
+  
+  // Escalonado en nth-of-type con animación mejorada
+  &:nth-of-type(1) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-of-type(2) {
+    animation-delay: 0.2s;
+  }
+  
+  &:nth-of-type(3) {
+    animation-delay: 0.3s;
+  }
+  
+  &:nth-of-type(4) {
+    animation-delay: 0.4s;
+  }
+  
+  &:hover {
+    // Efecto lift mejorado
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 8px 15px rgba($color-black, 0.15);
+    z-index: 1;
+  }
+  
+  &:active {
+    transform: translateY(-2px) scale(0.99);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  
+  .card-body {
+    background-color: $color-white;
+    border-radius: 0 0 24px 24px;
+    transition: background-color 0.3s ease;
+    
     &:hover {
-        background-color: $cp-tertiary;
-        border-color: $cp-tertiary;
-        color: #ffffff;
+      background-color: rgba($color-primary, 0.02);
     }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show > &.dropdown-toggle {
-        background-color: $cp-primary;
-        border-color: $cp-primary;
-        color: #ffffff;
-    }
-
-    &:not(:disabled):not(.disabled):focus,
-    &:not(:disabled):not(.disabled).focus {
-        background-color: $cp-tertiary;
-        border-color: $cp-tertiary;
-        color: #ffffff;
-    }
-}
-
-/* Botones Específicos */
-button.btn.btn-primary.icon-no-margin.p-0 {
-    background-color: $cp-secondary;
-    border-color: white;
-    color: white;
-
+  }
+  
+  &:not(.block_calendar_upcoming) {
+    border-bottom: 0;
+  }
+  
+  // Estilos para el footer dentro de bloques (sin color)
+  .card-text.content .footer {
+    background-color: transparent;
+  }
+  
+  // Botones en .block con interactividad mejorada
+  button.dropdown-toggle {
+    box-shadow: none;
+    border: 1px solid $color-secondary;
+    @include smooth-transition(all 0.3s);
+    
     &:hover {
-        background-color: $cp-secondary;
-        border-color: white;
-        color: white !important;
+      background-color: $color-secondary-dimmed;
+      color: $color-white;
+      box-shadow: none;
+      border: 1px solid $color-secondary;
+      transform: scale(1.05);
     }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active:focus,
-    .show > &.dropdown-toggle {
-        background-color: darken($cp-secondary, 10%);
-        border-color: white;
-        color: white;
-
-        .fa,
-        .edw-icon {
-            color: white;
-        }
+    
+    &:active {
+      transform: scale(0.98);
+      transition: transform 0.1s;
     }
+    
+    &.btn-outline-secondary.dropdown-toggle {
+      &:focus, &.show {
+        border-color: $color-secondary-dimmed;
+        background-color: $color-secondary-dimmed;
+        outline: none !important;
+        box-shadow: none;
+        color: $color-white;
+        animation: focusPulse 1.5s infinite;
+      }
+    }
+  }
+  
+  .dropdown-item {
+    @include smooth-transition(all 0.3s);
+    position: relative;
+    
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background-color: rgba($color-primary, 0.1);
+      transition: width 0.3s ease;
+      z-index: -1;
+    }
+    
+    &:focus {
+      background-color: $color-primary-dark;
+      color: $color-white;
+    }
+    
+    &:hover {
+      transform: translateX(5px);
+      background-color: transparent;
+      
+      &:before {
+        width: 100%;
+      }
+    }
+    
+    &:active {
+      transform: translateX(2px);
+      transition: transform 0.1s;
+    }
+  }
 }
 
-.btn-floating {
-    border-color: white;
-}
-
-.btn-primary .fa,
-.btn-primary .edw-icon {
-    color: white !important;
-}
-
-.navbar .edw-icon{
-    color: $cp-primary;
-}
-
-/* Personalizaciones Próximos Eventos */
-.block_calendar_upcoming .event {
-    border-left: 2px solid #ccc;
-    padding-left: 5px;
-}
-
-.block_calendar_upcoming .event.my-event-urgent {
-    border-color: $cp-secondary;
-}
-
-.block_calendar_upcoming .event.my-event-priority {
-    border-color: $cp-tertiary;
-}
-
-/* END Personalizaciones Próximos Eventos */
-
-/* Estilos base para la página de login */
-.login-page {
-    min-height: 100vh;
-    background-color: var(--color-bg-page);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-
-    /* Contenedor principal */
-    .login-container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-
-        /* Grid layout */
-        .row {
-            margin: 0;
-            min-height: 100vh;
-        }
-    }
-}
-
-/* Estilos del formulario de login */
-.loginform {
-    display: flex;
-    flex-direction: column;
-    max-width: var(--max-width-form);
-    animation: fadeIn 0.8s ease-out;
-
-    /* Mensaje de bienvenida */
-    .login-welcome-wrapper {
-        text-align: center;
-        margin-bottom: 2rem;
-
-        h2 {
-            font-size: 1.25rem;
-            color: var(--color-text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            color: var(--color-text-secondary);
-            font-size: 0.95rem;
-        }
-    }
-}
-
-.login-wrapper{
-    margin: 10%;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Footer */
-.footer {
-    background-color: var(--color-footer-bg);
-    padding: 1rem 0;
-    text-align: center;
-
-    .my-credit {
-        font-size: 0.875rem;
-        color: var(--color-text-secondary);
-    }
-}
-
-.carousel-item img {
-    object-fit: cover;
-    width: 100%;
-    height: 100vh;
-    max-height: 1080px; /* Para evitar estiramiento excesivo en pantallas muy altas */
-}
-
-.navbar [data-key="recentcourses"] {
-    display: none;
-}
-
-span.badge.badge-info {
-    color: $color-white;
-}
-span.badge.rounded-pill.bg-secondary.text-dark {
-    color: $color-white !important;
-}
-span.badge.bg-secondary.text-dark {
-    color: $color-white !important;
-}
-.about-text-content h4.data {
-    color: $color-white;
-}
-.about-text-content a.link-1 {
-    color: $color-white;
-}
-.login-logo img.mb-3.img-fluid {
-    width: 50%;
-}
-
-/* ============================================================
-   MODO OSCURO - ADAPTACIÓN PARA REMUI
-   ============================================================ */
-
-/* Estilos personalizados para modo oscuro en RemUI */
-body.dark-mode {
-    /* Footer */
-    .my-credit-footer-wrapper {
-        background-color: $my-gris-dm;
-        color: $cp-dm-text;
-    }
-    
-    a.my-credit-link,
-    a.my-credit-link:hover {
-        color: $cp-dm-text;
-    }
-    
-    #page-header.hasbackground.design-1 .header-main-section .category .badge {
-        background-color: $cp-dm-medium-blue;
-    }
-    
-    .position-absolute.w-100.h-100 {
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) -5%, rgba(0, 0, 0, 0.2) 120%) !important;
-    }
-    
-    #page-footer .copyright {
-        background-color: $my-gris-dm;
-        color: $cp-dm-text;
-    }
-    
-    #top-footer {
-        background-color: $cp-dm-primary;
-    }
-    
-    /* Botones */
-    .btn-link {
-        color: $cp-dm-tertiary;
-        border-color: $cp-dm-primary;
-        background-color: $cp-dm-card-bg;
-    }
-    
-    .btn-link:hover {
-        color: $cp-dm-text;
-        border-color: $cp-dm-tertiary;
-        background-color: lighten($cp-dm-card-bg, 5%);
-    }
-    
-    .btn-outline-primary {
-        color: $cp-dm-tertiary;
-        border-color: $cp-dm-tertiary;
-        background-color: transparent;
-    }
-    
-    .btn-outline-primary:hover {
-        color: $cp-dm-text;
-        background-color: $cp-dm-tertiary;
-        border-color: $cp-dm-tertiary;
-    }
-    
-    /* Enlaces y navegación */
-    .text-info,
-    .users-list-name,
-    #page-header #page-navbar nav ol.breadcrumb .breadcrumb-item a {
-        color: lighten($cp-dm-medium-blue, 15%) !important;
-    }
-    
-    .nav-pills-custom .nav-link::before {
-        border-left-color: $cp-dm-primary;
-    }
-    
-    /* Calendario */
-    .maincalendar .calendarmonth td.today .day-number-circle {
-        background-color: $cp-dm-primary;
-    }
-    
-    /* Otros elementos */
-    #page-footer .footer-container hr,
-    .progress-bar {
-        background-color: $cp-dm-primary;
-        border-top-color: $cp-dm-border;
-    }
-    
-    .about-text-content {
-        color: $cp-dm-text;
-    }
-    
-    /* Autocompletado */
-    .form-autocomplete-suggestions {
-        background-color: $cp-dm-card-bg;
-        border-color: $cp-dm-border;
-    }
-    
-    .form-autocomplete-suggestions li {
-        color: $cp-dm-text;
-    }
-    
-    .form-autocomplete-suggestions li:hover {
-        background-color: $cp-dm-primary;
-        border-left-color: $cp-dm-primary;
-    }
-    
-    .form-autocomplete-suggestions li:focus {
-        background-color: $my-gris-dm;
-        color: $cp-dm-text;
-        border-left-color: $cp-dm-tertiary;
-    }
-    
-    .form-autocomplete-suggestions li[aria-selected="true"] {
-        background-color: $cp-dm-primary;
-        border-left-color: $cp-dm-tertiary;
-    }
-    
-    /* Paginación */
-    .page-link {
-        background-color: $cp-dm-card-bg;
-        border-color: $cp-dm-border;
-        color: $cp-dm-text;
-    }
-    
-    .page-link:hover {
-        background-color: lighten($cp-dm-card-bg, 5%);
-        color: $cp-dm-tertiary;
-    }
-    
-    .page-item.active .page-link {
-        background-color: $cp-dm-primary;
-        border-color: $cp-dm-primary;
-    }
-    
-    /* Botones flotantes */
-    .floating-buttons-wrapper > .btn-floating {
-        background-color: $cp-dm-primary;
-        color: $cp-dm-text;
-    }
-    
-    /* Modo oscuro en login */
-    .login-page {
-        --color-bg-page: $cp-dm-bg;
-        --color-text-primary: $cp-dm-text;
-        --color-text-secondary: darken($cp-dm-text, 15%);
-        --color-footer-bg: $my-gris-dm;
-    }
-    
-    .loginform {
-        background-color: $cp-dm-card-bg;
+// My Overview Block con interactividad mejorada
+.block_myoverview {
+  [data-region="filter"] {
+    .nav-grouping-selector {
+      .nav {
+        margin: 10px 17px 16px 17px;
         
-        input, button {
-            background-color: $cp-dm-input-bg;
-            color: $cp-dm-text;
-            border-color: $cp-dm-border;
+        li.nav-item {
+          .nav-link {
+            @include smooth-transition(all 0.3s);
+            
+            &:hover {
+              transform: translateY(-2px);
+            }
+            
+            &:active {
+              transform: translateY(0);
+              transition: transform 0.1s;
+            }
+          }
+          
+          [aria-current="true"] {
+            &::after {
+              border-bottom: 3px solid $color-primary;
+              animation: fadeIn 0.3s ease;
+            }
+            
+            &:hover::after {
+              animation: borderPulse 1.5s infinite;
+            }
+          }
         }
+      }
     }
     
-    /* Badges */
-    .badge-info {
-        background-color: $cp-dm-medium-blue;
-        color: $cp-dm-text;
+    .all-filter-wrapper {
+      .nav-display-selector-wrapper {
+        .nav-display-selector {
+          .nav {
+            .nav-item {
+              .nav-link {
+                @include smooth-transition(all 0.3s);
+                
+                &:hover {
+                  transform: translateY(-2px);
+                }
+                
+                &:active {
+                  transform: translateY(0);
+                  transition: transform 0.1s;
+                }
+                
+                [aria-current="true"] {
+                  color: $color-primary;
+                  animation: textPulse 2s infinite;
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    
-    .badge-info:hover {
-        background-color: lighten($cp-dm-medium-blue, 10%);
-    }
-    
-    .badge-success {
-        background-color: $cp-dm-success;
-    }
-    
-    span.badge.badge-info, 
-    span.badge.rounded-pill.bg-secondary.text-dark,
-    span.badge.bg-secondary.text-dark {
-        color: $cp-dm-text !important;
-        background-color: $cp-dm-medium-blue !important;
-    }
-    
-    /* Eventos */
-    .block_calendar_upcoming .event {
-        border-left-color: $cp-dm-border;
-    }
-    
-    .block_calendar_upcoming .event.my-event-urgent {
-        border-color: $cp-dm-secondary;
-    }
-    
-    .block_calendar_upcoming .event.my-event-priority {
-        border-color: $cp-dm-tertiary;
-    }
-    
-    /* Course index */
-    #theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title.courseindex-item.d-flex.align-items-center.dropready {
-        background-color: $cp-dm-primary;
-    }
-    
-    /* Bloques laterales con los nuevos colores para modo oscuro */
-    #block-region-side-pre > section:nth-of-type(7n) > .card-header {
-        background-color: $cp-dm-block-7;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 1) > .card-header {
-        background-color: $cp-dm-block-1;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 2) > .card-header {
-        background-color: $cp-dm-block-2;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 3) > .card-header {
-        background-color: $cp-dm-block-3;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 4) > .card-header {
-        background-color: $cp-dm-block-4;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 5) > .card-header {
-        background-color: $cp-dm-block-5;
-    }
-    
-    #block-region-side-pre > section:nth-of-type(7n + 6) > .card-header {
-        background-color: $cp-dm-block-6;
-    }
-    
-    #block-region-side-pre > section > .card-body {
-        background-color: darken($cp-dm-card-bg, 3%);
-    }
+  }
 }
 
-/* Media queries */
-@media (max-width: 991.98px) {
-    .loginform {
-        margin: 5%;
-        padding: 1.5rem;
+// Bloques laterales (side-pre) con interactividad mejorada
+#block-region-side-pre {
+  .card-header > h5.card-title {
+    // Asegura texto blanco en el header
+    color: $color-white !important;
+    transition: transform 0.3s ease, text-shadow 0.3s;
+    
+    &:hover {
+      transform: translateX(3px);
+      text-shadow: 0 2px 4px rgba($color-black, 0.3);
     }
-}
-
-@media (max-width: 768px) {
-    body.dark-mode .loginform .login-welcome-wrapper h2 {
-        font-size: 1.25rem;
+  }
+  
+  > section {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba($color-black, 0.1);
     }
-}
-
-@media (max-width: 480px) {
-    body.dark-mode .loginform {
-        margin: 1rem;
-        padding: 1rem;
+    
+    &:active {
+      transform: translateY(-2px);
+      transition: transform 0.1s;
     }
+  }
+  
+  > section:nth-of-type(7n) > .card-header {
+    background-color: $block-region-side-pre-7;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+  }
+  
+  > section:nth-of-type(7n + 1) > .card-header {
+    background-color: $block-region-side-pre-1;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 1) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-1;
+    border-right: 1px solid $block-region-side-pre-1;
+    border-bottom: 1px solid $block-region-side-pre-1;
+  }
+  
+  > section:nth-of-type(7n + 2) > .card-header {
+    background-color: $block-region-side-pre-2;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 2) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-2;
+    border-right: 1px solid $block-region-side-pre-2;
+    border-bottom: 1px solid $block-region-side-pre-2;
+  }
+  
+  > section:nth-of-type(7n + 3) > .card-header {
+    background-color: $block-region-side-pre-3;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 3) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-3;
+    border-right: 1px solid $block-region-side-pre-3;
+    border-bottom: 1px solid $block-region-side-pre-3;
+  }
+  
+  > section:nth-of-type(7n + 4) > .card-header {
+    background-color: $block-region-side-pre-4;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 4) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-4;
+    border-right: 1px solid $block-region-side-pre-4;
+    border-bottom: 1px solid $block-region-side-pre-4;
+  }
+  
+  > section:nth-of-type(7n + 5) > .card-header {
+    background-color: $block-region-side-pre-5;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 5) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-5;
+    border-right: 1px solid $block-region-side-pre-5;
+    border-bottom: 1px solid $block-region-side-pre-5;
+  }
+  
+  > section:nth-of-type(7n + 6) > .card-header {
+    background-color: $block-region-side-pre-6;
+    border-radius: 0px;
+  }
+  
+  > section:nth-of-type(7n + 6) > .card-body {
+    background-color: $light-bg;
+    border-radius: 0px 0px 24px 24px;
+    border-left: 1px solid $block-region-side-pre-6;
+    border-right: 1px solid $block-region-side-pre-6;
+    border-bottom: 1px solid $block-region-side-pre-6;
+  }
+  
+  .block {
+    border-bottom: 0;
+  }
 }
 
-/* Estilos para estadísticas */
-.edw-stats-wrapper .stat-block .inner .edw-icon {
-    font-size: 44px;
-    display: flex;
-    color: $cp-secondary;
+// Timeline con interactividad mejorada
+.block_timeline {
+  .block-timeline {
+    [data-region="day-filter"],
+    [data-region="view-selector"] {
+      .dropdown-toggle {
+        border: 1px solid $color-d5ddea;
+        color: $color-1c3d77;
+        @include smooth-transition(all 0.3s);
+        
+        &:hover {
+          border-color: $color-primary;
+          box-shadow: 0 0 0 0.2rem rgba($color-primary, 0.2);
+          transform: translateY(-2px);
+        }
+        
+        &:active {
+          transform: translateY(0);
+          transition: transform 0.1s;
+        }
+      }
+    }
+    
+    [data-region="timeline-view"] {
+      box-shadow: none;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba($color-black, 0.15);
+      }
+      
+      &:active {
+        transform: translateY(-1px);
+        transition: transform 0.1s;
+      }
+    }
+  }
 }
 
-h6, .h6, .h-regular-6, .h-semibold-6, .epb_custom_modal .advancedblocktab .left-sidebar .left-sidebar-mid-region .block-category-select-mob .btn, 
-.epb_custom_modal .advancedblocktab .left-sidebar .left-sidebar-mid-region .block-category-select-mob #page-calendar-view .cal_courses_flt, 
-#page-calendar-view .epb_custom_modal .advancedblocktab .left-sidebar .left-sidebar-mid-region .block-category-select-mob .cal_courses_flt, 
-.block_timeline .block-timeline .edw-timeline-event-list-item .coursename-action, 
-#page-admin-roles-permissions [role="main"] .rolecap .allowedroles span, 
-#page-admin-roles-permissions [role="main"] .rolecap .forbiddenroles span, 
-#page-admin-roles-override [role="main"] .rolecap .allowedroles span, 
-#page-admin-roles-override [role="main"] .rolecap .forbiddenroles span, 
-#page-admin-roles-check [role="main"] .rolecap .allowedroles span, 
-#page-admin-roles-check [role="main"] .rolecap .forbiddenroles span, 
-#page-admin-roles-check [role="main"] #chooseuser h3, 
-#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #reportuser optgroup, 
-#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #userselector_options #userselector_options_sizer #userselector_options_caption, 
-#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #userselector_options #userselector_options_sizer #userselector_options_caption a, 
-#page-admin-roles-check [role="main"] #chooseuser form #reportuser_wrapper #userselector_options #userselector_options_sizer #userselector_options_caption a:hover, 
-#page-admin-roles-permissions table.rolecap thead, 
-#page-admin-roles-override table.rolecap thead, 
-#page-admin-roles-check table.rolecap thead, 
-.h-bold-6, .h-exbold-6 {
-    text-transform: inherit;
-    color: $cp-medium-blue;
-    font-size: .875rem;
+// Questionnaire Styles con interactividad mejorada
+.que {
+  .formulation {
+    background-color: $color-white;
+    border: 1px solid $color-badae4;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba($color-badae4, 0.3);
+      border-color: $color-primary;
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+      transition: transform 0.1s;
+    }
+  }
+  
+  &.informationitem {
+    .formulation {
+      background-color: $color-def2f8;
+      border-color: $color-badae4;
+      
+      &:hover {
+        background-color: lighten($color-def2f8, 2%);
+      }
+    }
+    
+    .info {
+      margin-bottom: 5px;
+    }
+  }
+  
+  &.correct {
+    .outcome,
+    .comment {
+      background-color: $color-dffae7;
+      border-color: $color-c7e9d1;
+      color: $color-0a1f22;
+      animation: correctAnswerPulse 2s ease-in-out;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba($color-c7e9d1, 0.3);
+      }
+    }
+  }
 }
 
-a {
-    font-size: 1rem;
+// Activity Instance con interactividad mejorada
+.activityinstance a {
+  text-transform: none;
+  @include smooth-transition(all 0.3s);
+  display: inline-block;
+  
+  &:hover {
     text-decoration: none;
-    color: $cp-medium-blue;
-    transition: color 0.3s ease-in-out;
+    transform: translateX(3px);
+    color: $color-secondary;
+  }
+  
+  &:active {
+    transform: translateX(1px);
+    transition: transform 0.1s;
+  }
+}
+
+// Tarjetas del dashboard con interactividad mejorada
+.dashboard-card {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background-color 0.3s;
+  
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba($color-black, 0.15);
+    z-index: 1;
+  }
+  
+  &:active {
+    transform: translateY(-3px) scale(0.99);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  
+  .course-info-container {
+    .edw-card-design-hd {
+      span.categoryname.small-info-semibold,
+      .popover-region .content-item-container.notification span.categoryname.content-item-footer,
+      #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th span.categoryname.h-semibold-5,
+      #block-region-side-pre .block-content-area .table-wrapper .calendartable.calendarmonth th .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.h-semibold-5,
+      span.categoryname.edw-msg-panel-badge {
+        color: $color-white;
+        background-color: $color-secondary;
+        font-size: 0.8em;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 4px 8px rgba($color-black, 0.2);
+        }
+        
+        &:active {
+          transform: translateY(-1px) scale(0.98);
+          transition: transform 0.1s;
+        }
+      }
+    }
+  }
+}
+
+.categoryname.text-truncate.small-info-semibold {
+  color: $color-white;
+  background-color: $color-secondary;
+  font-size: 0.8em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s;
+  
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 4px 8px rgba($color-secondary, 0.4);
+    background-color: darken($color-secondary, 5%);
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: transform 0.1s;
+  }
+}
+
+/* ==========================================
+   6. ICONOS PARA BLOQUES
+   ========================================== */
+
+/* Estilo base para todos los bloques con animación mejorada */
+.block h5.card-title:before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  margin-right: 8px;
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.3s ease;
+}
+
+.block:hover h5.card-title:before {
+  transform: rotate(-10deg) scale(1.3);
+  color: $color-secondary;
+}
+
+/* Estilo por defecto para bloques no listados específicamente */
+.block h5.card-title:before {
+  content: "\f468"; /* fa-solid fa-box - icono general para bloques */
+}
+
+/* Access Review Block */
+.block.block_accessreview h5.card-title:before {
+  content: "\f070"; /* fa-solid fa-eye-slash - revisión de acceso */
+}
+
+/* Activity Modules Block */
+.block.block_activity_modules h5.card-title:before {
+  content: "\f468"; /* fa-solid fa-box - módulos de actividad */
+}
+
+/* Activity Results Block */
+.block.block_activity_results h5.card-title:before {
+  content: "\f681"; /* fa-solid fa-ranking-star - resultados */
+}
+
+/* Admin Bookmarks Block */
+.block.block_admin_bookmarks h5.card-title:before {
+  content: "\f02e"; /* fa-solid fa-bookmark - marcadores */
+}
+
+/* Badges Block */
+.block.block_badges h5.card-title:before {
+  content: "\f559"; /* fa-solid fa-medal - insignias */
+}
+
+/* Blog Menu Block */
+.block.block_blog_menu h5.card-title:before {
+  content: "\f781"; /* fa-solid fa-blog - menú del blog */
+}
+
+/* Blog Recent Block */
+.block.block_blog_recent h5.card-title:before {
+  content: "\f017"; /* fa-solid fa-clock - entradas recientes */
+}
+
+/* Blog Tags Block */
+.block.block_blog_tags h5.card-title:before {
+  content: "\f02c"; /* fa-solid fa-tags - etiquetas del blog */
+}
+
+/* Calendar Month Block */
+.block.block_calendar_month h5.card-title:before {
+  content: "\f133"; /* fa-solid fa-calendar - calendario mensual */
+}
+
+/* Calendar Upcoming Block */
+.block.block_calendar_upcoming h5.card-title:before {
+  content: "\f784"; /* fa-solid fa-calendar-day - eventos próximos */
+}
+
+/* Checklist Block */
+.block.block_checklist h5.card-title:before {
+  content: "\f14a"; /* fa-solid fa-square-check - lista de verificación */
+}
+
+/* Comments Block */
+.block.block_comments h5.card-title:before {
+  content: "\f086"; /* fa-solid fa-comments - comentarios */
+}
+
+/* Completion Progress Block */
+.block.block_completion_progress h5.card-title:before {
+  content: "\f772"; /* fa-solid fa-circle-half-stroke - progreso de finalización */
+}
+
+/* Completion Status Block */
+.block.block_completionstatus h5.card-title:before {
+  content: "\f058"; /* fa-solid fa-circle-check - estado de finalización */
+}
+
+/* Configurable Reports Block */
+.block.block_configurable_reports h5.card-title:before {
+  content: "\f200"; /* fa-solid fa-chart-pie - informes configurables */
+}
+
+/* Course List Block */
+.block.block_course_list h5.card-title:before {
+  content: "\f0ae"; /* fa-solid fa-table-list - lista de cursos */
+}
+
+/* Course Summary Block */
+.block.block_course_summary h5.card-title:before {
+  content: "\f022"; /* fa-solid fa-list-alt - resumen del curso */
+}
+
+/* Dedication Block */
+.block.block_dedication h5.card-title:before {
+  content: "\f004"; /* fa-solid fa-heart - dedicación */
+}
+
+/* Feedback Block */
+.block.block_feedback h5.card-title:before {
+  content: "\f4ad"; /* fa-solid fa-comment-dots - retroalimentación */
+}
+
+/* Global Search Block */
+.block.block_globalsearch h5.card-title:before {
+  content: "\f689"; /* fa-solid fa-search-plus - búsqueda global */
+}
+
+/* Glossary Random Block */
+.block.block_glossary_random h5.card-title:before {
+  content: "\f49e"; /* fa-solid fa-dice - glosario aleatorio */
+}
+
+/* Grade Me Block */
+.block.block_grade_me h5.card-title:before {
+  content: "\f304"; /* fa-solid fa-pen - calificación */
+}
+
+/* Grade Overview Block */
+.block.block_grade_overview h5.card-title:before {
+  content: "\f080"; /* fa-solid fa-chart-bars - vista general de calificaciones */
+}
+
+/* HTML Block */
+.block.block_html h5.card-title:before {
+  content: "\f121"; /* fa-solid fa-code - HTML */
+}
+
+/* Login Block */
+.block.block_login h5.card-title:before {
+  content: "\f2f6"; /* fa-solid fa-right-to-bracket - inicio de sesión */
+}
+
+/* LP Block */
+.block.block_lp h5.card-title:before {
+  content: "\f5da"; /* fa-solid fa-graduation-cap - planes de aprendizaje */
+}
+
+/* Mentees Block */
+.block.block_mentees h5.card-title:before {
+  content: "\f4c4"; /* fa-solid fa-user-graduate - estudiantes mentoreados */
+}
+
+/* Message Teacher Block */
+.block.block_messageteacher h5.card-title:before {
+  content: "\f4e8"; /* fa-solid fa-comment-dots - mensajes al profesor */
+}
+
+/* Mnet Hosts Block */
+.block.block_mnet_hosts h5.card-title:before {
+  content: "\f542"; /* fa-solid fa-network-wired - hosts de red */
+}
+
+/* Multiblock Block */
+.block.block_multiblock h5.card-title:before {
+  content: "\f5fd"; /* fa-solid fa-layer-group - múltiples bloques */
+}
+
+/* My Certificates Block */
+.block.block_mycertificates h5.card-title:before {
+  content: "\f0a3"; /* fa-solid fa-certificate - certificados */
+}
+
+/* My Overview Block */
+.block.block_myoverview h5.card-title:before {
+  content: "\f00a"; /* fa-solid fa-table-cells - vista general */
+}
+
+/* My Profile Block */
+.block.block_myprofile h5.card-title:before {
+  content: "\f2bd"; /* fa-solid fa-user-circle - perfil */
+}
+
+/* My Progress Block */
+.block.block_myprogress h5.card-title:before {
+  content: "\f64f"; /* fa-solid fa-user-clock - mi progreso */
+}
+
+/* Navigation Block */
+.block.block_navigation h5.card-title:before {
+  content: "\f0e8"; /* fa-solid fa-sitemap - navegación */
+}
+
+/* News Items Block */
+.block.block_news_items h5.card-title:before {
+  content: "\f1ea"; /* fa-solid fa-newspaper - noticias */
+}
+
+/* Online Users Block */
+.block.block_online_users h5.card-title:before {
+  content: "\f500"; /* fa-solid fa-user-group - usuarios en línea */
+}
+
+/* Private Files Block */
+.block.block_private_files h5.card-title:before {
+  content: "\f023"; /* fa-solid fa-lock - archivos privados */
+}
+
+/* Recent Activity Block */
+.block.block_recent_activity h5.card-title:before {
+  content: "\f1da"; /* fa-solid fa-clock-rotate-left - actividad reciente */
+}
+
+/* Recently Accessed Courses Block */
+.block.block_recentlyaccessedcourses h5.card-title:before {
+  content: "\f518"; /* fa-solid fa-book-open - cursos recientes */
+}
+
+/* Recently Accessed Items Block */
+.block.block_recentlyaccesseditems h5.card-title:before {
+  content: "\f07c"; /* fa-solid fa-folder-open - elementos recientes */
+}
+
+/* RSS Client Block */
+.block.block_rss_client h5.card-title:before {
+  content: "\f09e"; /* fa-solid fa-rss - RSS */
+}
+
+/* Search Forums Block */
+.block.block_search_forums h5.card-title:before {
+  content: "\f002"; /* fa-solid fa-magnifying-glass - búsqueda en foros */
+}
+
+/* Section Links Block */
+.block.block_section_links h5.card-title:before {
+  content: "\f0cb"; /* fa-solid fa-list-ol - enlaces de sección */
+}
+
+/* Self Completion Block */
+.block.block_selfcompletion h5.card-title:before {
+  content: "\f5a2"; /* fa-solid fa-user-check - auto-finalización */
+}
+
+/* Settings Block */
+.block.block_settings h5.card-title:before {
+  content: "\f013"; /* fa-solid fa-gear - configuración */
+}
+
+/* Site Main Menu Block */
+.block.block_site_main_menu h5.card-title:before {
+  content: "\f0c9"; /* fa-solid fa-bars - menú principal */
+}
+
+/* Social Activities Block */
+.block.block_social_activities h5.card-title:before {
+  content: "\f0c0"; /* fa-solid fa-users - actividades sociales */
+}
+
+/* Starred Courses Block */
+.block.block_starredcourses h5.card-title:before {
+  content: "\f005"; /* fa-solid fa-star - cursos destacados */
+}
+
+/* Tag Flickr Block */
+.block.block_tag_flickr h5.card-title:before {
+  content: "\f16e"; /* fa-brands fa-flickr - Flickr */
+}
+
+/* Tag YouTube Block */
+.block.block_tag_youtube h5.card-title:before {
+  content: "\f167"; /* fa-brands fa-youtube - YouTube */
+}
+
+/* Tags Block */
+.block.block_tags h5.card-title:before {
+  content: "\f02c"; /* fa-solid fa-tags - etiquetas */
+}
+
+/* Timeline Block */
+.block.block_timeline h5.card-title:before {
+  content: "\f783"; /* fa-solid fa-calendar-days - línea de tiempo */
+}
+
+/* XP Block */
+.block.block_xp h5.card-title:before {
+  content: "\f091"; /* fa-solid fa-trophy - puntos de experiencia */
+}
+
+/* ===========================================
+   7. ELEMENTOS DE FORMULARIO
+   =========================================== */
+
+// Cuestionarios con interactividad mejorada
+.que {
+  .formulation {
+    background-color: $color-white;
+    border: 1px solid $color-badae4;
+    transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
+    
+    &:hover {
+      box-shadow: 0 5px 15px rgba($color-black, 0.15);
+      transform: translateY(-3px);
+      border-color: $color-primary;
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+      transition: transform 0.1s;
+    }
+  }
+  
+  &.informationitem {
+    .formulation {
+      background-color: $color-def2f8;
+      border-color: $color-badae4;
+      
+      &:hover {
+        background-color: lighten($color-def2f8, 2%);
+      }
+    }
+    
+    .info {
+      margin-bottom: 5px;
+    }
+  }
+  
+  &.correct {
+    .outcome,
+    .comment {
+      background-color: $color-dffae7;
+      border-color: $color-c7e9d1;
+      color: $color-0a1f22;
+      animation: correctAnswerGlow 2s ease-in-out infinite;
+      transition: transform 0.3s, box-shadow 0.3s;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba($color-c7e9d1, 0.4);
+      }
+    }
+  }
+}
+
+// Autocomplete con interactividad mejorada
+.form-autocomplete-suggestions {
+  li {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+      border-left: 4px solid $color-primary;
+      padding-left: 12px;
+      transform: translateX(5px) scale(1.03);
+    }
+    
+    &:active {
+      transform: translateX(2px) scale(0.98);
+      transition: transform 0.1s;
+    }
+    
+    &:focus {
+      background-color: $color-primary-light;
+      color: $color-primary-dark;
+      border-left: 4px solid $color-secondary-dark;
+      padding-left: 12px;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($color-secondary, 0.25);
+    }
+    
+    &[aria-selected="true"] {
+      background-color: $color-primary;
+      color: $color-white;
+      border-left: 4px solid $color-secondary;
+      padding-left: 12px;
+      animation: selectedItemPulse 2s infinite;
+      transform: scale(1.03);
+    }
+  }
+}
+
+// Links colapsables con interactividad mejorada
+.collapsible-link {
+  position: relative;
+  display: block;
+  text-align: left;
+  @include smooth-transition(all 0.3s);
+  
+  &::before {
+    content: '\f107';
+    top: 50%;
+    right: 0.8rem;
+    transform: translateY(-50%);
+    font-family: 'FontAwesome';
+    font-size: 1.1rem;
+    display: block;
+    position: absolute;
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.3s;
+  }
+  
+  &[aria-expanded='true']::before {
+    content: '\f106';
+    transform: translateY(-50%) rotate(0deg);
+    color: $color-secondary;
+  }
+  
+  &:hover {
+    background-color: rgba($color-primary, 0.05);
+    
+    &::before {
+      transform: translateY(-50%) scale(1.3);
+      color: $color-secondary;
+    }
+  }
+  
+  &:active {
+    background-color: rgba($color-primary, 0.02);
+    transition: background-color 0.1s;
+    
+    &::before {
+      transform: translateY(-50%) scale(0.9);
+      transition: transform 0.1s;
+    }
+  }
+}
+
+// Mejorar inputs generales
+input, select, textarea {
+  @include smooth-transition(all 0.3s);
+  @include interactive-focus;
+  
+  &:hover {
+    border-color: $color-secondary;
+  }
+  
+  &:focus {
+    transform: translateY(-2px);
+    border-color: $color-secondary;
+    box-shadow: 0 4px 8px rgba($color-secondary, 0.2);
+  }
+}
+
+// Checkboxes y radios interactivos
+[type="checkbox"], [type="radio"] {
+  position: relative;
+  cursor: pointer;
+  
+  &:hover {
+    &:before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: rgba($color-secondary, 0.2);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      animation: checkboxPulse 0.5s ease-out;
+    }
+  }
+  
+  &:checked {
+    animation: checkboxChecked 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+}
+
+/* ===========================================
+   8. PÁGINA DE LOGIN (Adaptación a template) con interactividad mejorada
+   =========================================== */
+
+// Estilos para la página de login completa con interactividad mejorada
+.pagelayout-login {
+  min-height: 100vh;
+  animation: pageLoadFade 0.8s ease-in-out;
+  
+  // Ocultar elementos innecesarios
+  .header-main,
+  .navbar,
+  .drawer-toggles,
+  .debug {
+    display: none !important;
+  }
+  
+  // Ajustes para el carrusel con interactividad
+  #loginCarouselColumn {
+    @media (min-width: 768px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 10;
+    }
+    
+    #loginCarousel {
+      height: 100%;
+      
+      .carousel-inner {
+        height: 100%;
+      }
+      
+      .carousel-item {
+        height: 100%;
+        transition: opacity 0.8s ease-in-out;
+        
+        img {
+          width: 100%;
+          height: 100vh;
+          object-fit: cover;
+          object-position: center;
+          transition: transform 7s ease-in-out;
+          
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+      
+      .carousel-indicators li {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba($color-white, 0.5);
+        transition: background-color 0.3s, transform 0.3s;
+        
+        &:hover {
+          transform: scale(1.2);
+        }
+        
+        &.active {
+          background-color: $color-white;
+          transform: scale(1.3);
+          box-shadow: 0 0 10px rgba($color-white, 0.5);
+        }
+      }
+    }
+  }
+  
+  // Ajustes para la columna de login con interactividad
+  .login-col {
+    min-height: 100vh;
+    animation: fadeInRight 0.8s ease-out;
+    
+    @media (min-width: 768px) {
+      margin-left: 66.6667%;
+    }
+    
+    .login-wrapper {
+      width: 100%;
+      max-width: 480px;
+      padding: 2rem;
+      /* Eliminamos las animaciones del contenedor del box */
+      /* Ya no aplicamos transformaciones ni sombras al hover */
+    }
+  }
+  
+  // Footer fijo abajo de toda la pantalla
+  .my-footer-wrapper {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    
+    // El panel del footer
+    .my-footer.panel {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      
+      .card.my-footer.panel.fixed-bottom {
+        z-index: 1030;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        height: auto;
+        max-height: 60px; // Reducción de altura
+        
+        .card-block {
+          .copyright {
+            background-color: $my-gris;
+            padding: 8px 10px;
+            margin: 0;
+            
+            .my-credit-footer-wrapper {
+              background-color: transparent;
+              padding: 0;
+              
+              .my-credit {
+                font-size: 0.85rem;
+                color: $color-primary;
+                
+                small {
+                  &:hover {
+                    color: $color-secondary;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Nueva animación de transición escalonada para el login
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Mejoras visuales para el formulario de login con interactividad
+.loginform {
+  // Evita duplicación de estilos en divs anidados
+  &.d-flex.flex-column {
+    .loginform {
+      display: block !important;
+    }
+  }
+  
+  // Logo del login con interactividad mejorada
+  .login-logo {
+    margin-bottom: 1.5rem;
+    animation: loginElementEntrance 0.5s 0.2s ease-out both;
+    
+    img {
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  filter 0.3s ease;
+      max-height: 80px;
+      
+      &:hover {
+        transform: scale(1.1) rotate(3deg);
+        filter: drop-shadow(0 5px 10px rgba($color-primary, 0.3));
+      }
+      
+      &:active {
+        transform: scale(0.95);
+        transition: transform 0.1s;
+      }
+    }
+  }
+  
+  // Transición escalonada para elementos del formulario
+  .form-group {
+    &:nth-child(1) {
+      animation: loginElementEntrance 0.5s 0.4s ease-out both;
+    }
+    
+    &:nth-child(2) {
+      animation: loginElementEntrance 0.5s 0.6s ease-out both;
+    }
+    
+    &:nth-child(3) {
+      animation: loginElementEntrance 0.5s 0.8s ease-out both;
+    }
+    
+    &:nth-child(4) {
+      animation: loginElementEntrance 0.5s 1s ease-out both;
+    }
+  }
+  
+  // Mejoras visuales para inputs con interactividad
+  input.form-control {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    &:hover {
+      border-color: $color-secondary;
+    }
+    
+    &:focus {
+      border-color: $color-secondary;
+      box-shadow: 0 0 0 0.2rem rgba($color-secondary, 0.25);
+      transform: translateY(-3px);
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+      transition: transform 0.1s;
+    }
+  }
+  
+  // Estilos para botones con interactividad mejorada
+  .btn-primary {
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+    position: relative;
+    overflow: hidden;
+    animation: loginElementEntrance 0.5s 1.2s ease-out both;
+    
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, $color-white 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 0.5s;
+    }
+    
+    &:active:after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+    
+    &:hover {
+      background-color: darken($color-secondary, 5%);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 6px 15px rgba($color-secondary, 0.4);
+    }
+    
+    &:active {
+      transform: translateY(-1px) scale(0.98);
+      box-shadow: 0 2px 5px rgba($color-secondary, 0.3);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+  }
+  
+  .btn-secondary {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    position: relative;
+    overflow: hidden;
+    animation: loginElementEntrance 0.5s 1.3s ease-out both;
+    
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, $color-white 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 0.5s;
+    }
+    
+    &:active:after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+    
+    &:hover {
+      background-color: darken($color-primary, 5%);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 6px 15px rgba($color-primary, 0.4);
+    }
+    
+    &:active {
+      transform: translateY(-1px) scale(0.98);
+      box-shadow: 0 2px 5px rgba($color-primary, 0.3);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+  }
+  
+  // Enlace olvido contraseña con interactividad y animación
+  .login-form-forgotpassword {
+    animation: loginElementEntrance 0.5s 1.4s ease-out both;
+    
+    a {
+      color: $color-primary;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+      position: relative;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: $color-secondary;
+        transition: width 0.3s ease;
+      }
+      
+      &:hover {
+        color: $color-secondary;
+        text-decoration: none;
+        transform: translateY(-1px);
+        
+        &:after {
+          width: 100%;
+        }
+      }
+      
+      &:active {
+        transform: translateY(0);
+        transition: transform 0.1s;
+      }
+    }
+  }
+}
+
+/* ===========================================
+   9. CALENDARIO Y EVENTOS
+   =========================================== */
+
+// Estilos para eventos con interactividad mejorada
+.event {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background-color 0.3s;
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba($color-black, 0.15);
+    z-index: 1;
+  }
+  
+  &:active {
+    transform: translateY(-2px) scale(0.99);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  
+  h3.name,
+  .calendar_event_course {
+    color: $color-white;
+    text-shadow: 1px 1px 1px $color-black;
+    transition: transform 0.3s, text-shadow 0.3s;
+    
+    &:hover {
+      transform: translateX(3px);
+      text-shadow: 2px 2px 3px rgba($color-black, 0.5);
+    }
+  }
+  
+  a.card-link {
+    font-weight: bold;
+    border-bottom: 2px dotted;
+    font-size: 107%;
+    transition: all 0.3s ease;
+    display: inline-block;
+    
+    &:hover {
+      border-bottom-style: solid;
+      padding-bottom: 2px;
+      transform: translateY(-2px);
+      color: $color-secondary;
+    }
+    
+    &:active {
+      transform: translateY(0);
+      transition: transform 0.1s;
+    }
+  }
+}
+
+// Próximos eventos en el calendario con interactividad mejorada
+.block_calendar_upcoming {
+  .event {
+    border-left: 2px solid $color-ccc;
+    padding-left: 5px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    &:hover {
+      padding-left: 10px;
+      background-color: rgba($color-ccc, 0.1);
+      border-left-width: 4px;
+    }
+    
+    &:active {
+      transform: translateX(2px);
+      transition: transform 0.1s;
+    }
+    
+    &.my-event-urgent {
+      border-color: $color-event-urgent;
+      animation: urgentPulse 2s infinite;
+      
+      &:hover {
+        background-color: rgba($color-event-urgent, 0.08);
+        animation-play-state: paused;
+      }
+    }
+    
+    &.my-event-priority {
+      border-color: $color-event-priority;
+      
+      &:hover {
+        background-color: rgba($color-event-priority, 0.08);
+        border-left-width: 6px;
+      }
+    }
+  }
+}
+
+// Badge de peligro con interactividad mejorada
+.badge.badge-danger {
+  background-color: $color-event-urgent;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+  
+  &:hover {
+    transform: scale(1.2);
+    box-shadow: 0 2px 5px rgba($color-event-urgent, 0.5);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+}
+
+// Calendario con interactividad mejorada
+.maincalendar {
+  .calendarmonth {
+    td {
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      
+      &:hover {
+        background-color: rgba($color-primary, 0.08);
+        transform: scale(1.02);
+        z-index: 1;
+      }
+      
+      &:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+      }
+      
+      &.today {
+        .day-number-circle {
+          color: $color-white;
+          background-color: $color-primary;
+          animation: todayPulse 2s infinite;
+          
+          &:hover {
+            animation-play-state: paused;
+            transform: scale(1.2);
+            box-shadow: 0 0 10px $color-primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Día de hoy en calendario con interactividad mejorada
+section#region-main .maincalendar td.today span.day-number-circle,
+aside:not(#block-region-side-pre) .maincalendar td.today span.day-number-circle {
+  border-radius: 5px;
+  color: $color-white;
+  background-color: $color-primary;
+  box-shadow: 0 6px 12px $color-primary;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 20px $color-primary;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+}
+
+/* ===========================================
+   10. ANIMACIONES Y TRANSICIONES
+   =========================================== */
+
+// Keyframes base mejorados
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(5px) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(5%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Nuevas animaciones mejoradas
+@keyframes buttonPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba($color-secondary, 0);
+    transform: scale(1.03);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0);
+    transform: scale(1);
+  }
+}
+
+// Animación de entrada para elementos del login
+@keyframes loginElementEntrance {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes buttonBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes correctAnswerPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($color-c7e9d1, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($color-c7e9d1, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($color-c7e9d1, 0);
+  }
+}
+
+@keyframes correctAnswerGlow {
+  0% {
+    box-shadow: 0 0 5px rgba($color-c7e9d1, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba($color-c7e9d1, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba($color-c7e9d1, 0.5);
+  }
+}
+
+@keyframes selectedItemPulse {
+  0% {
+    border-left-width: 4px;
+  }
+  50% {
+    border-left-width: 8px;
+  }
+  100% {
+    border-left-width: 4px;
+  }
+}
+
+@keyframes todayPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($color-primary, 0.7);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 10px rgba($color-primary, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($color-primary, 0);
+  }
+}
+
+@keyframes logoEntrance {
+  0% {
+    transform: scale(0.7) rotate(-10deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes inputFocus {
+  0% {
+    transform: scale(0.97);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes tabActiveBorder {
+  0% {
+    width: 0;
+    left: 50%;
+  }
+  100% {
+    width: 100%;
+    left: 0;
+  }
+}
+
+@keyframes urgentPulse {
+  0% {
+    border-left-width: 2px;
+  }
+  50% {
+    border-left-width: 8px;
+  }
+  100% {
+    border-left-width: 2px;
+  }
+}
+
+// Animación específica para el botón de login mejorada
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+// Nueva animación para la carga de la página mejorada
+@keyframes pageLoadFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// Animación para elementos que se deslizan desde la derecha mejorada
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+// Nueva animación para notificaciones mejorada
+@keyframes notificationPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0.7);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba($color-secondary, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0);
+  }
+}
+
+// Nuevas animaciones para elementos interactivos
+@keyframes focusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba($color-secondary, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($color-secondary, 0);
+  }
+}
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes activePagePulse {
+  0% {
+    box-shadow: 0 2px 5px rgba($color-primary, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 10px rgba($color-primary, 0.5);
+  }
+  100% {
+    box-shadow: 0 2px 5px rgba($color-primary, 0.3);
+  }
+}
+
+@keyframes checkboxPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes checkboxChecked {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes borderPulse {
+  0% {
+    border-bottom-color: $color-primary;
+  }
+  50% {
+    border-bottom-color: $color-secondary;
+  }
+  100% {
+    border-bottom-color: $color-primary;
+  }
+}
+
+@keyframes textPulse {
+  0% {
+    color: $color-primary;
+  }
+  50% {
+    color: $color-secondary;
+  }
+  100% {
+    color: $color-primary;
+  }
+}
+
+/* ===========================================
+   11. MEDIA QUERIES Y RESPONSIVE
+   =========================================== */
+
+// Media queries para pantallas pequeñas
+@media (max-width: 767px) {
+  .fixed-carousel-col {
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  
+  .login-col {
+    margin-left: 0;
+    min-height: auto;
+    overflow: visible;
+    padding: 1rem;
+    display: block;
+  }
+  
+  .login-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .block:hover {
+    transform: translateY(-3px) scale(1.01);
+  }
+  
+  .btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 3px 8px rgba($color-black, 0.15);
+  }
+  
+  .nav-pills-custom .nav-link::before {
+    display: none;
+  }
+}
+
+// Media queries para pantallas medianas
+@media (min-width: 768px) and (max-width: 991px) {
+  .nav-pills-custom .nav-link::before {
+    right: -5px;
+    border-left-width: 5px;
+  }
+  
+  .floating-buttons-wrapper {
+    bottom: 60px;
+    left: 10px;
+    
+    > .btn-floating {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+/* ===========================================
+   12. UTILIDADES Y AJUSTES MENORES
+   =========================================== */
+
+// Ajustes para activity instance con interactividad mejorada
+.activityinstance a {
+  text-transform: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block;
+  
+  &:hover {
+    text-decoration: none;
+    padding-left: 5px;
+    transform: translateX(2px);
+    color: $color-secondary;
+  }
+  
+  &:active {
+    transform: translateX(1px);
+    transition: transform 0.1s;
+  }
+}
+
+// Ocultar license notice
+.license-notice {
+  display: none;
+}
+
+// Estadísticas (ícono) con interactividad mejorada
+.edw-stats-wrapper .stat-block .inner .edw-icon {
+  font-size: 44px;
+  display: flex;
+  color: $color-secondary;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease, text-shadow 0.3s;
+  
+  &:hover {
+    transform: scale(1.15) rotate(5deg);
+    color: darken($color-secondary, 10%);
+    text-shadow: 0 3px 6px rgba($color-black, 0.2);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+}
+
+// Título de sección en courseindex con interactividad mejorada
+#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
+  padding: 10px 24px;
+  color: $color-white;
+  background-color: $color-primary;
+  border-radius: 0;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  
+  &:hover {
+    background-color: darken($color-primary, 8%);
+    transform: translateX(3px);
+  }
+  
+  &:active {
+    transform: translateX(1px);
+    transition: transform 0.1s;
+  }
+}
+
+// Ítems en courseindex con interactividad mejorada
+#theme_remui-drawers-courseindex .pageitem {
+  color: $color-white !important;
+  transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  &:hover {
+    background-color: rgba($color-white, 0.15);
+    transform: translateX(5px) scale(1.02);
+  }
+  
+  &:active {
+    transform: translateX(2px) scale(0.98);
+    transition: transform 0.1s;
+  }
+}
+
+/* ===========================================
+   13. DROPDOWNS Y CONTROLES ESPECÍFICOS
+   =========================================== */
+
+// Dropdown toggles y behavior con interactividad mejorada
+.dropdown-toggle {
+  position: relative;
+  @include smooth-transition(all 0.3s);
+  
+  &::after {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    top: 1px;
+  }
+  
+  &:hover::after {
+    transform: translateY(3px) scale(1.2);
+  }
+  
+  &:active::after {
+    transform: translateY(1px) scale(0.9);
+    transition: transform 0.1s;
+  }
+}
+
+// Controles de navegación específicos con interactividad mejorada
+.block .dropdown-item:focus {
+  background-color: $color-primary-dark;
+  color: $color-white;
+}
+
+// Botones específicos para bloques de navegación
+.block button.dropdown-toggle:hover {
+  background-color: darken($light-bg, 10%);
+  color: $color-white;
+}
+
+// My Overview bloque, elementos específicos
+.block-myoverview {
+  [data-region="filter"] {
+    .nav-grouping-selector {
+      .nav {
+        li.nav-item {
+          .nav-link {
+            @include smooth-transition(all 0.3s);
+            
+            &:hover {
+              transform: translateY(-2px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animación para eventos
+.block_calendar_upcoming .event {
+  &:nth-child(odd) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(even) {
+    animation-delay: 0.3s;
+  }
+  
+  &.my-event-urgent {
+    animation: urgentPulse 2s infinite;
+  }
+}
+
+/* ===========================================
+   14. FOOTER STYLES - SIN ANIMACIONES
+   =========================================== */
+
+.my-credit-footer-wrapper {
+  background-color: $color-gray-light;
+  color: $color-primary;
+  font-size: 15px;
+  padding: 1rem 0;
+}
+
+#page-footer {
+  background-color: darken($color-primary, 10%);
+  
+  .copyright {
+    background-color: $my-gris;
+    color: $color-primary;
+    text-align: center;
+    min-height: inherit;
+    margin-bottom: 0;
+  }
+}
+
+#top-footer {
+  background-color: $color-primary;
+  color: $color-white;
+  margin: 0 -15px;
+  padding: 2rem 0;
+  position: relative;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, $color-primary, $color-secondary, $color-primary);
+  }
+  
+  .my-about {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+  }
+  
+  a {
+    color: $color-white;
+    position: relative;
+    
+    &:hover {
+      color: $color-secondary;
+      text-decoration: none;
+    }
+  }
+}
+
+.footer {
+  background-color: $my-gris;
+  padding: 1rem 0;
+  text-align: center;
+  
+  .my-credit {
+    font-size: 0.875rem;
+    color: $color-primary;
+    
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+}
+
+/* ==========================================
+   NUEVAS INCLUSIONES y REEMPLAZOS DE VALORES
+   ========================================== */
+
+/* Ícono de estadísticas */
+.edw-stats-wrapper .stat-block .inner .edw-icon {
+  font-size: 44px;
+  display: flex;
+  color: $color-secondary; 
+}
+
+/* Título de sección en courseindex */
+#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title {
+  padding: 10px 24px;
+  color: $color-white;
+  background-color: $color-primary;
+  border-radius: 0;
+  justify-content: space-between;
+}
+
+/* Ítems en courseindex */
+#theme_remui-drawers-courseindex .pageitem {
+  color: $color-white !important;
+}
+
+/* Estilos para los círculos de día en el calendario */
+section#region-main .maincalendar td.today span.day-number-circle,
+aside:not(#block-region-side-pre) .maincalendar td.today span.day-number-circle {
+  border-radius: 5px;
+  color: $color-white;
+  background-color: $color-primary;
+  box-shadow: 0 6px 12px $color-primary;
+}
+
+/* Para el calendario (calendarmonth) */
+.maincalendar .calendarmonth td.today .day-number-circle {
+  color: $color-white;
+  background-color: $color-primary;
+}
+
+/* Estilos para navegación de tabs */
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link.active, 
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link:hover, 
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link:focus {
+  color: $color-primary;
+  background-color: #fff0;
+}
+
+.edw-tabs-navigation .nav-tabs .nav-item .nav-link.active::before {
+  content: "";
+  visibility: visible;
+  position: absolute;
+  bottom: -15px;
+  width: 100%;
+  border-bottom: 3px solid $color-secondary;
+}
+
+#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title .edw-icon, 
+#theme_remui-drawers-courseindex .drawercontent #courseindex #courseindex-content .courseindex .courseindex-section .courseindex-section-title .fa-lock {
+  color: $color-white;
 }

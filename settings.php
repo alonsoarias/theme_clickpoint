@@ -51,7 +51,7 @@ if ($ADMIN->fulltree) {
     /* =========================================================================
        TAB 1: General Settings
        ========================================================================= */
-    $page = new admin_settingpage('theme_clickpoint_generals', get_string('generalsettings', 'theme_clickpoint'));
+    $page = new admin_settingpage('theme_clickpoint_cp_generals', get_string('generalsettings', 'theme_clickpoint'));
 
     // --- Notificaciones Generales ---
     $page->add(new admin_setting_heading(
@@ -154,7 +154,7 @@ if ($ADMIN->fulltree) {
     /* =========================================================================
        TAB 2: Login Page Settings
        ========================================================================= */
-    $page = new admin_settingpage('theme_clickpoint_login', get_string('loginsettings', 'theme_clickpoint'));
+    $page = new admin_settingpage('theme_clickpoint_cp_login', get_string('loginsettings', 'theme_clickpoint'));
 
     // Carousel Settings
     $page->add(new admin_setting_heading(
@@ -199,7 +199,7 @@ if ($ADMIN->fulltree) {
     /* =========================================================================
        TAB 3: Dashboard Settings
        ========================================================================= */
-    $page = new admin_settingpage('theme_clickpoint_dashboard', get_string('dashboardsettings', 'theme_clickpoint'));
+    $page = new admin_settingpage('theme_clickpoint_cp_dashboard', get_string('dashboardsettings', 'theme_clickpoint'));
 
     // Personal Area Header Settings
     $page->add(new admin_setting_heading(
@@ -268,7 +268,7 @@ if ($ADMIN->fulltree) {
     /* =========================================================================
        TAB 4: Footer Settings
        ========================================================================= */
-    $page = new admin_settingpage('theme_clickpoint_footer', get_string('footersettings', 'theme_clickpoint'));
+    $page = new admin_settingpage('theme_clickpoint_cp_footer', get_string('footersettings', 'theme_clickpoint'));
 
     // Visibilidad del Footer
     $name = 'theme_clickpoint/cp_hidefootersections';

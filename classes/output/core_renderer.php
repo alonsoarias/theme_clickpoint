@@ -51,278 +51,50 @@ class core_renderer extends \theme_remui\output\core_renderer
         return $this->themeConfig;
     }
     
+    // IOMAD customisations.
+
     /**
      * The standard tags that should be included in the <head> tag
-     * including lazysizes for optimized image loading and IOMAD styles
-     * 
+     * including a meta description for the front page
+     * We cheekily add un-cached CSS for Iomad here
+     *
      * @return string HTML fragment.
      */
-    public function standard_head_html()
-    {
-        global $SITE, $PAGE, $DB, $CFG;
+    public function standard_head_html() {
+        global $SITE, $PAGE, $DB;
 
-        // Obtener el resultado base del padre
+        // Inject additional 'live' css
+        $css = '';
+
+        // Get company colours
+        $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
+        if ($companyrec = $DB->get_record('company', array('id' => $companyid))) {
+            $company = $DB->get_record('company', array('id' => $companyid), '*', MUST_EXIST);
+            $linkcolor = $company->linkcolor;
+            if ($linkcolor) {
+                $css .= 'a {color: ' . $linkcolor . '} ';
+            }
+            $headingcolor = $company->headingcolor;
+            if ($headingcolor) {
+                $css .= '.navbar {background-color: ' . $headingcolor . '!important} ';
+            }
+            $maincolor = $company->maincolor;
+            if ($maincolor) {
+                $css .= 'body, #nav-drawer {background-color: ' . $maincolor . '!important} ';
+            }
+
+            $css .= $company->customcss;
+        }
+
         $output = parent::standard_head_html();
-        
-        // Integrar lazysizes.min.js para carga optimizada de imágenes
-        $lazysizesurl = new moodle_url('/theme/clickpoint/js/lazysizes.min.js');
-        $output .= '<script src="' . $lazysizesurl . '" async defer></script>';
-        
-        // Configuración personalizada de lazysizes
-        $output .= '
-        <script>
-            window.lazySizesConfig = window.lazySizesConfig || {};
-            window.lazySizesConfig.loadMode = 1; // Cargar imágenes más agresivamente
-        </script>';
 
-        // Inyectar estilos de IOMAD directamente si la clase está disponible
-        if (class_exists('\iomad')) {
-            $css = '';
-            try {
-                $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
-
-                if ($companyid && ($company = $DB->get_record('company', array('id' => $companyid)))) {
-                    $css .= "/* IOMAD Custom Styles with Clickpoint Enhancements */\n";
-
-                    // Variables para uso interno
-                    $primaryColor = !empty($company->headingcolor) ? $company->headingcolor : null;
-                    $secondaryColor = !empty($company->linkcolor) ? $company->linkcolor : null;
-                    $mainColor = !empty($company->maincolor) ? $company->maincolor : null;
-
-                    // 1. ENCABEZADOS Y TEXTO
-                    if ($primaryColor) {
-                        $css .= "h1, .h1, h2, .h2, h3, .h3, h4, .h4, .h5, .h5, h6, .h6 { color: {$primaryColor} !important; }\n";
-                    }
-
-                    if ($secondaryColor) {
-                        $css .= "a { color: {$secondaryColor} !important; }\n";
-                        $css .= "a:hover { color: " . $this->lighten_color($secondaryColor, 15) . " !important; transform: translateY(-2px); }\n";
-                        $css .= "a:active { transform: translateY(-1px); transition: transform 0.1s; }\n";
-                    }
-
-                    // 2. NAVBAR ESPECÍFICO - Implementando estilos de clickpoint.scss
-                    if ($primaryColor && $secondaryColor) {
-                        // Borde inferior con gradiente
-                        $css .= ".navbar { 
-                            border-bottom: 5px solid !important; 
-                            border-image: linear-gradient(to right, {$secondaryColor}, {$primaryColor}, {$secondaryColor}) 20% !important;
-                            box-shadow: 0 2px 3px rgba(255, 255, 255, 0.5) !important;
-                        }\n";
-                        
-                        // Estilos de navegación principal
-                        $css .= ".navbar .primary-navigation .nav-link, .navbar .primary-navigation .dropdown-toggle, 
-                                .navbar #usernavigation .nav-link, .navbar #usernavigation .dropdown-toggle { 
-                                    color: {$primaryColor} !important; 
-                                    font-weight: bold !important;
-                                    transition: color 0.3s, transform 0.3s, text-shadow 0.3s !important;
-                                }\n";
-                        
-                        // Hover y focus estados
-                        $css .= ".navbar .primary-navigation .nav-link:hover, .navbar .primary-navigation .dropdown-toggle:hover,
-                                .navbar #usernavigation .nav-link:hover, .navbar #usernavigation .dropdown-toggle:hover,
-                                .navbar .primary-navigation .nav-link:focus, .navbar .primary-navigation .dropdown-toggle:focus,
-                                .navbar #usernavigation .nav-link:focus, .navbar #usernavigation .dropdown-toggle:focus { 
-                                    color: {$secondaryColor} !important; 
-                                    transform: translateY(-3px) !important;
-                                    text-shadow: 0 2px 4px rgba({$this->hex2rgb($secondaryColor)}, 0.3) !important;
-                                }\n";
-                        
-                        // Active state
-                        $css .= ".navbar .primary-navigation .nav-link.active, .navbar .primary-navigation .dropdown-toggle.active, 
-                                .navbar #usernavigation .nav-link.active, .navbar #usernavigation .dropdown-toggle.active { 
-                                    color: {$secondaryColor} !important; 
-                                }\n";
-                        
-                        $css .= ".navbar .primary-navigation .nav-link.active::before, .navbar .primary-navigation .dropdown-toggle.active::before, 
-                                .navbar #usernavigation .nav-link.active::before, .navbar #usernavigation .dropdown-toggle.active::before { 
-                                    content: \"\";
-                                    position: absolute !important;
-                                    bottom: 0 !important;
-                                    left: 0 !important;
-                                    width: 100% !important;
-                                    height: 3px !important;
-                                    background-color: {$secondaryColor} !important;
-                                }\n";
-
-                        // User initials style
-                        $primaryDark = $this->darken_color($primaryColor, 10);
-                        $css .= ".navbar .userinitials { 
-                                    background-color: {$primaryDark} !important; 
-                                    color: #FFFFFF !important;
-                                    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                                                box-shadow 0.3s ease,
-                                                background-color 0.3s ease !important;
-                                }\n";
-                        
-                        $css .= ".navbar .userinitials:hover { 
-                                    transform: scale(1.1) rotate(5deg) !important;
-                                    box-shadow: 0 4px 8px rgba({$this->hex2rgb($primaryDark)}, 0.4) !important;
-                                    background-color: " . $this->lighten_color($primaryDark, 5) . " !important;
-                                }\n";
-
-                        // Botones nav-pills
-                        $css .= ".nav-pills .nav-link.active, .nav-pills .show>.nav-link { 
-                                    color: #FFFFFF !important; 
-                                    background-color: {$primaryColor} !important; 
-                                    transform: translateY(-1px) !important;
-                                    box-shadow: 0 4px 10px rgba({$this->hex2rgb($primaryColor)}, 0.3) !important;
-                                }\n";
-                        
-                        $css .= ".nav-pills .nav-link:hover:not(.active) {
-                                    background-color: rgba({$this->hex2rgb($secondaryColor)}, 0.1) !important;
-                                    transform: translateY(-2px) scale(1.02) !important;
-                                }\n";
-                    }
-
-                    // 3. BOTONES
-                    if ($primaryColor && $secondaryColor) {
-                        // btn-primary con color secundario
-                        $css .= ".btn-primary { 
-                                    background-color: {$secondaryColor} !important; 
-                                    border-color: {$secondaryColor} !important; 
-                                    color: #FFFFFF !important; 
-                                    position: relative !important;
-                                    overflow: hidden !important;
-                                    transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
-                                }\n";
-                        
-                        $css .= ".btn-primary:hover { 
-                                    background-color: {$primaryColor} !important; 
-                                    border-color: {$primaryColor} !important; 
-                                    color: #FFFFFF !important;
-                                    transform: translateY(-3px) scale(1.03) !important;
-                                    box-shadow: 0 5px 15px rgba({$this->hex2rgb($secondaryColor)}, 0.4) !important;
-                                }\n";
-                        
-                        $css .= ".btn-primary:active {
-                                    transform: translateY(-1px) scale(0.98) !important;
-                                    box-shadow: 0 2px 5px rgba({$this->hex2rgb($secondaryColor)}, 0.3) !important;
-                                    transition: transform 0.1s, box-shadow 0.1s !important;
-                                }\n";
-
-                        // btn-secondary con color primario
-                        $css .= ".btn-secondary { 
-                                    background-color: {$primaryColor} !important; 
-                                    border-color: {$primaryColor} !important; 
-                                    color: #FFFFFF !important;
-                                    transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
-                                }\n";
-                        
-                        $css .= ".btn-secondary:hover { 
-                                    background-color: {$secondaryColor} !important; 
-                                    border-color: {$secondaryColor} !important; 
-                                    color: #FFFFFF !important;
-                                    transform: translateY(-3px) scale(1.03) !important;
-                                    box-shadow: 0 5px 15px rgba({$this->hex2rgb($primaryColor)}, 0.4) !important;
-                                }\n";
-                        
-                        $css .= ".btn-secondary:active {
-                                    transform: translateY(-1px) scale(0.98) !important;
-                                    box-shadow: 0 2px 5px rgba({$this->hex2rgb($primaryColor)}, 0.3) !important;
-                                    transition: transform 0.1s, box-shadow 0.1s !important;
-                                }\n";
-
-                        // Botones específicos con icon-no-margin
-                        $css .= "button.btn.btn-primary.icon-no-margin.p-0 { 
-                                    background-color: {$secondaryColor} !important; 
-                                    border-color: #FFFFFF !important; 
-                                    color: #FFFFFF !important;
-                                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-                                }\n";
-                        
-                        $css .= "button.btn.btn-primary.icon-no-margin.p-0:hover { 
-                                    background-color: {$secondaryColor} !important; 
-                                    border-color: #FFFFFF !important; 
-                                    color: #FFFFFF !important;
-                                    transform: scale(1.08) !important;
-                                    box-shadow: 0 3px 6px rgba({$this->hex2rgb($secondaryColor)}, 0.3) !important;
-                                }\n";
-                        
-                        $css .= "button.btn.btn-primary.icon-no-margin.p-0:active {
-                                    transform: scale(0.95) !important;
-                                    transition: transform 0.1s !important;
-                                }\n";
-
-                        // Asegurar que los iconos dentro de btn-primary sean blancos
-                        $css .= ".btn-primary .fa, .btn-primary .edw-icon { color: #FFFFFF !important; }\n";
-                    }
-
-                    // 4. FOOTER
-                    if ($primaryColor) {
-                        $primaryDark = $this->darken_color($primaryColor, 10);
-                        $css .= "#page-footer { background-color: {$primaryDark} !important; }\n";
-                        $css .= "#top-footer { 
-                                    background-color: {$primaryColor} !important; 
-                                    color: #FFFFFF !important;
-                                    position: relative !important;
-                                }\n";
-                        
-                        $css .= "#top-footer:before {
-                                    content: '';
-                                    position: absolute !important;
-                                    top: 0 !important;
-                                    left: 0 !important;
-                                    right: 0 !important;
-                                    height: 4px !important;
-                                    background: linear-gradient(to right, {$primaryColor}, {$secondaryColor}, {$primaryColor}) !important;
-                                }\n";
-                        
-                        $css .= "#top-footer h3 { 
-                                    color: #FFFFFF !important;
-                                    margin-bottom: 15px !important;
-                                    position: relative !important;
-                                    display: inline-block !important;
-                                    padding-bottom: 10px !important;
-                                }\n";
-                    }
-
-
-                    // 5. COLORES DE FONDO
-                    if ($mainColor) {
-                        $lightBg = $this->lighten_color($mainColor, 5);
-                        $css .= "body, #nav-drawer { background-color: {$mainColor} !important; }\n";
-                        $css .= "#page-content { background-color: {$mainColor} !important; }\n";
-                        $css .= "#block-region-side-pre > section > .card-body { background-color: {$lightBg} !important; }\n";
-                    }
-                    
-                    // 6. ELEMENTOS DE BLOQUES (Card blocks)
-                    $css .= ".block {
-                                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                                            box-shadow 0.4s ease, 
-                                            background-color 0.3s !important;
-                            }\n";
-                    
-                    $css .= ".block:hover {
-                                transform: translateY(-5px) scale(1.01) !important;
-                                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15) !important;
-                                z-index: 1 !important;
-                            }\n";
-                    
-                    $css .= ".block:active {
-                                transform: translateY(-2px) scale(0.99) !important;
-                                transition: transform 0.1s, box-shadow 0.1s !important;
-                            }\n";
-
-                    // Incluir estilos personalizados de la empresa si existen
-                    if (!empty($company->customcss)) {
-                        $css .= "\n/* Custom Company CSS */\n";
-                        $css .= $company->customcss . "\n";
-                    }
-                }
-            } catch (\Exception $e) {
-                // Silencioso en caso de error
-                if (debugging()) {
-                    $css .= "/* Error al obtener colores IOMAD: " . $e->getMessage() . " */\n";
-                }
-            }
-
-            if (!empty($css)) {
-                $output .= '<style>' . $css . '</style>';
-            }
+        if ($css) {
+            $output .= '<style>' . $css . '</style>';
         }
 
         return $output;
     }
+
 
     /**
      * Renders the login form with company branding.
@@ -698,74 +470,5 @@ class core_renderer extends \theme_remui\output\core_renderer
         ];
 
         return in_array($CFG->wwwroot, $allowed_urls);
-    }
-
-    /**
-     * Convierte un color hexadecimal a formato RGB
-     *
-     * @param string $hex Color en formato hexadecimal
-     * @return string Valores RGB separados por comas
-     */
-    private function hex2rgb($hex) {
-        $hex = ltrim($hex, '#');
-        
-        if(strlen($hex) == 3) {
-            $r = hexdec(substr($hex, 0, 1).substr($hex, 0, 1));
-            $g = hexdec(substr($hex, 1, 1).substr($hex, 1, 1));
-            $b = hexdec(substr($hex, 2, 1).substr($hex, 2, 1));
-        } else {
-            $r = hexdec(substr($hex, 0, 2));
-            $g = hexdec(substr($hex, 2, 2));
-            $b = hexdec(substr($hex, 4, 2));
-        }
-        
-        return "$r, $g, $b";
-    }
-
-    /**
-     * Oscurecer un color en formato hexadecimal
-     *
-     * @param string $hex Color en formato hexadecimal
-     * @param int $percent Porcentaje de oscurecimiento
-     * @return string Color oscurecido en formato hexadecimal
-     */
-    private function darken_color($hex, $percent) {
-        return $this->adjust_brightness($hex, -$percent);
-    }
-
-    /**
-     * Aclarar un color en formato hexadecimal
-     *
-     * @param string $hex Color en formato hexadecimal
-     * @param int $percent Porcentaje de aclarado
-     * @return string Color aclarado en formato hexadecimal
-     */
-    private function lighten_color($hex, $percent) {
-        return $this->adjust_brightness($hex, $percent);
-    }
-
-    /**
-     * Ajusta el brillo de un color hexadecimal
-     *
-     * @param string $hex Color en formato hexadecimal
-     * @param int $steps Pasos de brillo (positivo para aclarar, negativo para oscurecer)
-     * @return string Color ajustado en formato hexadecimal
-     */
-    private function adjust_brightness($hex, $steps) {
-        // Elimina el # si existe
-        $hex = ltrim($hex, '#');
-
-        // Convierte a RGB
-        $r = hexdec(substr($hex, 0, 2));
-        $g = hexdec(substr($hex, 2, 2));
-        $b = hexdec(substr($hex, 4, 2));
-
-        // Ajusta el brillo
-        $r = max(0, min(255, $r + $steps * 2.55));
-        $g = max(0, min(255, $g + $steps * 2.55));
-        $b = max(0, min(255, $b + $steps * 2.55));
-
-        // Convierte de nuevo a hexadecimal
-        return '#' . sprintf('%02x%02x%02x', $r, $g, $b);
     }
 }
