@@ -1,4 +1,13 @@
 <?php
+/**
+ * Language strings for theme_clickpoint.
+ *
+ * @package    theme_clickpoint
+ * @copyright  2024 Soporte ClickPoint <soporte@clickpoint.co>
+ * @author     Pedro Alonso Arias Balcucho
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 $string['pluginname'] = 'ClickPoint';
 $string['choosereadme'] = 'ClickPoint is a theme created by Pedro Arias exclusively for our customers. It enhances the Remui and IOMAD themes with additional features for corporate learning environments.';
 
@@ -127,11 +136,6 @@ $string['enable_chat'] = 'Enable Chat Widget';
 $string['enable_chatdesc'] = 'When enabled, adds a Tawk.to chat widget to your site for logged-in users.';
 $string['tawkto_embed_url'] = 'Tawk.to Embed URL';
 $string['tawkto_embed_urldesc'] = 'Enter your Tawk.to widget URL obtained from your Tawk.to dashboard (e.g., https://embed.tawk.to/123456789/default).';
-
-// Accessibility settings
-$string['accessibilityheading'] = 'ClickPoint Accessibility Settings';
-$string['accessibility_widget'] = 'Enable Accessibility Widget';
-$string['accessibility_widgetdesc'] = 'When enabled, adds an accessibility helper widget for users to customize their viewing experience.';
 
 // Content protection settings
 $string['contentprotectionheading'] = 'ClickPoint Content Protection Settings';
