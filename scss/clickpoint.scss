@@ -19,8 +19,7 @@ h4,
 h6,
 .h6 {
     color: $cp-primary;
-    font-family: $headings-font-family;
-    font-weight: $headings-font-weight;
+    font-weight: $font-weight-medium;
 }
 
 h1 {
@@ -1014,6 +1013,11 @@ body.dark-mode {
     .dashboard-card .course-info-container .edw-card-design-hd span.categoryname.small-info-semibold,
     .categoryname.text-truncate.small-info-semibold {
         background-color: $cp-dm-tertiary;
+    }
+    
+    /* Soporte para gradiente */
+    .position-absolute.w-100.h-100, #page-footer .footer-container hr.position-absolute.h-100 {
+        background: linear-gradient(359deg, $cp-dm-primary-dark -5%, transparent 120%) !important;
     }
 }
 
