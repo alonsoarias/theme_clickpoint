@@ -61,37 +61,85 @@ class core_renderer extends \theme_remui\output\core_renderer
      * @return string HTML fragment.
      */
     public function standard_head_html() {
-        global $SITE, $PAGE, $DB;
-
-        // Inject additional 'live' css
-        $css = '';
-
-        // Get company colours
-        $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
-        if ($companyrec = $DB->get_record('company', array('id' => $companyid))) {
-            $company = $DB->get_record('company', array('id' => $companyid), '*', MUST_EXIST);
-            $linkcolor = $company->linkcolor;
-            if ($linkcolor) {
-                $css .= 'a {color: ' . $linkcolor . '} ';
-            }
-            $headingcolor = $company->headingcolor;
-            if ($headingcolor) {
-                $css .= '.navbar {background-color: ' . $headingcolor . '!important} ';
-            }
-            $maincolor = $company->maincolor;
-            if ($maincolor) {
-                $css .= 'body, #nav-drawer {background-color: ' . $maincolor . '!important} ';
-            }
-
-            $css .= $company->customcss;
-        }
-
+        global $CFG, $DB;
+    
+        // Primero obtenemos el HTML estándar del método padre
         $output = parent::standard_head_html();
-
-        if ($css) {
-            $output .= '<style>' . $css . '</style>';
+        
+        try {
+            // Comprobamos si IOMAD está disponible
+            if (class_exists('\iomad') && class_exists('\company')) {
+                $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
+                
+                if ($companyid && $company = $DB->get_record('company', array('id' => $companyid))) {
+                    // Colores de la compañía (usar por defecto si no están definidos)
+                    $primaryColor = !empty($company->headingcolor) ? $company->headingcolor : '#1D4356';
+                    $secondaryColor = !empty($company->linkcolor) ? $company->linkcolor : '#FF5E01';
+                    $textColor = !empty($company->textcolor) ? $company->textcolor : '#706565';
+                    $backgroundColor = !empty($company->maincolor) ? $company->maincolor : '#FFFFFF';
+                    
+                    // Verificar si la clase existe antes de usarla
+                    $companyStylesFile = $CFG->dirroot . '/theme/clickpoint/classes/util/company_styles.php';
+                    if (file_exists($companyStylesFile)) {
+                        require_once($companyStylesFile);
+                        
+                        // Generar CSS personalizado para la compañía
+                        if (class_exists('\\theme_clickpoint\\util\\company_styles')) {
+                            $companyCSS = \theme_clickpoint\util\company_styles::get_company_css(
+                                $primaryColor,
+                                $secondaryColor,
+                                $textColor,
+                                $backgroundColor
+                            );
+                            
+                            // Si la compañía tiene CSS personalizado adicional, también lo agregamos
+                            if (!empty($company->customcss)) {
+                                $companyCSS .= "\n" . $company->customcss;
+                            }
+                            
+                            // Insertar el CSS generado en el head
+                            $output .= "\n<style id='company-styles'>\n" . $companyCSS . "\n</style>";
+                            
+                            debugging('Company styles applied for company ID: ' . $companyid, DEBUG_DEVELOPER);
+                        } else {
+                            debugging('Company styles class exists but could not be loaded', DEBUG_DEVELOPER);
+                        }
+                    } else {
+                        // Fallback: usar el enfoque tradicional si no tenemos la clase
+                        $css = '';
+                        
+                        // Company link color
+                        if ($linkcolor = $company->linkcolor) {
+                            $css .= 'a {color: ' . $linkcolor . '} ';
+                        }
+                        
+                        // Company heading color
+                        if ($headingcolor = $company->headingcolor) {
+                            $css .= '.navbar {background-color: ' . $headingcolor . '!important} ';
+                            $css .= 'h1, h2, h3, h4, h5, h6 {color: ' . $headingcolor . '} ';
+                        }
+                        
+                        // Company main color
+                        if ($maincolor = $company->maincolor) {
+                            $css .= 'body, #nav-drawer {background-color: ' . $maincolor . '!important} ';
+                        }
+                        
+                        // Company custom CSS
+                        if (!empty($company->customcss)) {
+                            $css .= $company->customcss;
+                        }
+                        
+                        if (!empty($css)) {
+                            $output .= "\n<style id='company-styles-fallback'>\n" . $css . "\n</style>";
+                            debugging('Applied fallback company styles for company ID: ' . $companyid, DEBUG_DEVELOPER);
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            debugging('Error applying company styles: ' . $e->getMessage(), DEBUG_DEVELOPER);
         }
-
+        
         return $output;
     }
 
