@@ -119,6 +119,8 @@ $cp-dm-gray: #444040;            // Versión oscura del gris
 
 // Asignación de roles para modo oscuro
 $cp-dm-primary: $cp-dm-dark-blue;
+$cp-dm-primary-light: lighten($cp-dm-primary, 10%);
+$cp-dm-primary-dark: darken($cp-dm-primary, 10%);
 $cp-dm-secondary: $cp-dm-orange;
 $cp-dm-tertiary: $cp-dm-light-orange;
 
@@ -147,12 +149,7 @@ $cp-dm-block-7: #555555;   // Gris (más oscuro para fondos oscuros)
 // ===========================================
 // 4. TIPOGRAFÍA Y ESPACIADO
 // ===========================================
-// Variables para fuentes, tamaños y espaciado
-
-// Familias de fuentes
-$cp-font-primary: 'Inter', sans-serif;
-$cp-font-secondary: 'Inter', sans-serif;
-$cp-font-headings: 'Inter', sans-serif;
+// Variables para tamaños y espaciado
 
 // Tamaños de fuente escalables
 $font-size-xs: 0.75rem;     // 12px
@@ -213,11 +210,6 @@ $yellow: $cp-light-orange;
 $green: $cp-success;
 $teal: lighten($cp-medium-blue, 20%);
 $cyan: $cp-medium-blue;
-
-// Definiciones de fuentes para compatibilidad
-$font-family-sans-serif: $cp-font-primary;
-$font-family-aux: $cp-font-secondary;
-$headings-font-family: $cp-font-headings;
 
 // Bloques laterales (compatibilidad)
 $block-region-side-pre-1: $cp-block-1;
