@@ -1,17 +1,17 @@
 <?php
-
 /**
- * Provides the core rendering functionality for the theme_clickpoint, aligning Moodle's HTML with Bootstrap expectations.
+ * Provides the core rendering functionality for the theme_clickpoint.
  *
- * This core renderer class extends theme_remui's core renderer, adding specific modifications to enhance and customize
- * the user interface for theme_clickpoint. Key functionalities include customized login forms, theme settings integration,
- * and dynamic handling of UI elements like carousels and notices based on theme configurations.
+ * This core renderer class extends theme_remui's core renderer, adding specific modifications
+ * to enhance and customize the user interface for theme_clickpoint. Key functionalities include
+ * customized login forms, theme settings integration, and dynamic handling of UI elements like
+ * carousels and notices based on theme configurations.
  *
  * @package    theme_clickpoint
  * @category   output
+ * @copyright  2024 Soporte ClickPoint <soporte@clickpoint.co>
  * @author     Pedro Alonso Arias Balcucho
- * @copyright  2024 Soporte clickpoint <soporte@clickpoint.co>
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace theme_clickpoint\output;
@@ -27,13 +27,13 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/../../../remui/classes/output/core_renderer.php');
 require_once(__DIR__ . '/../util/theme_settings.php');
 
-
 /**
- * Renderers to align Moodle's HTML with that expected by Bootstrap
+ * Core renderer for theme_clickpoint
  *
+ * This class extends the core_renderer of the parent theme to customize
+ * the rendering of various UI elements.
  */
-class core_renderer extends \theme_remui\output\core_renderer
-{
+class core_renderer extends \theme_remui\output\core_renderer {
     /**
      * Cached theme config
      * @var object
@@ -42,7 +42,7 @@ class core_renderer extends \theme_remui\output\core_renderer
 
     /**
      * Get theme config with caching
-     * @return object
+     * @return object Theme configuration
      */
     public function get_theme_config() {
         if ($this->themeConfig === null) {
@@ -51,39 +51,35 @@ class core_renderer extends \theme_remui\output\core_renderer
         return $this->themeConfig;
     }
     
-    // IOMAD customisations.
-
     /**
-     * The standard tags that should be included in the <head> tag
-     * including a meta description for the front page
-     * We cheekily add un-cached CSS for Iomad here
+     * Outputs standard head HTML to add required meta tags and CSS for IOMAD.
      *
      * @return string HTML fragment.
      */
     public function standard_head_html() {
         global $CFG, $DB;
     
-        // Primero obtenemos el HTML estándar del método padre
+        // Get base head HTML from parent method
         $output = parent::standard_head_html();
         
         try {
-            // Comprobamos si IOMAD está disponible
+            // Check if IOMAD is available
             if (class_exists('\iomad') && class_exists('\company')) {
                 $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
                 
                 if ($companyid && $company = $DB->get_record('company', array('id' => $companyid))) {
-                    // Colores de la compañía (usar por defecto si no están definidos)
+                    // Company colors (use defaults if not defined)
                     $primaryColor = !empty($company->headingcolor) ? $company->headingcolor : '#1D4356';
                     $secondaryColor = !empty($company->linkcolor) ? $company->linkcolor : '#FF5E01';
                     $textColor = !empty($company->textcolor) ? $company->textcolor : '#706565';
                     $backgroundColor = !empty($company->maincolor) ? $company->maincolor : '#FFFFFF';
                     
-                    // Verificar si la clase existe antes de usarla
+                    // Verify class exists before using it
                     $companyStylesFile = $CFG->dirroot . '/theme/clickpoint/classes/util/company_styles.php';
                     if (file_exists($companyStylesFile)) {
                         require_once($companyStylesFile);
                         
-                        // Generar CSS personalizado para la compañía
+                        // Generate custom CSS for company
                         if (class_exists('\\theme_clickpoint\\util\\company_styles')) {
                             $companyCSS = \theme_clickpoint\util\company_styles::get_company_css(
                                 $primaryColor,
@@ -92,12 +88,12 @@ class core_renderer extends \theme_remui\output\core_renderer
                                 $backgroundColor
                             );
                             
-                            // Si la compañía tiene CSS personalizado adicional, también lo agregamos
+                            // Add company's custom CSS if available
                             if (!empty($company->customcss)) {
                                 $companyCSS .= "\n" . $company->customcss;
                             }
                             
-                            // Insertar el CSS generado en el head
+                            // Insert generated CSS in head
                             $output .= "\n<style id='company-styles'>\n" . $companyCSS . "\n</style>";
                             
                             debugging('Company styles applied for company ID: ' . $companyid, DEBUG_DEVELOPER);
@@ -105,7 +101,7 @@ class core_renderer extends \theme_remui\output\core_renderer
                             debugging('Company styles class exists but could not be loaded', DEBUG_DEVELOPER);
                         }
                     } else {
-                        // Fallback: usar el enfoque tradicional si no tenemos la clase
+                        // Fallback: use traditional approach if we don't have the class
                         $css = '';
                         
                         // Company link color
@@ -143,22 +139,21 @@ class core_renderer extends \theme_remui\output\core_renderer
         return $output;
     }
 
-
     /**
      * Renders the login form with company branding.
      *
-     * @param \core_auth\output\login $form The renderable.
-     * @return string
+     * @param \core_auth\output\login $form The renderable login form.
+     * @return string HTML output
      */
     public function render_login(\core_auth\output\login $form) {
         global $SITE, $OUTPUT;
 
         $context = $form->export_for_template($this);
 
-        // Prepara el mensaje de error, si lo hubiera.
+        // Prepare error message if present
         $context->errorformatted = $this->error_text($context->error);
 
-        // Inyectamos el contexto de branding (logo y nombre de la compañía)
+        // Inject branding context (logo and company name)
         $brandingContext = $this->get_branding_context();
         if ($brandingContext) {
             foreach ($brandingContext as $key => $value) {
@@ -166,42 +161,47 @@ class core_renderer extends \theme_remui\output\core_renderer
             }
         }
 
-        // Si no se obtuvo el nombre de compañía, se usa el nombre completo del sitio.
+        // If no company name was obtained, use the site's full name
         if (empty($context->companyname)) {
             $context->sitename = format_string($SITE->fullname, true, ['context' => \context_course::instance(SITEID)]);
         }
 
-        // Limpieza final: eliminamos propiedades con valor null.
+        // Final cleanup: remove properties with null values
         foreach ($context as $key => $value) {
             if (is_null($value)) {
                 unset($context->$key);
             }
         }
 
-        // Renderiza la plantilla 'core/loginbox' con el contexto completo.
+        // Render 'core/loginbox' template with the complete context
         return $this->render_from_template('core/loginbox', $context);
     }
 
+    /**
+     * Gets branding context for templates.
+     * 
+     * @return array Context containing branding information
+     */
     public function get_branding_context() {
         global $SITE, $DB;
         $context = [];
 
-        // Primero intentamos obtener el logo de la compañía si IOMAD está disponible
+        // First try to get company logo if IOMAD is available
         if (class_exists('\iomad') && class_exists('\company')) {
             try {
                 $companyid = \iomad::get_my_companyid(\context_system::instance(), false);
                 if (!empty($companyid)) {
-                    // Obtener la información completa de la compañía
+                    // Get complete company information
                     $company = $DB->get_record('company', array('id' => $companyid), '*');
                     if (!empty($company)) {
-                        // Usar el método nativo de IOMAD para obtener el logo URL
+                        // Use IOMAD's native method to get logo URL
                         $companyobj = new \company($company->id);
                         $logo_url = $companyobj->get_logo_url($company->id);
                         if (!empty($logo_url)) {
-                            debugging("Logo de compañía encontrado: " . $logo_url, DEBUG_DEVELOPER);
+                            debugging("Company logo found: " . $logo_url, DEBUG_DEVELOPER);
                             $context['companylogourl'] = $logo_url;
                             $context['companyname'] = format_string($company->name);
-                            // Si estamos en la página de login y hay un logo de compañía, devolvemos el contexto aquí
+                            // If we're on the login page and have a company logo, return context here
                             if ($this->page->pagelayout == 'login') {
                                 $context['incontainer'] = true;
                                 return $context;
@@ -210,11 +210,11 @@ class core_renderer extends \theme_remui\output\core_renderer
                     }
                 }
             } catch (\Exception $e) {
-                debugging('Error al obtener logo de compañía: ' . $e->getMessage(), DEBUG_DEVELOPER);
+                debugging('Error getting company logo: ' . $e->getMessage(), DEBUG_DEVELOPER);
             }
         }
 
-        // Manejo específico para la página de login (cuando no hay logo de compañía)
+        // Special handling for login page (when no company logo)
         if ($this->page->pagelayout == 'login') {
             $loginpanellogo = $this->get_theme_logo_url('loginpanellogo');
             if ($loginpanellogo) {
@@ -224,39 +224,43 @@ class core_renderer extends \theme_remui\output\core_renderer
             }
         }
 
-        // Lógica para el logo estándar del tema
+        // Logic for standard theme logo
         $logo = $this->get_theme_logo_url('logo');
         if (!empty($logo)) {
             $context['logourl'] = $logo;
         } else {
-            // Logo por defecto si no hay ninguno configurado
+            // Default logo if none configured
             $context['logourl'] = $this->image_url('logo', 'theme');
         }
 
-        // Agregar el logomini si está configurado
+        // Add logomini if configured
         $logomini = $this->get_theme_logo_url('logomini');
         if (!empty($logomini)) {
             $context['logominiurl'] = $logomini;
         }
 
-        // Información del sitio como respaldo
+        // Site info as fallback
         $context['sitename'] = format_string($SITE->shortname);
 
         return $context;
     }
 
     /**
-     * Devuelve la URL del logo. Puede cambiarse para usar 'clickpoint' o 'remui' según tu preferencia.
+     * Returns the URL of the logo to use.
      *
-     * @param string $img
-     * @return string|null
+     * @param string $img Logo identifier
+     * @return string|null Logo URL or null if not found
      */
-    public function get_theme_logo_url($img)
-    {
+    public function get_theme_logo_url($img) {
         $theme = theme_config::load('remui');
         return $theme->setting_file_url($img, $img);
     }
 
+    /**
+     * Generates standard footer HTML with additional elements.
+     *
+     * @return string HTML footer content
+     */
     public function standard_footer_html() {
         global $CFG, $USER;
     
@@ -266,12 +270,6 @@ class core_renderer extends \theme_remui\output\core_renderer
         // Add chat widget if enabled and user is logged in
         if (!empty($this->page->theme->settings->cp_enable_chat) && isloggedin()) {
             $output .= $this->add_chat_widget();
-        }
-    
-        // Add accessibility widget only if enabled and user is logged in
-        if (isloggedin() && !empty($this->page->theme->settings->cp_accessibility_widget)) {
-            $output .= '<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>';
-            debugging('Accessibility widget loaded for user ID: ' . $USER->id, DEBUG_DEVELOPER);
         }
     
         // Add copy paste prevention if enabled
@@ -293,26 +291,25 @@ class core_renderer extends \theme_remui\output\core_renderer
     }
     
     /**
-     * Sobrescribe el método full_header para mostrar avisos generales u otros estilos en el header.
+     * Generates full header with notices if configured.
      *
-     * @return string
+     * @return string Header HTML
      */
-    public function full_header()
-    {
+    public function full_header() {
         global $CFG, $USER, $PAGE;
     
         $theme = theme_config::load('clickpoint');
         $output = '';
     
-        // Ocultar secciones front page si está configurado
+        // Hide front page sections if configured
         if (!empty($theme->settings->cp_hidefrontpagesections)) {
             $output .= '<style>.frontpage-sections { display: none; }</style>';
         }
     
-        // Aviso general (notice)
+        // General notice (info or warning)
         if (!empty(trim($theme->settings->cp_generalnotice))) {
             $mode = $theme->settings->cp_generalnoticemode;
-            // 'info' => alert-info, 'danger' => alert-danger, 'off' => sin aviso
+            // 'info' => alert-info, 'danger' => alert-danger, 'off' => no notice
             if ($mode === 'info') {
                 $output .= '<div class="alert alert-info mt-4"><strong><i class="fa fa-info-circle"></i></strong> ' . $theme->settings->cp_generalnotice . '</div>';
             } else if ($mode === 'danger') {
@@ -320,27 +317,27 @@ class core_renderer extends \theme_remui\output\core_renderer
             }
         }
     
-        // Recordatorio para admin, si el aviso está en modo 'off'
+        // Reminder for admin if notice is in 'off' mode
         if (is_siteadmin() && (!empty($theme->settings->cp_generalnoticemode) && $theme->settings->cp_generalnoticemode === 'off')) {
             $output .= '<div class="alert mt-4"><a href="' . $CFG->wwwroot . '/admin/settings.php?section=themesettingclickpoint#theme_clickpoint">' .
                 '<strong><i class="fa fa-edit"></i></strong> ' . get_string('generalnotice_create', 'theme_clickpoint') . '</a></div>';
         }
     
-        // Validación de URL (por ejemplo, para sitios de prueba)
+        // URL validation (e.g., for test sites)
         if (!$this->check_allowed_urls()) {
             $popup_id = bin2hex(random_bytes(8));
             $output .= $this->show_unauthorized_access_overlay($popup_id);
         }
     
-        // Continúa con el header normal.
+        // Continue with normal header
         $output .= parent::full_header();
         return $output;
     }
     
     /**
-     * Agrega el script de chat si está configurado en el tema (cp_enable_chat y cp_tawkto_embed_url).
+     * Adds chat widget script if configured.
      *
-     * @return string HTML/JS del widget de chat
+     * @return string HTML/JS for chat widget
      */
     protected function add_chat_widget() {
         global $USER;
@@ -377,46 +374,45 @@ class core_renderer extends \theme_remui\output\core_renderer
     }
     
     /**
-     * Agrega la lógica de prevención de Copy/Paste para roles específicos.
+     * Adds copy/paste prevention logic for specific roles.
      */
-    protected function add_copy_paste_prevention()
-    {
+    protected function add_copy_paste_prevention() {
         global $USER, $PAGE, $COURSE;
     
         $theme = theme_config::load('clickpoint');
         $restrictedroles = $theme->settings->cp_copypaste_roles;
     
-        // Si no hay roles restringidos, no hacemos nada.
+        // If no restricted roles, do nothing
         if (empty($restrictedroles)) {
             return;
         }
     
-        // Si es administrador/a, ignoramos la restricción
+        // If site admin, ignore restriction
         if (is_siteadmin()) {
             return;
         }
     
         try {
-            // Obtenemos el contexto para saber en qué curso o página estamos
+            // Get context to determine what course or page we're on
             $context = null;
             if (!empty($COURSE->id) && $COURSE->id > 1) {
-                // Contexto de un curso
+                // Course context
                 $context = \context_course::instance($COURSE->id);
             } else if (!empty($PAGE->context)) {
-                // Si no es un curso, usamos el contexto de la página actual
+                // If not a course, use current page context
                 $context = $PAGE->context;
             }
     
             if (!$context) {
-                return; // No hay contexto válido
+                return; // No valid context
             }
     
-            // Convertimos a array si es string (por seguridad)
+            // Convert to array if string (for safety)
             if (!is_array($restrictedroles)) {
                 $restrictedroles = explode(',', $restrictedroles);
             }
     
-            // Obtenemos los roles del usuario en este contexto
+            // Get user roles in this context
             $userroles = get_user_roles($context, $USER->id);
             $hasrestrictedrole = false;
             foreach ($userroles as $role) {
@@ -426,9 +422,9 @@ class core_renderer extends \theme_remui\output\core_renderer
                 }
             }
     
-            // Si el usuario tiene algún rol restringido, aplicamos la prevención
+            // If user has a restricted role, apply prevention
             if (isloggedin() && $hasrestrictedrole) {
-                // Llama a un módulo AMD con la lógica para bloquear copy/paste
+                // Call AMD module with logic to block copy/paste
                 $PAGE->requires->js_call_amd('theme_clickpoint/prevent_copy_paste', 'init');
             }
         } catch (moodle_exception $e) {
@@ -438,13 +434,12 @@ class core_renderer extends \theme_remui\output\core_renderer
     }
 
     /**
-     * Muestra un overlay de acceso no autorizado.
+     * Displays unauthorized access overlay.
      * 
-     * @param string $popup_id Un ID único para el div
-     * @return string
+     * @param string $popup_id Unique ID for the overlay
+     * @return string HTML for overlay
      */
-    protected function show_unauthorized_access_overlay($popup_id)
-    {
+    protected function show_unauthorized_access_overlay($popup_id) {
         $output = '';
         $output .= '<style>
             #' . $popup_id . ' {
@@ -472,10 +467,10 @@ class core_renderer extends \theme_remui\output\core_renderer
         $output .= '</div>';
         $output .= '</div>';
 
-        // JS para bloquear devtools e interacción
+        // JS to block devtools and interaction
         $output .= '<script type="text/javascript">
             document.addEventListener("keydown", function(event) {
-                // Bloquea F12 y ctrl+shift+i / ctrl+shift+j
+                // Block F12 and ctrl+shift+i / ctrl+shift+j
                 if (event.keyCode == 123 || (event.ctrlKey && event.shiftKey && (event.keyCode == 73 || event.keyCode == 74))) {
                     event.preventDefault();
                     alert("' . get_string('devtools_access_disabled', 'theme_clickpoint') . '");
@@ -487,7 +482,7 @@ class core_renderer extends \theme_remui\output\core_renderer
                     alert("' . get_string('devtools_access_disabled', 'theme_clickpoint') . '");
                 }
             }, 1000);
-            // Previene interacción en el resto de la página
+            // Prevent interaction with the rest of the page
             document.body.style.pointerEvents = "none";
             document.addEventListener("contextmenu", event => event.preventDefault());
             document.body.addEventListener("click", function(e) {
@@ -500,17 +495,17 @@ class core_renderer extends \theme_remui\output\core_renderer
     }
 
     /**
-     * Comprueba si la URL actual está en la lista de URLs permitidas.
-     * @return bool True si la URL está permitida, False en caso contrario.
+     * Checks if current URL is in allowed URLs list.
+     * 
+     * @return bool True if URL is allowed, False otherwise
      */
-    protected function check_allowed_urls()
-    {
+    protected function check_allowed_urls() {
         global $CFG;
         $allowed_urls = [
             'https://clickpoint.orioncloud.com.co',
             'http://clickpoint.orioncloud.com.co',
-            'https://clickpoint1.orioncloud.com.co',
-            'http://clickpoint1.orioncloud.com.co',
+            'https://clickpoint.localhost.com',
+            'http://clickpoint.localhost.com',
             'https://iomad.orioncloud.com.co',
             'http://iomad.orioncloud.com.co',
             'https://iomad.localhost.com',
